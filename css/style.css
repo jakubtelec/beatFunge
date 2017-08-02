@@ -1,0 +1,77 @@
+* {
+    margin: 0 0;
+    padding: 0 0;
+    box-sizing: border-box;
+    font-family: Arial;
+    outline: 1px dotted red;
+}
+
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#controls {
+	width: 100px;
+	flex-wrap: wrap;
+}
+
+#grid {
+	width: 400px;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	align-self: center;
+}
+
+.cell {
+	border: 2px solid white;
+	background-color: lightgrey;
+	border-radius: 20px;
+}
+
+.cursor {
+	border: 2px solid lightgrey;
+	background-color: lightblue;
+	transition: 0.01s; 
+}
+
+.bouncer-normal {
+	background-color: red;
+	border: 3px solid white;
+	border-radius: 20px;
+	transition: 0.2s ease;
+}
+
+.bouncer-lighter {
+	background-color: pink;
+	border: 2px solid white;
+	border-radius: 20px;
+	transition: 0.2s ease;
+}
+
+.trigger-normal {
+	background-color: green;
+	border: 2px solid white;
+	border-radius: 20px;
+	transition: 0.1s ease;
+}
+
+.trigger-lighter {
+	background-color: lightgreen;
+	border: 1px solid white;
+	border-radius: 20px;
+	transition: 0.1s ease;
+}
+
+.normal-button {
+	background-color: white;
+	border: 1px solid grey;
+	border-radius: 20px;
+	transition: 0.1s ease;
+}
+
+
+
+
+

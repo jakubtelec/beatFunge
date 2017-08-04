@@ -26,13 +26,12 @@
      this.bpm = 110; // beats per minute
      this.bars = 4; // bars per beat
      this.beat = 0; // beat counter
+     this.action_type = 0;; // type of interacton - for events
 
      // grid size
 
      this.x_size = x_size;
      this.y_size = y_size;
-     this.cell_width = 0;
-     this.cell_height = 0;
 
      // tables 
 
@@ -172,31 +171,73 @@
      this.prepare_DOM = function() {
 
 
-         this.cell_width = Math.floor(400 / this.x_size);
-         this.cell_height = Math.floor(400 / this.y_size);
+         // calculate grid size 
+
+         $("#grid").css("width", 34 * x_size + 15 + "px")
+
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
              cell.addClass("cell");
              cell.attr("pos", i);
-             cell.css({
-                 "flex-basis": this.cell_width,
-                 "text-align": "center",
-                 "height": this.cell_height + "px"
-             });
              cell.text("")
              cell.appendTo("#grid");
          }
+
          this.DOM = $("#grid");
+
+
+         // preparing events for right panel menu
+
+         let self = this;
+         let rightPanel = $("#right-panel");
+
+         rightPanel.children().on("click", function() {
+             let target = $(this);
+             console.log(target.index());
+             rightPanel.children().eq(self.action_type).removeClass("glow");
+             self.action_type = target.index();
+             target.addClass("glow");
+         })
 
          // preparing separate events for cells
 
-         let self = this;
+
 
          this.DOM.children().on("click", function() {
-             let addr = $(this).attr("pos");
-             // self.map[addr].type
-         });
-     }
+             let target = $(this);
+             let addr = target.attr("pos");
+
+             if (self.action_type == 0) {
+                 target.removeClass();
+                 target.addClass("cell")
+                 target.addClass("trigger-normal");
+                 self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             if (self.action_type == 1) {
+                 target.removeClass();
+                 target.addClass("cell")
+                 target.addClass("bouncer");
+                 self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+
+         })
+
+         this.DOM.children().on("dblclick", function() {
+
+             let target = $(this);
+             let addr = target.attr("pos");
+             self.map[addr].type = "empty";
+             self.map[addr].subtype = "";
+             target.removeClass();
+             target.addClass("cell");
+         })
+
+
+
+     };
+
 
 
      this.render_DOM = function() {
@@ -212,9 +253,11 @@
              if (this.map[i].type === "bouncer") {
                  if (this.bouncerBuffer.indexOf(i) != -1) {
                      this.DOM.children().eq(i).removeClass();
+                     this.DOM.children().eq(i).addClass("cell");
                      this.DOM.children().eq(i).addClass("bouncer-lighter")
                  } else {
                      this.DOM.children().eq(i).removeClass();
+                     this.DOM.children().eq(i).addClass("cell");
                      this.DOM.children().eq(i).addClass("bouncer-normal")
                  };
              }
@@ -223,12 +266,12 @@
 
              if (this.map[i].subtype === "trigger") {
                  if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("trigger-lighter")
-                 } else {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("trigger-normal")
-                 };
+                     this.DOM.children().eq(i).addClass("cell");
+                     this.DOM.children().eq(i).addClass("greenGlow");
+                     setTimeout(() => {
+                         this.DOM.children().eq(i).removeClass("greenGlow");
+                     }, 2500);
+                 } 
              }
 
          }

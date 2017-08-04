@@ -75,9 +75,11 @@ $(document).ready(function() {
     var matrixProto = __webpack_require__(2);
 
     var matrix = new matrixProto(13, 13);
+
+
     var soundbank = new soundbankProto();
 
-    soundbank.load_sounds(["kick.wav", "clap.wav", "hi hat closed.wav", "bleep 3.wav", "bleep 2.wav"]);
+    soundbank.load_sounds(["kick.wav", "kick_click.wav", "hihat_closed.wav", "hihat_open.wav", "snare_1.wav", "snare_2.wav", "snare_3.wav", "switch.wav", "chord_1.wav"]);
     console.log(soundbank.sounds);
 
     // test data
@@ -87,34 +89,43 @@ $(document).ready(function() {
     matrix.set_cursor(0, 0, "right", 0);
     matrix.set_cursor(0, 1, "right", 1);
     matrix.set_cursor(12, 2, "left", 2);
-    matrix.set_cursor(0, 2, "right", 4);
+    matrix.set_cursor(3, 8, "down", 3);
+    matrix.set_cursor(7, 3, "up", 4);
+    matrix.set_cursor(12, 12, "left", 5);
+    matrix.set_cursor(0, 6, "right", 6);
+    matrix.set_cursor(12, 6, "left", 8);
+
     // matrix.set_cursor(0, 2, "right", 2);
     // matrix.set_cursor(0, 2, "right", 2);
     // matrix.set_cursor(8, 0, "down", 3);
     // matrix.set_cursor(12, 8, "up", 4);
 
-    matrix.set_bouncer(7, 2);
-    matrix.set_bouncer(4, 2);
+    // matrix.set_bouncer(7, 2);
+    // matrix.set_bouncer(4, 2);
 
 
-    matrix.set_trigger(1, 2);
-    matrix.set_trigger(6, 2);
-    matrix.set_trigger(10, 2);
-    // matrix.set_trigger(6,2);
-    // matrix.set_trigger(13,2);
-    // matrix.set_trigger(15,2);    
+    // matrix.set_trigger(1, 2);
+    // matrix.set_trigger(6, 2);
+    // matrix.set_trigger(10, 2);
+    // // matrix.set_trigger(6,2);
+    // // matrix.set_trigger(13,2);
+    // // matrix.set_trigger(15,2);    
 
-    matrix.set_trigger(4, 1);
-    matrix.set_trigger(12, 1);
+    // matrix.set_trigger(4, 1);
+    // matrix.set_trigger(12, 1);
 
-    matrix.set_trigger(0, 0);
-    matrix.set_trigger(4, 0);
-    matrix.set_trigger(8, 0);
-    matrix.set_trigger(12, 0);
+    // matrix.set_trigger(0, 0);
+    // matrix.set_trigger(4, 0);
+    // matrix.set_trigger(8, 0);
+    // matrix.set_trigger(12, 0);
+
+
+    
 
 
     matrix.update_map();
     matrix.prepare_DOM();
+    matrix.render_DOM();
     idLoop = setInterval(function() {
         matrix.render_DOM();
         soundbank.trigger_sounds(matrix.soundBuffer);
@@ -187,13 +198,12 @@ module.exports = soundbankProto;
      this.bpm = 110; // beats per minute
      this.bars = 4; // bars per beat
      this.beat = 0; // beat counter
+     this.action_type = 0;; // type of interacton - for events
 
      // grid size
 
      this.x_size = x_size;
      this.y_size = y_size;
-     this.cell_width = 0;
-     this.cell_height = 0;
 
      // tables 
 
@@ -333,31 +343,73 @@ module.exports = soundbankProto;
      this.prepare_DOM = function() {
 
 
-         this.cell_width = Math.floor(400 / this.x_size);
-         this.cell_height = Math.floor(400 / this.y_size);
+         // calculate grid size 
+
+         $("#grid").css("width", 34 * x_size + 15 + "px")
+
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
              cell.addClass("cell");
              cell.attr("pos", i);
-             cell.css({
-                 "flex-basis": this.cell_width,
-                 "text-align": "center",
-                 "height": this.cell_height + "px"
-             });
              cell.text("")
              cell.appendTo("#grid");
          }
+
          this.DOM = $("#grid");
+
+
+         // preparing events for right panel menu
+
+         let self = this;
+         let rightPanel = $("#right-panel");
+
+         rightPanel.children().on("click", function() {
+             let target = $(this);
+             console.log(target.index());
+             rightPanel.children().eq(self.action_type).removeClass("glow");
+             self.action_type = target.index();
+             target.addClass("glow");
+         })
 
          // preparing separate events for cells
 
-         let self = this;
+
 
          this.DOM.children().on("click", function() {
-             let addr = $(this).attr("pos");
-             // self.map[addr].type
-         });
-     }
+             let target = $(this);
+             let addr = target.attr("pos");
+
+             if (self.action_type == 0) {
+                 target.removeClass();
+                 target.addClass("cell")
+                 target.addClass("trigger-normal");
+                 self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             if (self.action_type == 1) {
+                 target.removeClass();
+                 target.addClass("cell")
+                 target.addClass("bouncer");
+                 self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+
+         })
+
+         this.DOM.children().on("dblclick", function() {
+
+             let target = $(this);
+             let addr = target.attr("pos");
+             self.map[addr].type = "empty";
+             self.map[addr].subtype = "";
+             target.removeClass();
+             target.addClass("cell");
+         })
+
+
+
+     };
+
 
 
      this.render_DOM = function() {
@@ -373,9 +425,11 @@ module.exports = soundbankProto;
              if (this.map[i].type === "bouncer") {
                  if (this.bouncerBuffer.indexOf(i) != -1) {
                      this.DOM.children().eq(i).removeClass();
+                     this.DOM.children().eq(i).addClass("cell");
                      this.DOM.children().eq(i).addClass("bouncer-lighter")
                  } else {
                      this.DOM.children().eq(i).removeClass();
+                     this.DOM.children().eq(i).addClass("cell");
                      this.DOM.children().eq(i).addClass("bouncer-normal")
                  };
              }
@@ -384,12 +438,12 @@ module.exports = soundbankProto;
 
              if (this.map[i].subtype === "trigger") {
                  if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("trigger-lighter")
-                 } else {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("trigger-normal")
-                 };
+                     this.DOM.children().eq(i).addClass("cell");
+                     this.DOM.children().eq(i).addClass("greenGlow");
+                     setTimeout(() => {
+                         this.DOM.children().eq(i).removeClass("greenGlow");
+                     }, 2500);
+                 } 
              }
 
          }

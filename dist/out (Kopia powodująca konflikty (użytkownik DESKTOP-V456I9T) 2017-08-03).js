@@ -69,10 +69,14 @@
 
 $(document).ready(function() {
 
+    // INITS
+
     var soundbankProto = __webpack_require__(1);
-    var matrixProto = __webpack_require__(2); 
+    var matrixProto = __webpack_require__(2);
 
     var matrix = new matrixProto(13, 13);
+
+
     var soundbank = new soundbankProto();
 
     soundbank.load_sounds(["kick.wav", "clap.wav", "hi hat closed.wav", "bleep 3.wav", "bleep 2.wav"]);
@@ -110,18 +114,21 @@ $(document).ready(function() {
     matrix.set_trigger(8, 0);
     matrix.set_trigger(12, 0);
 
-    // matrix.set_trigger(16, 0);
+
+    
 
 
-    // matrix.set_pipe(1,1,"right");
-    // matrix.set_pipe(2,1,"left");
-    // matrix.set_pipe(3,1,"up");
-    // matrix.set_pipe(4,1,"down");
-
-    // go! 
-
-    matrix.play();
-})
+    matrix.update_map();
+    matrix.prepare_DOM();
+    matrix.render_DOM();
+    // idLoop = setInterval(function() {
+    //     matrix.render_DOM();
+    //     soundbank.trigger_sounds(matrix.soundBuffer);
+    //     matrix.animate_cursors();
+    //     matrix.update_map();
+    // }, Math.round(60000 / matrix.bpm / matrix.bars));
+}
+)
 
 /***/ }),
 /* 1 */
@@ -138,7 +145,6 @@ var soundbankProto = function() {
     this.load_sounds = function(filenames) {
 
         filenames.forEach((element) => {
-            console.log("Loaded: " + element);
             this.sounds.push(new Howl({
                 src: ['./audio/' + element]
             }))
@@ -146,8 +152,6 @@ var soundbankProto = function() {
     }
 
     this.trigger_sounds = function(soundBuffer) {
-
-    // triggers sounds from buffer
 
         for (let i = 0; i < soundBuffer.length; i++) {
             this.sounds[soundBuffer[i]].play();
@@ -194,6 +198,8 @@ module.exports = soundbankProto;
 
      this.x_size = x_size;
      this.y_size = y_size;
+     this.cell_width = 0;
+     this.cell_height = 0;
 
      // tables 
 
@@ -209,10 +215,6 @@ module.exports = soundbankProto;
      // DOM 
 
      this.DOM = "";
-
-     // soundbank for Howler
-
-     this.sounds = [];
 
      // METHODS
 
@@ -268,11 +270,13 @@ module.exports = soundbankProto;
          // moving cursors and detecting interactions with obiejcts on map
 
          this.beat++;
-
+         this.soundBuffer = [];
 
          for (var i = 0; i < this.cursors.length; i++) {
 
-             // detect triggers and store sounds and triggers into buffers 
+             // detect triggers and store sounds and triggers into buffers
+
+
 
              if (this.map[this.pos(this.cursors[i].x, this.cursors[i].y)].subtype === "trigger") {
                  // console.log("Sample: " + this.cursors[i].sound);
@@ -332,8 +336,37 @@ module.exports = soundbankProto;
          }
      }
 
+     this.prepare_DOM = function() {
 
-     this.render_map = function() {
+
+         this.cell_width = Math.floor(400 / this.x_size);
+         this.cell_height = Math.floor(400 / this.y_size);
+         for (let i = 0; i < this.x_size * this.y_size; i++) {
+             let cell = $("<div>");
+             cell.addClass("cell");
+             cell.attr("pos", i);
+             cell.css({
+                 "flex-basis": this.cell_width,
+                 "text-align": "center",
+                 "height": this.cell_height + "px"
+             });
+             cell.text("")
+             cell.appendTo("#grid");
+         }
+         this.DOM = $("#grid");
+
+         // preparing separate events for cells
+
+         let self = this;
+
+         this.DOM.children().on("click", function() {
+             let addr = $(this).attr("pos");
+             
+         });
+     }
+
+
+     this.render_DOM = function() {
 
          // console.log(this.triggerBuffer);
 
@@ -381,47 +414,6 @@ module.exports = soundbankProto;
          this.triggerBuffer = [];
          this.bouncerBuffer = [];
      }
-
-     this.prepare_DOM = function() {
-         let cell_width = Math.floor(400 / this.x_size);
-         let cell_height = Math.floor(400 / this.y_size);
-         for (let i = 0; i < this.x_size * this.y_size; i++) {
-             let cell = $("<div>");
-             cell.addClass("cell");
-             cell.attr("pos", i);
-             cell.css({
-                 "flex-basis": cell_width,
-                 "text-align": "center",
-                 "height": cell_height + "px"
-             });
-             cell.text("")
-             cell.appendTo("#grid");
-         }
-         this.DOM = $("#grid");
-
-         // preparing events
-
-         let self = this;
-
-         this.DOM.children().on("click", function() {
-             let addr = $(this).attr("pos");
-             // self.map[addr].type
-         });
-     }
-
-     this.play = function() {
-         let self = this;
-         this.update_map();
-         this.prepare_DOM();
-         this.idSetInterval = setInterval(function() {
-             self.render_map();
-             self.trigger_sounds();
-             self.animate_cursors();
-             self.update_map();
-         }, Math.round(60000 / this.bpm / this.bars));
-     }
-
-
  }
 
  module.exports = matrixProto;

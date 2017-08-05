@@ -1,4 +1,9 @@
+
+
+
 $(document).ready(function() {
+
+    require("../sass/style.scss");
 
     // INITS
 
@@ -16,6 +21,7 @@ $(document).ready(function() {
     // test data
 
     matrix.init_map();
+
 
     matrix.set_cursor(0, 0, "right", 0);
     matrix.set_cursor(0, 1, "right", 1);

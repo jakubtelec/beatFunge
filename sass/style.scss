@@ -1,0 +1,139 @@
+@import "_vars";
+
+* {
+    margin: 0 0;
+    padding: 0 0;
+    font-family: 'Arimo', sans-serif;
+    font-size: 14px;
+    /*outline: 1px dotted red;*/
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    background-color: $backgroundColor;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-self: center;
+}
+
+.cell {
+    background-color: $cellBackground;
+    border: 1px solid $cellBorder;
+    border-radius: 17px;
+    margin: 2px 2px;
+    flex-basis: 30px;
+    text-align: center;
+    height: 30px;
+    line-height: 28px;
+    color: white;
+}
+
+.cursor {
+    border: 1px solid $cursorBorder;
+    background-color: $cursorBackground;
+}
+
+.bouncer {
+    background-color: $bouncerBackground;
+    border: 1px solid $bouncerBorder;
+}
+
+.trigger {
+    background-color: $triggerBackground;
+    border: 1px solid $triggerBorder;
+}
+
+@keyframes triggerGlow {
+
+    0% {
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+    50% {
+        box-shadow: 0px 0px 5px 3px $triggerGlow;
+    }
+    100% {
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+}
+
+.trigGlow {
+    animation: triggerGlow 0.1s ease-in-out;
+}
+
+
+#right-panel {
+    width: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    height: 34px;
+    flex-wrap: wrap;
+}
+
+.button {
+    border-radius: 20px;
+    margin: 2px 2px;
+    width: 30px;
+    height: 30px;
+	line-height: 28px;
+    text-align: center;
+    font-weight: 400;
+    color: $buttonContent;
+}
+
+.size-30 {
+    flex-basis: 30px;
+}
+
+.size-60 {
+    flex-basis: 60px;
+}
+
+.size-90 {
+    flex-basis: 90px;
+}
+
+@keyframes glowingBorder {
+
+    0% {
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+    50% {
+        box-shadow: 0px 0px 5px 2px $menuGlow;
+    }
+    100% {
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+}
+
+.glow {
+    animation: glowingBorder 1s infinite;
+}

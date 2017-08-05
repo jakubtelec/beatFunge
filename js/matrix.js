@@ -210,7 +210,7 @@
              if (self.action_type == 0) {
                  target.removeClass();
                  target.addClass("cell")
-                 target.addClass("trigger-normal");
+                 target.addClass("trigger");
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
@@ -218,6 +218,7 @@
                  target.removeClass();
                  target.addClass("cell")
                  target.addClass("bouncer");
+                 target.text("#")
                  self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
@@ -250,27 +251,27 @@
 
              // bouncers
 
-             if (this.map[i].type === "bouncer") {
-                 if (this.bouncerBuffer.indexOf(i) != -1) {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("cell");
-                     this.DOM.children().eq(i).addClass("bouncer-lighter")
-                 } else {
-                     this.DOM.children().eq(i).removeClass();
-                     this.DOM.children().eq(i).addClass("cell");
-                     this.DOM.children().eq(i).addClass("bouncer-normal")
-                 };
-             }
+             // if (this.map[i].type === "bouncer") {
+             //     if (this.bouncerBuffer.indexOf(i) != -1) {
+             //         this.DOM.children().eq(i).removeClass();
+             //         this.DOM.children().eq(i).addClass("cell");
+             //         this.DOM.children().eq(i).addClass("bouncer")
+             //     } else {
+             //         this.DOM.children().eq(i).removeClass();
+             //         this.DOM.children().eq(i).addClass("cell");
+             //         this.DOM.children().eq(i).addClass("bouncer")
+             //     };
+             // }
 
              // triggers 
 
              if (this.map[i].subtype === "trigger") {
                  if (this.triggerBuffer.indexOf(i) != -1) {
                      this.DOM.children().eq(i).addClass("cell");
-                     this.DOM.children().eq(i).addClass("greenGlow");
+                     this.DOM.children().eq(i).addClass("trigGlow");
                      setTimeout(() => {
-                         this.DOM.children().eq(i).removeClass("greenGlow");
-                     }, 2500);
+                         this.DOM.children().eq(i).removeClass("trigGlow");
+                     }, 100);
                  } 
              }
 

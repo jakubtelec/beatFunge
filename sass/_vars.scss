@@ -1,0 +1,38 @@
+// COLORS 
+
+$backgroundColor: black;
+
+// cell 
+
+$cellBackground: black;
+$cellBorder: grey;
+
+// cursor
+
+$cursorBackground: black;
+$cursorBorder: darken(white, 10%);
+
+// trigger
+
+$triggerBackground: lighten(black, 35%);
+$triggerBorder: grey;
+
+$triggerGlow: white;
+
+// pipe
+
+$pipeBackground: lighten(black, 65%);
+$pipeBorder: lighten(grey, 50%);
+$pipeContent: lighten(grey, 60%);
+
+
+// bouncer
+
+$bouncerBackground: black;
+$bouncerBorder: darken(white, 20%);
+
+// menu
+
+$buttonContent: white;
+
+$menuGlow: white;

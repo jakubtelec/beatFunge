@@ -26,7 +26,10 @@
      this.bpm = 110; // beats per minute
      this.bars = 4; // bars per beat
      this.beat = 0; // beat counter
-     this.action_type = 0;; // type of interacton - for events
+     this.action = {
+        type: "normal",
+        subtype: 0
+     }; // type of interacton - for events
 
      // grid size
 
@@ -46,7 +49,10 @@
 
      // DOM 
 
-     this.DOM = "";
+     this.DOM = {};
+     this.rightPanel = {};
+     this.bottomPanel = {};
+
 
      // METHODS
 
@@ -168,12 +174,23 @@
          }
      }
 
-     this.prepare_DOM = function() {
+     this.prepare_DOM = function(soundbank) {
 
+         // --- INITS ---
+
+         this.DOM = $("#grid");
+         this.rightPanel = $("#right-panel");
+         this.bottomPanel = $("#bottom-panel");
+         let sampleBank = $(".sample-bank");
+         console.log(this.sampleBank);
+
+         let self = this;
+
+         //  --- GRID --- 
 
          // calculate grid size 
 
-         $("#grid").css("width", 34 * x_size + 15 + "px")
+         this.DOM.css("width", 34 * x_size + 15 + "px")
 
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
@@ -183,38 +200,21 @@
              cell.appendTo("#grid");
          }
 
-         this.DOM = $("#grid");
-
-
-         // preparing events for right panel menu
-
-         let self = this;
-         let rightPanel = $("#right-panel");
-
-         rightPanel.children().on("click", function() {
-             let target = $(this);
-             console.log(target.index());
-             rightPanel.children().eq(self.action_type).removeClass("glow");
-             self.action_type = target.index();
-             target.addClass("glow");
-         })
-
-         // preparing separate events for cells
-
-
+         // create events
 
          this.DOM.children().on("click", function() {
+
              let target = $(this);
              let addr = target.attr("pos");
 
-             if (self.action_type == 0) {
+             if (self.action.type =="normal" && self.action.subtype == 0) {
                  target.removeClass();
                  target.addClass("cell")
                  target.addClass("trigger");
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
-             if (self.action_type == 1) {
+             if (self.action.type =="normal" && self.action.subtype == 1) {
                  target.removeClass();
                  target.addClass("cell")
                  target.addClass("bouncer");
@@ -234,6 +234,65 @@
              target.removeClass();
              target.addClass("cell");
          })
+
+
+         // --- RIGHT PANEL --- 
+
+         // create events
+
+         this.rightPanel.children().on("click", function() {
+             let target = $(this);
+             self.action.type = "normal"; 
+             console.log(target.index());
+             self.rightPanel.children().eq(self.action.subtype).removeClass("glow");
+             self.action.subtype = target.index();
+             target.addClass("glow");
+         })
+
+         // --- BOTTOM PANEL --- 
+
+         // create sample list
+
+         this.bottomPanel.css("width", 34 * x_size + 50 + "px");
+
+         soundbank.sounds.forEach((element,index) => {
+            
+            if (index > 0) {sampleBank.clone().appendTo(self.bottomPanel);}
+
+            let cutStart = element._src.lastIndexOf("/") + 1;
+            let name = element._src.slice(cutStart,element._src.length - 4);
+
+            let lastBank = self.bottomPanel.children().last().children()
+            lastBank.eq(0).text(index);
+            lastBank.eq(1).text(name);
+
+            lastBank.on("click", function() {
+                self.bottomPanel.children().children().removeClass("glow");
+                let target = $(this);
+                clickIndex = target.index();
+                lastBank.eq(0).addClass("glow");
+                lastBank.eq(1).addClass("glow");
+                (clickIndex > 2 ? lastBank.eq(clickIndex).addClass("glow") : lastBank.eq(2).addClass("glow"));
+                console.log(target.index());
+
+            })
+         });
+
+         // sampleBank = $(".sample-bank");
+
+         // sampleBank.forEach((element,index) 
+         //    )
+
+         // sampleBank.children().on("click", function() {
+         //    console.log('klik!');
+
+         // })
+
+
+
+
+
+
 
 
 
@@ -272,7 +331,7 @@
                      setTimeout(() => {
                          this.DOM.children().eq(i).removeClass("trigGlow");
                      }, 100);
-                 } 
+                 }
              }
 
          }

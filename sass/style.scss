@@ -5,7 +5,7 @@
     padding: 0 0;
     font-family: 'Arimo', sans-serif;
     font-size: 14px;
-    /*outline: 1px dotted red;*/
+    // outline: 1px dotted red;
 }
 
 html {
@@ -91,6 +91,8 @@ body {
     align-content: flex-start;
 }
 
+
+
 .row {
     width: 100%;
     display: flex;
@@ -101,24 +103,25 @@ body {
 .button {
     border-radius: 20px;
     margin: 2px 2px;
-    width: 30px;
+    // width: 30px;
     height: 30px;
-	line-height: 28px;
+    line-height: 28px;
     text-align: center;
     font-weight: 400;
     color: $buttonContent;
 }
+
 
 .size-30 {
     flex-basis: 30px;
 }
 
 .size-60 {
-    flex-basis: 60px;
+    flex-basis: 64px;
 }
 
 .size-90 {
-    flex-basis: 90px;
+    flex-basis: 98px;
 }
 
 @keyframes glowingBorder {
@@ -136,4 +139,26 @@ body {
 
 .glow {
     animation: glowingBorder 1s infinite;
+}
+
+
+
+#bottom-panel {
+    margin: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.sample-bank {
+    flex-basis: 306px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.sample {
+    background-color: $sampleBackground; 
+    color: $sampleContent;
+    border: 1px solid $sampleBorder;
 }

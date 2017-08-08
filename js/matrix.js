@@ -275,8 +275,14 @@
                 (clickIndex > 2 ? lastBank.eq(clickIndex).addClass("glow") : lastBank.eq(2).addClass("glow"));
                 console.log(target.index());
 
+
+
+
+
+
             })
          });
+
 
          // sampleBank = $(".sample-bank");
 

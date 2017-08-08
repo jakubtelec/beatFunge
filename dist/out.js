@@ -750,7 +750,7 @@ module.exports = soundbankProto;
 
      // globals 
 
-     this.bpm = 110; // beats per minute
+     this.bpm = 180; // beats per minute
      this.bars = 4; // bars per beat
      this.beat = 0; // beat counter
      this.action = {
@@ -1002,8 +1002,14 @@ module.exports = soundbankProto;
                 (clickIndex > 2 ? lastBank.eq(clickIndex).addClass("glow") : lastBank.eq(2).addClass("glow"));
                 console.log(target.index());
 
+
+
+
+
+
             })
          });
+
 
          // sampleBank = $(".sample-bank");
 

@@ -88,26 +88,26 @@ $(document).ready(function() {
     matrix.init_map();
 
 
-    matrix.set_cursor(0, 0, "right", 0);
-    matrix.set_cursor(0, 1, "right", 1);
-    matrix.set_cursor(12, 2, "left", 2);
-    matrix.set_cursor(3, 8, "down", 3);
-    matrix.set_cursor(7, 3, "up", 4);
-    matrix.set_cursor(12, 12, "left", 5);
-    matrix.set_cursor(0, 6, "right", 6);
-    matrix.set_cursor(12, 6, "left", 8);
+    // matrix.set_cursor(0, 0, "right", 0);
+    // matrix.set_cursor(0, 1, "right", 1);
+    // matrix.set_cursor(12, 2, "left", 2);
+    // matrix.set_cursor(3, 8, "down", 3);
+    // matrix.set_cursor(7, 3, "up", 4);
+    // matrix.set_cursor(12, 12, "left", 5);
+    // matrix.set_cursor(0, 6, "right", 6);
+    // matrix.set_cursor(12, 6, "left", 8);
 
-    matrix.update_map();
     matrix.prepare_DOM(soundbank);
     matrix.render_DOM();
     idLoop = setInterval(function() {
         matrix.render_DOM();
-        soundbank.trigger_sounds(matrix.soundBuffer);
-        matrix.animate_cursors();
-        matrix.update_map();
+        if (matrix.state == "play") {
+            soundbank.trigger_sounds(matrix.soundBuffer);
+            matrix.animate_cursors();
+        }
+
     }, Math.round(60000 / matrix.bpm / matrix.bars));
-}
-)
+})
 
 /***/ }),
 /* 1 */
@@ -149,7 +149,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: black; }\n\n.wrapper {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap; }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: black;\n  border: 1px solid grey;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #e6e6e6;\n  background-color: black; }\n\n.bouncer {\n  background-color: black;\n  border: 1px solid #cccccc; }\n\n.trigger {\n  background-color: #404040;\n  border: 1px solid grey; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.row {\n  width: 100%;\n  display: flex;\n  height: 34px;\n  flex-wrap: wrap; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: white; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  background-color: transpose;\n  color: #e6e6e6;\n  border: 1px solid #cccccc; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\nbody {\n  background-color: black; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 220px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: zoom 0.2s linear; }\n\n@keyframes zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid grey;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #e6e6e6;\n  background-color: black; }\n\n.bouncer {\n  background-color: black;\n  border: 1px solid #cccccc; }\n\n.trigger {\n  background-color: #404040;\n  border: 1px solid grey; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: white; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  background-color: transpose;\n  color: #e6e6e6;\n  border: 1px solid #cccccc; }\n", ""]);
 
 // exports
 
@@ -757,6 +757,7 @@ module.exports = soundbankProto;
          index: 0,
          direction: ""
      }; // type of interacton - for events
+     this.state = "pause" // state of app
 
      // grid size
 
@@ -777,6 +778,7 @@ module.exports = soundbankProto;
      // DOM 
 
      this.DOM = {};
+     this.topPanel = {};
      this.rightPanel = {};
      this.bottomPanel = {};
 
@@ -823,14 +825,6 @@ module.exports = soundbankProto;
 
      // let's move things atround! 
 
-     this.update_map = function() {
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "right") { this.map[i].display = "→" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "left") { this.map[i].display = "←" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "down") { this.map[i].display = "↓" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "up") { this.map[i].display = "↑" };
-     };
-
-
      this.animate_cursors = function() {
 
          // moving cursors and detecting interactions with obiejcts on map
@@ -854,8 +848,8 @@ module.exports = soundbankProto;
                  this.triggerBuffer.push(cursor_field);
              }
 
-            if (this.map[cursor_field].type === "pipe") {
-                 this.cursors[i].direction = this.map[cursor_field].direction; 
+             if (this.map[cursor_field].type === "pipe") {
+                 this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
              // move stuff around
@@ -904,26 +898,55 @@ module.exports = soundbankProto;
 
          // --- INITS ---
 
+         this.topPanel = $("#top-panel");
          this.DOM = $("#grid");
          this.rightPanel = $("#right-panel");
          this.bottomPanel = $("#bottom-panel");
          let sampleBank = $(".sample-bank");
+         let app = $("#app");
+         let play = $("#play");
+         let pause = $("#pause");
          console.log(this.sampleBank);
+
+         // pinpointing and catching that damn scope :)  
 
          let self = this;
 
+         // --- TOP PANEL --- 
+         // creating events for controls
+
+         play.on("click", function() {
+             self.state = "play";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
+         pause.on("click", function() {
+             self.state = "pause";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+
+         })
+
          //  --- GRID --- 
+         // calculate screen and grid size
 
-         // calculate grid size 
-
-         this.DOM.css("width", 34 * x_size + 15 + "px")
+         app.css("width", 34 * this.x_size + 45 + "px"); // app window
+         this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
+         this.DOM.css("width", 34 * this.x_size + 10 + "px");
 
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
              cell.addClass("cell");
              cell.attr("pos", i);
              cell.text("")
-             cell.appendTo("#grid");
+             cell.appendTo("#grid").fadeIn();
          }
 
          // create grid events - clicks
@@ -951,7 +974,7 @@ module.exports = soundbankProto;
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
                  target.removeClass();
                  target.addClass("cell");
-                 target.text(self.rightPanel.children().eq(self.action.index));
+                 // target.text(self.rightPanel.children().eq(self.action.index));
                  console.log(self.action.direction);
                  self.set_pipe(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
              }
@@ -961,6 +984,12 @@ module.exports = soundbankProto;
                  target.addClass("cell")
                  self.set_cursor(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
              }
+
+             target.addClass("select")
+
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
 
 
          })
@@ -1064,10 +1093,10 @@ module.exports = soundbankProto;
 
              if (this.map[i].type === "pipe") {
 
-                (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
-                (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
-                (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
-                (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
+                 (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
+                 (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
+                 (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
+                 (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
              }
 
          }

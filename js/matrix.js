@@ -30,6 +30,7 @@
          index: 0,
          direction: ""
      }; // type of interacton - for events
+     this.state = "pause" // state of app
 
      // grid size
 
@@ -50,6 +51,7 @@
      // DOM 
 
      this.DOM = {};
+     this.topPanel = {};
      this.rightPanel = {};
      this.bottomPanel = {};
 
@@ -96,14 +98,6 @@
 
      // let's move things atround! 
 
-     this.update_map = function() {
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "right") { this.map[i].display = "→" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "left") { this.map[i].display = "←" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "down") { this.map[i].display = "↓" };
-         // if (this.map[i].type == "pipe" && this.map[i].subtype == "up") { this.map[i].display = "↑" };
-     };
-
-
      this.animate_cursors = function() {
 
          // moving cursors and detecting interactions with obiejcts on map
@@ -127,8 +121,8 @@
                  this.triggerBuffer.push(cursor_field);
              }
 
-            if (this.map[cursor_field].type === "pipe") {
-                 this.cursors[i].direction = this.map[cursor_field].direction; 
+             if (this.map[cursor_field].type === "pipe") {
+                 this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
              // move stuff around
@@ -177,26 +171,55 @@
 
          // --- INITS ---
 
+         this.topPanel = $("#top-panel");
          this.DOM = $("#grid");
          this.rightPanel = $("#right-panel");
          this.bottomPanel = $("#bottom-panel");
          let sampleBank = $(".sample-bank");
+         let app = $("#app");
+         let play = $("#play");
+         let pause = $("#pause");
          console.log(this.sampleBank);
+
+         // pinpointing and catching that damn scope :)  
 
          let self = this;
 
+         // --- TOP PANEL --- 
+         // creating events for controls
+
+         play.on("click", function() {
+             self.state = "play";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
+         pause.on("click", function() {
+             self.state = "pause";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+
+         })
+
          //  --- GRID --- 
+         // calculate screen and grid size
 
-         // calculate grid size 
-
-         this.DOM.css("width", 34 * x_size + 15 + "px")
+         app.css("width", 34 * this.x_size + 45 + "px"); // app window
+         this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
+         this.DOM.css("width", 34 * this.x_size + 10 + "px");
 
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
              cell.addClass("cell");
              cell.attr("pos", i);
              cell.text("")
-             cell.appendTo("#grid");
+             cell.appendTo("#grid").fadeIn();
          }
 
          // create grid events - clicks
@@ -224,7 +247,7 @@
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
                  target.removeClass();
                  target.addClass("cell");
-                 target.text(self.rightPanel.children().eq(self.action.index));
+                 // target.text(self.rightPanel.children().eq(self.action.index));
                  console.log(self.action.direction);
                  self.set_pipe(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
              }
@@ -234,6 +257,12 @@
                  target.addClass("cell")
                  self.set_cursor(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
              }
+
+             target.addClass("select")
+
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
 
 
          })
@@ -337,10 +366,10 @@
 
              if (this.map[i].type === "pipe") {
 
-                (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
-                (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
-                (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
-                (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
+                 (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
+                 (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
+                 (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
+                 (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
              }
 
          }

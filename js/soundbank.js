@@ -6,11 +6,11 @@ var soundbankProto = function() {
 
     // sound loader - table of filenames as argument
 
-    this.load_sounds = function(filenames) {
+    this.load_sounds = function(path, filenames) {
 
         filenames.forEach((element) => {
             this.sounds.push(new Howl({
-                src: ['./audio/' + element]
+                src: [path + element]
             }))
         });
     }

@@ -24,7 +24,7 @@
 
      this.bpm = 180; // beats per minute
      this.bars = 4; // bars per beat
-     this.beat = 0; // beat counter
+     this.bar = 0; // bar counter
      this.action = { // action for click
          type: "object",
          index: 0,
@@ -102,7 +102,9 @@
 
          // moving cursors and detecting interactions with obiejcts on map
 
-         this.beat++;
+         (this.state != "pause") && (this.bar++);
+         
+         console.log(this.bar);
          this.soundBuffer = [];
 
          for (var i = 0; i < this.cursors.length; i++) {

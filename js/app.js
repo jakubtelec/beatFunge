@@ -10,9 +10,9 @@ $(document).ready(function() {
     var matrix = new matrixProto(17, 17);
 
 
-    var soundbank = new soundbankProto();
+    var bank808 = new soundbankProto();
 
-    soundbank.load_sounds(["kick.wav", "kick_click.wav", "hihat_closed.wav", "hihat_open.wav", "snare_1.wav", "snare_2.wav", "snare_3.wav", "switch.wav", "chord_1.wav"]);
+    bank808.load_sounds("./audio/A_808/", ["bass.wav", "kick.wav", "clap.wav", "clap 2.wav", "snare.wav", "cymbal.wav", "closed hh.wav", "open hh.wav", "tom.wav", "tom 2.wav"]);
 
     // test data
 
@@ -28,12 +28,12 @@ $(document).ready(function() {
     // matrix.set_cursor(0, 6, "right", 6);
     // matrix.set_cursor(12, 6, "left", 8);
 
-    matrix.prepare_DOM(soundbank);
+    matrix.prepare_DOM(bank808);
     matrix.render_DOM();
     idLoop = setInterval(function() {
         matrix.render_DOM();
         if (matrix.state == "play") {
-            soundbank.trigger_sounds(matrix.soundBuffer);
+            bank808.trigger_sounds(matrix.soundBuffer);
             matrix.animate_cursors();
         }
 

@@ -79,9 +79,9 @@ $(document).ready(function() {
     var matrix = new matrixProto(17, 17);
 
 
-    var soundbank = new soundbankProto();
+    var bank808 = new soundbankProto();
 
-    soundbank.load_sounds(["kick.wav", "kick_click.wav", "hihat_closed.wav", "hihat_open.wav", "snare_1.wav", "snare_2.wav", "snare_3.wav", "switch.wav", "chord_1.wav"]);
+    bank808.load_sounds("./audio/A_808/", ["bass.wav", "kick.wav", "clap.wav", "clap 2.wav", "snare.wav", "cymbal.wav", "closed hh.wav", "open hh.wav", "tom.wav", "tom 2.wav"]);
 
     // test data
 
@@ -97,12 +97,12 @@ $(document).ready(function() {
     // matrix.set_cursor(0, 6, "right", 6);
     // matrix.set_cursor(12, 6, "left", 8);
 
-    matrix.prepare_DOM(soundbank);
+    matrix.prepare_DOM(bank808);
     matrix.render_DOM();
     idLoop = setInterval(function() {
         matrix.render_DOM();
         if (matrix.state == "play") {
-            soundbank.trigger_sounds(matrix.soundBuffer);
+            bank808.trigger_sounds(matrix.soundBuffer);
             matrix.animate_cursors();
         }
 
@@ -149,7 +149,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\nbody {\n  background-color: black; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 220px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: zoom 0.2s linear; }\n\n@keyframes zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid grey;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #e6e6e6;\n  background-color: black; }\n\n.bouncer {\n  background-color: black;\n  border: 1px solid #cccccc; }\n\n.trigger {\n  background-color: #404040;\n  border: 1px solid grey; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: white; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  background-color: transpose;\n  color: #e6e6e6;\n  border: 1px solid #cccccc; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\nbody {\n  background-color: black; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: zoom 0.2s linear; }\n\n@keyframes zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid grey;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #e6e6e6;\n  background-color: black; }\n\n.bouncer {\n  background-color: black;\n  border: 1px solid #cccccc; }\n\n.trigger {\n  background-color: #404040;\n  border: 1px solid grey; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: white; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  background-color: transpose;\n  color: #e6e6e6;\n  border: 1px solid #cccccc; }\n", ""]);
 
 // exports
 
@@ -702,11 +702,11 @@ var soundbankProto = function() {
 
     // sound loader - table of filenames as argument
 
-    this.load_sounds = function(filenames) {
+    this.load_sounds = function(path, filenames) {
 
         filenames.forEach((element) => {
             this.sounds.push(new Howl({
-                src: ['./audio/' + element]
+                src: [path + element]
             }))
         });
     }
@@ -751,7 +751,7 @@ module.exports = soundbankProto;
 
      this.bpm = 180; // beats per minute
      this.bars = 4; // bars per beat
-     this.beat = 0; // beat counter
+     this.bar = 0; // bar counter
      this.action = { // action for click
          type: "object",
          index: 0,
@@ -829,7 +829,9 @@ module.exports = soundbankProto;
 
          // moving cursors and detecting interactions with obiejcts on map
 
-         this.beat++;
+         (this.state != "pause") && (this.bar++);
+         
+         console.log(this.bar);
          this.soundBuffer = [];
 
          for (var i = 0; i < this.cursors.length; i++) {

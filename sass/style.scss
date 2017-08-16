@@ -1,4 +1,4 @@
-@import "_vars";
+@import "vars.scss";
 
 * {
     margin: 0 0;
@@ -6,6 +6,8 @@
     font-family: 'Arimo', sans-serif;
     font-size: 14px;
     color: white;
+    cursor: default;
+    user-select: none;
     // outline: 1px dotted pink;
 }
 
@@ -23,6 +25,74 @@ html {
     box-sizing: inherit;
 }
 
+body {
+    background-color: $mainColor;
+}
+
+// tooltips 
+
+.tooltip,.tooltip-left {
+    position: relative;
+}
+
+.tooltip:hover:after {
+    font-size: 14px;
+    width: 150px;
+    text-align: left;
+    line-height: 16px;
+    background: $tooltipColor;
+    border-radius: 10px;
+    position: absolute;    
+    top: 25px;
+    left: 15px;    
+    color: #fff;
+    content: attr(data-title);
+    display: inline-block;
+    padding: 5px 10px;
+    text-shadow: 0 1px 0 #000;
+    z-index: 10;
+    animation: zoomin 0.3s linear;
+}
+
+.tooltip-left:hover:after {
+    font-size: 14px;
+    width: 150px;
+    text-align: left;
+    line-height: 16px;
+    background: $tooltipColor;
+    border-radius: 10px;
+    position: absolute;    
+    top: 25px;
+    right: 15px;    
+    color: #fff;
+    content: attr(data-title);
+    display: inline-block;
+    padding: 5px 10px;
+    text-shadow: 0 1px 0 #000;
+    z-index: 10;
+    animation: zoomin 0.3s linear;
+}
+
+@keyframes zoomin {
+    0% { transform: scale(0.95); }
+    20% { transform: scale(1.2); }
+    100% { transform: scale(0.95) }
+}
+
+#help {
+    transition: background-color 0.5s ease;
+}
+
+.help-off {
+    background-color: transparent;
+}
+
+.help-on {
+    background-color: $tooltipColor;
+}
+
+// app title
+
 h1 {
     font-size: 30px;
     font-weight: 400;
@@ -31,9 +101,7 @@ h1 {
     height: 34px;
 }
 
-body {
-    background-color: $backgroundColor;
-}
+// app
 
 .wrapper {
     width: 100%;
@@ -61,20 +129,34 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-
 }
 
 .select {
     border-radius: 50%;
-    animation: zoom 0.2s linear ;
+    animation: border-zoom 0.2s linear ;
 }
 
-@keyframes zoom {
+@keyframes border-zoom {
     0% { transform: scale(0.95); }
     50% { transform: scale(1.2); }
     100% { transform: scale(0.95) }
 }
 
+// beat counter
+
+#bar-counter {   
+    border-radius: 50%;
+    margin: 2px 2px;
+    flex-basis: 30px;
+    height: 30px;
+    color: $buttonContent;
+    border: 4px solid $counterBorder;
+    border-top: 4px solid $counterCursor;
+    transition: transform 0.1s;
+    transform: rotate(45deg);
+}
+
+// 
 #grid {
     display: flex;
     flex-wrap: wrap;
@@ -96,11 +178,9 @@ body {
 
 .cursor {
     border: 1px solid $cursorBorder;
-    background-color: $cursorBackground;
 }
 
 .bouncer {
-    background-color: $bouncerBackground;
     border: 1px solid $bouncerBorder;
 }
 
@@ -133,13 +213,6 @@ body {
     flex-wrap: wrap;
     align-content: flex-start;
 }
-
-// .row {
-//     width: 100%;
-//     display: flex;
-//     height: 34px;
-//     flex-wrap: wrap;
-// }
 
 .button {
     border-radius: 20px;
@@ -199,7 +272,6 @@ body {
 }
 
 .sample {
-    background-color: $sampleBackground; 
-    color: $sampleContent;
-    border: 1px solid $sampleBorder;
+    color: $cursorBorder;
+    border: 1px solid $cursorBorder;
 }

@@ -22,7 +22,7 @@
 
      // globals 
 
-     this.bpm = 180; // beats per minute
+     this.bpm = 100; // beats per minute
      this.bars = 4; // bars per beat
      this.bar = 0; // bar counter
      this.action = { // action for click
@@ -50,8 +50,9 @@
 
      // DOM 
 
-     this.DOM = {};
+     this.grid = {};
      this.topPanel = {};
+     this.barCounter = {};
      this.rightPanel = {};
      this.bottomPanel = {};
 
@@ -103,11 +104,9 @@
          // moving cursors and detecting interactions with obiejcts on map
 
          (this.state != "pause") && (this.bar++);
-         
-         console.log(this.bar);
          this.soundBuffer = [];
 
-         for (var i = 0; i < this.cursors.length; i++) {
+         for (let i = 0; i < this.cursors.length; i++) {
 
              let cursor_field = this.pos(this.cursors[i].x, this.cursors[i].y);
              let right_field = this.pos(this.cursors[i].x + 1, this.cursors[i].y);
@@ -116,20 +115,12 @@
              let down_field = this.pos(this.cursors[i].x, this.cursors[i].y + 1);
              this.cursors[i].history_x = this.cursors[i].x;
              this.cursors[i].history_y = this.cursors[i].y;
-             // detect triggers and store sounds and triggers into buffers
-
-             if (this.map[cursor_field].subtype === "trigger") {
-                 this.soundBuffer.push(this.cursors[i].sound);
-                 this.triggerBuffer.push(cursor_field);
-             }
 
              if (this.map[cursor_field].type === "pipe") {
                  this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
              // move stuff around
-
-
 
              switch (this.cursors[i].direction) {
                  case "right":
@@ -166,6 +157,15 @@
                      break;
              }
 
+             // detect triggers and store sounds and triggers into buffers
+
+             cursor_field = this.pos(this.cursors[i].x, this.cursors[i].y);
+
+             if (this.map[cursor_field].subtype === "trigger") {
+                 this.soundBuffer.push(this.cursors[i].sound);
+                 this.triggerBuffer.push(cursor_field);
+             }
+
          }
      }
 
@@ -174,13 +174,19 @@
          // --- INITS ---
 
          this.topPanel = $("#top-panel");
-         this.DOM = $("#grid");
+         this.barCounter = $("#bar-counter");
+         this.grid = $("#grid");
          this.rightPanel = $("#right-panel");
          this.bottomPanel = $("#bottom-panel");
          let sampleBank = $(".sample-bank");
          let app = $("#app");
          let play = $("#play");
+         let step = $("#step");
          let pause = $("#pause");
+         let help = $("#help");
+         let tooltips = $(".tooltip-off");
+         let tooltipsLeft = $(".tooltip-left-off");
+         console.log(tooltips);
          console.log(this.sampleBank);
 
          // pinpointing and catching that damn scope :)  
@@ -206,7 +212,17 @@
              setTimeout(function() {
                  target.removeClass("select");
              }, 300);
+         })
 
+         step.on("click", function() {
+             if (self.state != "play") {
+                 self.state = "step";
+                 let target = $(this);
+                 target.addClass("select");
+                 setTimeout(function() {
+                     target.removeClass("select");
+                 }, 300);
+             }
          })
 
          //  --- GRID --- 
@@ -214,7 +230,7 @@
 
          app.css("width", 34 * this.x_size + 45 + "px"); // app window
          this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
-         this.DOM.css("width", 34 * this.x_size + 10 + "px");
+         this.grid.css("width", 34 * this.x_size + 10 + "px");
 
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
@@ -224,12 +240,16 @@
              cell.appendTo("#grid").fadeIn();
          }
 
-         // create grid events - clicks
+         // create grid events for each cell - single clicks
 
-         this.DOM.children().on("click", function() {
+         this.grid.children().on("click", function() {
+
+             // vars 
 
              let target = $(this);
              let addr = target.attr("pos");
+
+             // adding cursor 
 
              if (self.action.type == "object" && self.action.index == 0) {
                  target.removeClass();
@@ -238,12 +258,40 @@
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
+             // adding bouncer 
+
              if (self.action.type == "object" && self.action.index == 1) {
                  target.removeClass();
                  target.addClass("cell")
                  target.addClass("bouncer");
                  target.text("#")
                  self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             // removing object OR CURSOR 
+
+             if (self.action.type == "object" && self.action.index == 2) {
+
+                // removing object - trigger, bouncer or arrow, then...
+
+                 self.map[addr].type = "empty";
+                 self.map[addr].subtype = "";
+                 target.removeClass();
+                 target.text("")
+                 target.addClass("cell");
+
+                 // ...checking for cursors and removing them - in case 
+
+                 let cursor_field = 0;
+                 let cursors_temp = [];
+                 for (let i = 0; i < self.cursors.length; i++) {
+                     cursor_field = self.pos(self.cursors[i].x, self.cursors[i].y);
+                     (cursor_field != target.attr("pos")) && (cursors_temp.push(self.cursors[i]))
+                 }
+
+                 // writing down new table of cursors 
+
+                 self.cursors = cursors_temp; 
              }
 
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
@@ -261,28 +309,11 @@
              }
 
              target.addClass("select")
-
              setTimeout(function() {
                  target.removeClass("select");
              }, 300);
 
-
          })
-
-         // create grid events - doubleclick
-
-         this.DOM.children().on("dblclick", function() {
-
-             let target = $(this);
-             let addr = target.attr("pos");
-             self.map[addr].type = "empty";
-             self.map[addr].subtype = "";
-             target.removeClass();
-             target.text("")
-             target.addClass("cell");
-
-         })
-
 
          // --- RIGHT PANEL --- 
 
@@ -340,13 +371,29 @@
              })
          });
 
+         help.on("click", function() {
+             tooltips.toggleClass("tooltip tooltip-off");
+             tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
+
+             let target = $(this);
+             target.toggleClass("help-off help-on");
+
+             target.addClass("select");
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
      };
 
 
 
      this.render_DOM = function() {
 
-         // console.log(this.triggerBuffer);
+         // bar counter
+
+         (this.state != "pause") && (this.barCounter.css("transform", "rotate(" + (45 + (this.bar % 4) * 90) + "deg)"));
+         (this.state == "step") && (this.state = "pause");
 
          // rewriting standard elements into DOM
 
@@ -356,10 +403,10 @@
 
              if (this.map[i].subtype === "trigger") {
                  if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.DOM.children().eq(i).addClass("cell");
-                     this.DOM.children().eq(i).addClass("trigGlow");
+                     this.grid.children().eq(i).addClass("cell");
+                     this.grid.children().eq(i).addClass("trigGlow");
                      setTimeout(() => {
-                         this.DOM.children().eq(i).removeClass("trigGlow");
+                         this.grid.children().eq(i).removeClass("trigGlow");
                      }, 100);
                  }
              }
@@ -368,20 +415,20 @@
 
              if (this.map[i].type === "pipe") {
 
-                 (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
-                 (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
-                 (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
-                 (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
+                 (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
+                 (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));
+                 (this.map[i].direction === "up") && (this.grid.children().eq(i).text("↑"));
+                 (this.map[i].direction === "down") && (this.grid.children().eq(i).text("↓"));
              }
 
          }
 
 
          for (let i = 0; i < this.cursors.length; i++) { // lighting up cursors
-             this.DOM.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).addClass("cursor");
-             this.DOM.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).text(this.cursors[i].sound);
-             this.DOM.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).removeClass("cursor");
-             this.DOM.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).text("");
+             this.grid.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).addClass("cursor");
+             this.grid.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).text(this.cursors[i].sound);
+             this.grid.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).removeClass("cursor");
+             (this.bar > 0) && (this.grid.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).text(""));
          }
 
 

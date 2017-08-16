@@ -1,0 +1,37 @@
+// COLORS 
+
+$mainColor: #003333;
+
+
+// tooltip
+
+$tooltipColor: green;
+
+// cell 
+
+$cellBackground: transparent;
+$cellBorder: lighten($mainColor, 50%);
+
+// cursor
+
+$cursorBorder: lighten($mainColor, 80%);
+
+// trigger
+
+$triggerBorder: lighten($mainColor, 70%);
+$triggerBackground: lighten($mainColor, 20%);
+$triggerGlow: lighten($mainColor, 70%);
+
+// bouncer
+
+$bouncerBorder: lighten($mainColor, 70%);
+$buttonContent: lighten($mainColor, 85%);
+
+// menu
+
+$menuGlow: lighten($mainColor,70%);
+
+// bar counter 
+
+$counterBorder: lighten($mainColor,20%);
+$counterCursor: lighten($mainColor,80%);

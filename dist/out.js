@@ -83,29 +83,16 @@ $(document).ready(function() {
 
     bank808.load_sounds("./audio/A_808/", ["bass.wav", "kick.wav", "clap.wav", "clap 2.wav", "snare.wav", "cymbal.wav", "closed hh.wav", "open hh.wav", "tom.wav", "tom 2.wav"]);
 
-    // test data
 
     matrix.init_map();
-
-
-    // matrix.set_cursor(0, 0, "right", 0);
-    // matrix.set_cursor(0, 1, "right", 1);
-    // matrix.set_cursor(12, 2, "left", 2);
-    // matrix.set_cursor(3, 8, "down", 3);
-    // matrix.set_cursor(7, 3, "up", 4);
-    // matrix.set_cursor(12, 12, "left", 5);
-    // matrix.set_cursor(0, 6, "right", 6);
-    // matrix.set_cursor(12, 6, "left", 8);
-
     matrix.prepare_DOM(bank808);
     matrix.render_DOM();
-    idLoop = setInterval(function() {
-        matrix.render_DOM();
-        if (matrix.state == "play") {
+    mainLoop = setInterval(function() {
+        if (matrix.state != "pause") {
+            matrix.animate_cursors();                       
             bank808.trigger_sounds(matrix.soundBuffer);
-            matrix.animate_cursors();
         }
-
+        matrix.render_DOM();
     }, Math.round(60000 / matrix.bpm / matrix.bars));
 })
 
@@ -149,7 +136,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\nbody {\n  background-color: black; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: zoom 0.2s linear; }\n\n@keyframes zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid grey;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #e6e6e6;\n  background-color: black; }\n\n.bouncer {\n  background-color: black;\n  border: 1px solid #cccccc; }\n\n.trigger {\n  background-color: #404040;\n  border: 1px solid grey; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: white; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px white; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  background-color: transpose;\n  color: #e6e6e6;\n  border: 1px solid #cccccc; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white;\n  cursor: default;\n  user-select: none; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: #003333; }\n\n.tooltip, .tooltip-left {\n  position: relative; }\n\n.tooltip:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  left: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n.tooltip-left:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  right: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n@keyframes zoomin {\n  0% {\n    transform: scale(0.95); }\n  20% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#help {\n  transition: background-color 0.5s ease; }\n\n.help-off {\n  background-color: transparent; }\n\n.help-on {\n  background-color: green; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: border-zoom 0.2s linear; }\n\n@keyframes border-zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#bar-counter {\n  border-radius: 50%;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  height: 30px;\n  color: #e6ffff;\n  border: 4px solid #009999;\n  border-top: 4px solid #ccffff;\n  transition: transform 0.1s;\n  transform: rotate(45deg); }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid #33ffff;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #ccffff; }\n\n.bouncer {\n  border: 1px solid #99ffff; }\n\n.trigger {\n  background-color: #009999;\n  border: 1px solid #99ffff; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: #e6ffff; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  color: #ccffff;\n  border: 1px solid #ccffff; }\n", ""]);
 
 // exports
 
@@ -749,7 +736,7 @@ module.exports = soundbankProto;
 
      // globals 
 
-     this.bpm = 180; // beats per minute
+     this.bpm = 100; // beats per minute
      this.bars = 4; // bars per beat
      this.bar = 0; // bar counter
      this.action = { // action for click
@@ -777,8 +764,9 @@ module.exports = soundbankProto;
 
      // DOM 
 
-     this.DOM = {};
+     this.grid = {};
      this.topPanel = {};
+     this.barCounter = {};
      this.rightPanel = {};
      this.bottomPanel = {};
 
@@ -830,11 +818,9 @@ module.exports = soundbankProto;
          // moving cursors and detecting interactions with obiejcts on map
 
          (this.state != "pause") && (this.bar++);
-         
-         console.log(this.bar);
          this.soundBuffer = [];
 
-         for (var i = 0; i < this.cursors.length; i++) {
+         for (let i = 0; i < this.cursors.length; i++) {
 
              let cursor_field = this.pos(this.cursors[i].x, this.cursors[i].y);
              let right_field = this.pos(this.cursors[i].x + 1, this.cursors[i].y);
@@ -843,20 +829,12 @@ module.exports = soundbankProto;
              let down_field = this.pos(this.cursors[i].x, this.cursors[i].y + 1);
              this.cursors[i].history_x = this.cursors[i].x;
              this.cursors[i].history_y = this.cursors[i].y;
-             // detect triggers and store sounds and triggers into buffers
-
-             if (this.map[cursor_field].subtype === "trigger") {
-                 this.soundBuffer.push(this.cursors[i].sound);
-                 this.triggerBuffer.push(cursor_field);
-             }
 
              if (this.map[cursor_field].type === "pipe") {
                  this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
              // move stuff around
-
-
 
              switch (this.cursors[i].direction) {
                  case "right":
@@ -893,6 +871,15 @@ module.exports = soundbankProto;
                      break;
              }
 
+             // detect triggers and store sounds and triggers into buffers
+
+             cursor_field = this.pos(this.cursors[i].x, this.cursors[i].y);
+
+             if (this.map[cursor_field].subtype === "trigger") {
+                 this.soundBuffer.push(this.cursors[i].sound);
+                 this.triggerBuffer.push(cursor_field);
+             }
+
          }
      }
 
@@ -901,13 +888,19 @@ module.exports = soundbankProto;
          // --- INITS ---
 
          this.topPanel = $("#top-panel");
-         this.DOM = $("#grid");
+         this.barCounter = $("#bar-counter");
+         this.grid = $("#grid");
          this.rightPanel = $("#right-panel");
          this.bottomPanel = $("#bottom-panel");
          let sampleBank = $(".sample-bank");
          let app = $("#app");
          let play = $("#play");
+         let step = $("#step");
          let pause = $("#pause");
+         let help = $("#help");
+         let tooltips = $(".tooltip-off");
+         let tooltipsLeft = $(".tooltip-left-off");
+         console.log(tooltips);
          console.log(this.sampleBank);
 
          // pinpointing and catching that damn scope :)  
@@ -933,7 +926,17 @@ module.exports = soundbankProto;
              setTimeout(function() {
                  target.removeClass("select");
              }, 300);
+         })
 
+         step.on("click", function() {
+             if (self.state != "play") {
+                 self.state = "step";
+                 let target = $(this);
+                 target.addClass("select");
+                 setTimeout(function() {
+                     target.removeClass("select");
+                 }, 300);
+             }
          })
 
          //  --- GRID --- 
@@ -941,7 +944,7 @@ module.exports = soundbankProto;
 
          app.css("width", 34 * this.x_size + 45 + "px"); // app window
          this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
-         this.DOM.css("width", 34 * this.x_size + 10 + "px");
+         this.grid.css("width", 34 * this.x_size + 10 + "px");
 
          for (let i = 0; i < this.x_size * this.y_size; i++) {
              let cell = $("<div>");
@@ -951,12 +954,16 @@ module.exports = soundbankProto;
              cell.appendTo("#grid").fadeIn();
          }
 
-         // create grid events - clicks
+         // create grid events for each cell - single clicks
 
-         this.DOM.children().on("click", function() {
+         this.grid.children().on("click", function() {
+
+             // vars 
 
              let target = $(this);
              let addr = target.attr("pos");
+
+             // adding cursor 
 
              if (self.action.type == "object" && self.action.index == 0) {
                  target.removeClass();
@@ -965,12 +972,40 @@ module.exports = soundbankProto;
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
+             // adding bouncer 
+
              if (self.action.type == "object" && self.action.index == 1) {
                  target.removeClass();
                  target.addClass("cell")
                  target.addClass("bouncer");
                  target.text("#")
                  self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             // removing object OR CURSOR 
+
+             if (self.action.type == "object" && self.action.index == 2) {
+
+                // removing object - trigger, bouncer or arrow, then...
+
+                 self.map[addr].type = "empty";
+                 self.map[addr].subtype = "";
+                 target.removeClass();
+                 target.text("")
+                 target.addClass("cell");
+
+                 // ...checking for cursors and removing them - in case 
+
+                 let cursor_field = 0;
+                 let cursors_temp = [];
+                 for (let i = 0; i < self.cursors.length; i++) {
+                     cursor_field = self.pos(self.cursors[i].x, self.cursors[i].y);
+                     (cursor_field != target.attr("pos")) && (cursors_temp.push(self.cursors[i]))
+                 }
+
+                 // writing down new table of cursors 
+
+                 self.cursors = cursors_temp; 
              }
 
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
@@ -988,28 +1023,11 @@ module.exports = soundbankProto;
              }
 
              target.addClass("select")
-
              setTimeout(function() {
                  target.removeClass("select");
              }, 300);
 
-
          })
-
-         // create grid events - doubleclick
-
-         this.DOM.children().on("dblclick", function() {
-
-             let target = $(this);
-             let addr = target.attr("pos");
-             self.map[addr].type = "empty";
-             self.map[addr].subtype = "";
-             target.removeClass();
-             target.text("")
-             target.addClass("cell");
-
-         })
-
 
          // --- RIGHT PANEL --- 
 
@@ -1067,13 +1085,29 @@ module.exports = soundbankProto;
              })
          });
 
+         help.on("click", function() {
+             tooltips.toggleClass("tooltip tooltip-off");
+             tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
+
+             let target = $(this);
+             target.toggleClass("help-off help-on");
+
+             target.addClass("select");
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
      };
 
 
 
      this.render_DOM = function() {
 
-         // console.log(this.triggerBuffer);
+         // bar counter
+
+         (this.state != "pause") && (this.barCounter.css("transform", "rotate(" + (45 + (this.bar % 4) * 90) + "deg)"));
+         (this.state == "step") && (this.state = "pause");
 
          // rewriting standard elements into DOM
 
@@ -1083,10 +1117,10 @@ module.exports = soundbankProto;
 
              if (this.map[i].subtype === "trigger") {
                  if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.DOM.children().eq(i).addClass("cell");
-                     this.DOM.children().eq(i).addClass("trigGlow");
+                     this.grid.children().eq(i).addClass("cell");
+                     this.grid.children().eq(i).addClass("trigGlow");
                      setTimeout(() => {
-                         this.DOM.children().eq(i).removeClass("trigGlow");
+                         this.grid.children().eq(i).removeClass("trigGlow");
                      }, 100);
                  }
              }
@@ -1095,20 +1129,20 @@ module.exports = soundbankProto;
 
              if (this.map[i].type === "pipe") {
 
-                 (this.map[i].direction === "right") && (this.DOM.children().eq(i).text("→"));
-                 (this.map[i].direction === "left") && (this.DOM.children().eq(i).text("←"));
-                 (this.map[i].direction === "up") && (this.DOM.children().eq(i).text("↑"));
-                 (this.map[i].direction === "down") && (this.DOM.children().eq(i).text("↓"));
+                 (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
+                 (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));
+                 (this.map[i].direction === "up") && (this.grid.children().eq(i).text("↑"));
+                 (this.map[i].direction === "down") && (this.grid.children().eq(i).text("↓"));
              }
 
          }
 
 
          for (let i = 0; i < this.cursors.length; i++) { // lighting up cursors
-             this.DOM.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).addClass("cursor");
-             this.DOM.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).text(this.cursors[i].sound);
-             this.DOM.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).removeClass("cursor");
-             this.DOM.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).text("");
+             this.grid.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).addClass("cursor");
+             this.grid.children().eq(this.pos(this.cursors[i].x, this.cursors[i].y)).text(this.cursors[i].sound);
+             this.grid.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).removeClass("cursor");
+             (this.bar > 0) && (this.grid.children().eq(this.pos(this.cursors[i].history_x, this.cursors[i].history_y)).text(""));
          }
 
 

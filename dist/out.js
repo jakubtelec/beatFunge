@@ -723,7 +723,7 @@ module.exports = function (css) {
 
                     self.bank = new soundbankProto();
 
-                    if (self.soundbank == 0) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10knocker", "11stab"]) }
+                    if (self.soundbank == 0) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10stab high", "11stab"]) }
 
                     if (self.soundbank == 1) {self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]) }
 
@@ -740,6 +740,8 @@ module.exports = function (css) {
 
                     if (self.soundbank == 0) {
 
+                    	// kick
+
                     	self.matrix.set_cursor(0,0,"right",0);
                     	self.matrix.set_trigger(0,0);
                     	self.matrix.set_trigger(4,0);
@@ -747,11 +749,59 @@ module.exports = function (css) {
                     	self.matrix.set_trigger(12,0);
                     	self.matrix.set_trigger(16,0);
 
+                    	// stab (mellow chord)
+
+                    	self.matrix.set_cursor(0,1,"right",11);
+                    	self.matrix.set_arrow(0,1, "right");
+                    	self.matrix.set_arrow(8,1, "down");
+                    	self.matrix.set_arrow(8,5, "left");
+                    	self.matrix.set_arrow(0,5, "up");
+                    	self.matrix.set_trigger(6,1);
+                    	self.matrix.set_trigger(0,3);
+
+                    	// closed hihat
+
+                    	self.matrix.set_cursor(4,7,"up",6);
+                    	self.matrix.set_trigger(4,3);
+                    	self.matrix.set_trigger(4,6);
+                    	self.matrix.set_bouncer(4,8);
+
+                    	// closed hihat 2
+
+                    	self.matrix.set_cursor(0,6,"right",7)
+                    	self.matrix.set_trigger(12,6);
+
+                    	// high stab
+
+                    	self.matrix.set_cursor(5,8,"right",10);
+                    	self.matrix.set_bouncer(12,8);
+                    	self.matrix.set_trigger(11,8);
+
+                        // open hihat
+
+                        self.matrix.set_cursor(0,9,"right",1);
+                        self.matrix.set_arrow(0,9, "right");
+                        self.matrix.set_arrow(16,9, "down");
+                        self.matrix.set_arrow(16,13, "left");
+                        self.matrix.set_arrow(0,13, "up");
+                        self.matrix.set_trigger(4,13);
+                        self.matrix.set_trigger(2,13);
+                        self.matrix.set_trigger(0,13);
+                        self.matrix.set_trigger(0,11);
+                        self.matrix.set_trigger(0,9);
+
+
+
+
+
+
+
+
 
                     }
 
                     self.matrix.render_DOM();
-                    
+
 
                     self.menu.fadeOut(200, "swing", () => self.app.fadeIn(200));
 

@@ -10,7 +10,7 @@ var soundbankProto = function() {
 
         filenames.forEach((element) => {
             this.sounds.push(new Howl({
-                src: [path + element]
+                src: [path + element + ".wav"]
             }))
         });
     }

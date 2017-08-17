@@ -82,19 +82,28 @@
          let addr = this.pos(x, y);
          this.map[addr].type = "bouncer";
          this.map[addr].solid = true;
+         this.grid.children().eq(addr).removeClass();
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("bouncer");
+         this.grid.children().eq(addr).text("#")
      }
 
-     this.set_pipe = function(x, y, direction = "right") {
+     this.set_arrow = function(x, y, direction = "right") {
          let addr = this.pos(x, y);
-         this.map[addr].type = "pipe";
+         this.map[addr].type = "arrow";
          this.map[addr].direction = direction;
          this.map[addr].solid = false;
+                          // target.removeClass();
+                 // target.addClass("cell");
      }
 
      this.set_trigger = function(x, y) {
          let addr = this.pos(x, y);
          this.map[addr].subtype = "trigger";
          this.map[addr].solid = false;
+         // this.grid.children().eq(addr).removeClass();
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("trigger");
      }
 
      // let's move things atround! 
@@ -116,7 +125,7 @@
              this.cursors[i].history_x = this.cursors[i].x;
              this.cursors[i].history_y = this.cursors[i].y;
 
-             if (this.map[cursor_field].type === "pipe") {
+             if (this.map[cursor_field].type === "arrow") {
                  this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
@@ -186,8 +195,6 @@
          let help = $("#help");
          let tooltips = $(".tooltip-off");
          let tooltipsLeft = $(".tooltip-left-off");
-         console.log(tooltips);
-         console.log(this.sampleBank);
 
          // pinpointing and catching that damn scope :)  
 
@@ -249,22 +256,15 @@
              let target = $(this);
              let addr = target.attr("pos");
 
-             // adding cursor 
+             // adding trigger 
 
              if (self.action.type == "object" && self.action.index == 0) {
-                 target.removeClass();
-                 target.addClass("cell")
-                 target.addClass("trigger");
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
              // adding bouncer 
 
              if (self.action.type == "object" && self.action.index == 1) {
-                 target.removeClass();
-                 target.addClass("cell")
-                 target.addClass("bouncer");
-                 target.text("#")
                  self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
@@ -272,7 +272,7 @@
 
              if (self.action.type == "object" && self.action.index == 2) {
 
-                // removing object - trigger, bouncer or arrow, then...
+                 // removing object - trigger, bouncer or arrow, then...
 
                  self.map[addr].type = "empty";
                  self.map[addr].subtype = "";
@@ -291,20 +291,14 @@
 
                  // writing down new table of cursors 
 
-                 self.cursors = cursors_temp; 
+                 self.cursors = cursors_temp;
              }
 
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
-                 target.removeClass();
-                 target.addClass("cell");
-                 // target.text(self.rightPanel.children().eq(self.action.index));
-                 console.log(self.action.direction);
-                 self.set_pipe(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
+                 self.set_arrow(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
              }
 
              if (self.action.type == "cursor") {
-                 target.removeClass();
-                 target.addClass("cell")
                  self.set_cursor(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
              }
 
@@ -323,7 +317,6 @@
              self.action.type == "cursor" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
              let target = $(this);
              self.action.type = "object";
-             console.log(target.index());
              self.rightPanel.children().eq(self.action.index).removeClass("glow");
              self.action.index = target.index();
              (target.index() == 3) && (self.action.direction = "right");
@@ -344,7 +337,8 @@
              (index > 0 ? sampleBank.clone().appendTo(self.bottomPanel) : null)
 
              let cutStart = element._src.lastIndexOf("/") + 1;
-             let name = element._src.slice(cutStart, element._src.length - 4);
+             let name = element._src.substring(cutStart + 2, element._src.length - 4);
+
 
              let lastBank = self.bottomPanel.children().last()
              lastBank.attr("pos", index)
@@ -411,9 +405,9 @@
                  }
              }
 
-             // pipes
+             // arrows
 
-             if (this.map[i].type === "pipe") {
+             if (this.map[i].type === "arrow") {
 
                  (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
                  (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));

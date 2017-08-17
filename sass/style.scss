@@ -91,13 +91,32 @@ body {
     background-color: $tooltipColor;
 }
 
-// app title
+
+// menu
+
+#menu {
+    width: 600px;
+}
+
+.menu-row {
+    margin: 10px 15px;
+    width: 600px;
+    // height: 46px;
+    // line-height: 46px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+
+// title
 
 h1 {
     font-size: 30px;
     font-weight: 400;
     display: block;
-    width: 210px; 
+    // width: 210px; 
     height: 34px;
 }
 
@@ -108,11 +127,7 @@ h1 {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-}
-
-#app {
-    // display: none;
-
+    justify-content: flex-start;
 }
 
 #top-panel {
@@ -236,6 +251,14 @@ h1 {
 
 .size-90 {
     flex-basis: 98px;
+}
+
+.size-140 {
+    flex-basis: 140px;
+}
+
+.size-180 {
+    flex-basis: 180px;
 }
 
 @keyframes glowingBorder {

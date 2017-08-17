@@ -8,43 +8,77 @@
 </head>
 
 <body>
-    <div class="wrapper" id="app">
-        <div id="top-panel">
-            <h1> .beatFunge</h1>
-            <div id="controls">
-                <div id="bar-counter"></div>
-                <div class="button size-60 bouncer tooltip-off" id="play" data-title="Play pattern">play</div>
-                <div class="button size-30 bouncer tooltip-off" id="step" data-title="Play pattern one step forward">></div>
-                <div class="button size-60 bouncer tooltip-off" id="pause" data-title="Pause playing">pause</div>
-                <div class="button size-30 bouncer help-off" id="help">?</div>
+    <!-- START MENU  -->
+    <div class="wrapper" id="menu">
+        <div class="menu-row">
+            <h1>.beatFunge</h1>
+        </div>
+        <div class="menu-row">
+            Select interactive demo...
+        </div>
+        <div class="menu-row kits">
+            <div class="button size-140 bouncer glow" id="demo">Demo</div>
+        </div>
+        <div class="menu-row">
+            ...or sample kit:
+        </div>
+        <div class="menu-row kits">
+            <div class="button size-140 bouncer" id="roland-808">Roland TR-808 </div>
+            <div class="button size-180 bouncer" id="plucked">Plucked synth F-minor </div>
+        </div>
+        <div class="menu-row">
+            Set tempo:
+        </div>
+        <div class="menu-row">
+            <div class="button size-30 bouncer" id="bpm-down">
+                < </div>
+                    <div class="button size-60 bouncer" id="bpm-counter"> 120 </div>
+                    <div class="button size-30 bouncer" id="bpm-up"> > </div>
+            </div>
+            <div class="menu-row">
+                Start app:
+            </div>
+            <div class="menu-row">
+                <div class="button size-140 bouncer" id="start-app"> GO! </div>
             </div>
         </div>
-        <div class="tooltip-off" id="grid" data-title="Cell grid. Rules: One click to add cell, two clicks to remove cell. You can select type of cell on right panel or - in case of cursors - on bottom panel.">
-        </div>
-        <div id="right-panel">
-            <div class="button size-30 trigger glow tooltip-left-off" data-title="Add sound trigger cell" id="add-trigger"></div>
-            <div class="button size-30 bouncer tooltip-left-off" id="add-bouncer" data-title="Add bouncer cell">#</div>
-            <div class="button size-30 bouncer">X</div>
-            <div class="button size-30 pipe"> → </div>
-            <div class="button size-30 pipe"> ← </div>
-            <div class="button size-30 pipe"> ↓ </div>
-            <div class="button size-30 pipe"> ↑ </div>
-        </div>
-        <div id="bottom-panel">
-            <div class="sample-bank">
-                <div class="button size-30 sample" id="new-sample"> 0 </div>
-                <div class="button size-90 sample"> Samplename </div>
-                <div class="button size-30 sample"> → </div>
-                <div class="button size-30 sample"> ← </div>
-                <div class="button size-30 sample"> ↓ </div>
-                <div class="button size-30 sample"> ↑ </div>
+        <!-- MAIN APP -->
+        <div class="wrapper" id="app">
+            <div id="top-panel">
+                <h1> .beatFunge</h1>
+                <div id="controls">
+                    <div id="bar-counter"></div>
+                    <div class="button size-60 bouncer tooltip-off" id="play" data-title="Play pattern">play</div>
+                    <div class="button size-30 bouncer tooltip-off" id="step" data-title="Play pattern one step forward">></div>
+                    <div class="button size-60 bouncer tooltip-off" id="pause" data-title="Pause playing">pause</div>
+                    <div class="button size-30 bouncer help-off" id="help">?</div>
+                </div>
+            </div>
+            <div class="tooltip-off" id="grid" data-title="Cell grid. Rules: One click to add cell, two clicks to remove cell. You can select type of cell on right panel or - in case of cursors - on bottom panel.">
+            </div>
+            <div id="right-panel">
+                <div class="button size-30 trigger glow tooltip-left-off" data-title="Add sound trigger cell" id="add-trigger"></div>
+                <div class="button size-30 bouncer tooltip-left-off" id="add-bouncer" data-title="Add bouncer cell">#</div>
+                <div class="button size-30 bouncer">X</div>
+                <div class="button size-30 pipe"> → </div>
+                <div class="button size-30 pipe"> ← </div>
+                <div class="button size-30 pipe"> ↓ </div>
+                <div class="button size-30 pipe"> ↑ </div>
+            </div>
+            <div id="bottom-panel">
+                <div class="sample-bank">
+                    <div class="button size-30 sample" id="new-sample"> 0 </div>
+                    <div class="button size-90 sample"> Samplename </div>
+                    <div class="button size-30 sample"> → </div>
+                    <div class="button size-30 sample"> ← </div>
+                    <div class="button size-30 sample"> ↓ </div>
+                    <div class="button size-30 sample"> ↑ </div>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-
-    <script src="./dist/howler.js" type="text/javascript"></script>
-    <script src="./dist/out.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="./dist/howler.js" type="text/javascript"></script>
+        <script src="./dist/out.js" type="text/javascript"></script>
 </body>
 
 </html>

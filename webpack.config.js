@@ -11,11 +11,22 @@ module.exports = {
     },
     watch: true,
     module: {
-        loaders: [
+        rules: [
+
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: {
+            //             presets: ['env']
+            //         }
+            //     }
+            // },
             {
                 test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
+                loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             }
         ]
-    }
+    },
 };

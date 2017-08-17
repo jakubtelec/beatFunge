@@ -70,15 +70,16 @@
                     self.matrix.init_map();
                     self.matrix.prepare_DOM(self.bank);
 
-
                     // DEMO CONTENT 
                     // (cuntent must be prepared after soundbank init) 
 
                     if (self.soundbank == 0) {
 
+                        self.matrix.switch_help();
+
                     	// kick
 
-                    	self.matrix.set_cursor(0,0,"right",0);
+                    	self.matrix.set_sample(0,0,"right",0);
                     	self.matrix.set_trigger(0,0);
                     	self.matrix.set_trigger(4,0);
                     	self.matrix.set_trigger(8,0);
@@ -87,7 +88,7 @@
 
                     	// stab (mellow chord)
 
-                    	self.matrix.set_cursor(0,1,"right",11);
+                    	self.matrix.set_sample(0,1,"right",11);
                     	self.matrix.set_arrow(0,1, "right");
                     	self.matrix.set_arrow(8,1, "down");
                     	self.matrix.set_arrow(8,5, "left");
@@ -97,25 +98,25 @@
 
                     	// closed hihat
 
-                    	self.matrix.set_cursor(4,7,"up",6);
+                    	self.matrix.set_sample(4,7,"up",6);
                     	self.matrix.set_trigger(4,3);
                     	self.matrix.set_trigger(4,6);
                     	self.matrix.set_bouncer(4,8);
 
                     	// closed hihat 2
 
-                    	self.matrix.set_cursor(0,6,"right",7)
+                    	self.matrix.set_sample(0,6,"right",7)
                     	self.matrix.set_trigger(12,6);
 
-                    	// high stab
+                    	// high freq stab (mellow chord + reverb)
 
-                    	self.matrix.set_cursor(5,8,"right",10);
+                    	self.matrix.set_sample(5,8,"right",10);
                     	self.matrix.set_bouncer(12,8);
                     	self.matrix.set_trigger(11,8);
 
-                        // open hihat
+                        // bass
 
-                        self.matrix.set_cursor(0,9,"right",1);
+                        self.matrix.set_sample(0,9,"right",1);
                         self.matrix.set_arrow(0,9, "right");
                         self.matrix.set_arrow(16,9, "down");
                         self.matrix.set_arrow(16,13, "left");
@@ -125,14 +126,6 @@
                         self.matrix.set_trigger(0,13);
                         self.matrix.set_trigger(0,11);
                         self.matrix.set_trigger(0,9);
-
-
-
-
-
-
-
-
 
                     }
 
@@ -144,7 +137,7 @@
 
                     mainLoop = setInterval(function() {
                         if (self.matrix.state != "pause") {
-                            self.matrix.animate_cursors();
+                            self.matrix.animate_samples();
                             self.bank.trigger_sounds(self.matrix.soundBuffer);
                         }
                         self.matrix.render_DOM();

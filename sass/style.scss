@@ -101,8 +101,6 @@ body {
 .menu-row {
     margin: 10px 15px;
     width: 600px;
-    // height: 46px;
-    // line-height: 46px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -116,7 +114,6 @@ h1 {
     font-size: 30px;
     font-weight: 400;
     display: block;
-    // width: 210px; 
     height: 34px;
 }
 
@@ -148,7 +145,8 @@ h1 {
 
 .select {
     border-radius: 50%;
-    animation: border-zoom 0.2s linear ;
+    animation: border-zoom 0.2s linear;
+    z-index: 10;
 }
 
 @keyframes border-zoom {

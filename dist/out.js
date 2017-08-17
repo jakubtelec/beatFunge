@@ -67,10 +67,7 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-$(document).ready(function () {
+$(document).ready(function() {
 
     __webpack_require__(1);
     __webpack_require__(6);
@@ -79,7 +76,8 @@ $(document).ready(function () {
     var menu = new menuProto();
 
     menu.init_menu();
-});
+
+})
 
 /***/ }),
 /* 1 */
@@ -666,12 +664,7 @@ module.exports = function (css) {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/*!
+/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  *  howler.js v2.0.3
  *  howlerjs.com
  *
@@ -681,7 +674,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *  MIT License
  */
 
-(function () {
+(function() {
 
   'use strict';
 
@@ -692,8 +685,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Create the global controller. All contained methods and properties apply
    * to all sounds that are currently playing or will be in the future.
    */
-
-  var HowlerGlobal = function HowlerGlobal() {
+  var HowlerGlobal = function() {
     this.init();
   };
   HowlerGlobal.prototype = {
@@ -701,7 +693,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Initialize the global Howler object.
      * @return {Howler}
      */
-    init: function init() {
+    init: function() {
       var self = this || Howler;
 
       // Create a global ID counter.
@@ -713,7 +705,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       self._muted = false;
       self._volume = 1;
       self._canPlayEvent = 'canplaythrough';
-      self._navigator = typeof window !== 'undefined' && window.navigator ? window.navigator : null;
+      self._navigator = (typeof window !== 'undefined' && window.navigator) ? window.navigator : null;
 
       // Public properties.
       self.masterGain = null;
@@ -736,7 +728,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Float} vol Volume from 0.0 to 1.0.
      * @return {Howler/Float}     Returns self or current volume.
      */
-    volume: function volume(vol) {
+    volume: function(vol) {
       var self = this || Howler;
       vol = parseFloat(vol);
 
@@ -759,13 +751,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         // Loop through and change volume for all HTML5 audio nodes.
-        for (var i = 0; i < self._howls.length; i++) {
+        for (var i=0; i<self._howls.length; i++) {
           if (!self._howls[i]._webAudio) {
             // Get all of the sounds in this Howl group.
             var ids = self._howls[i]._getSoundIds();
 
             // Loop through all sounds and change the volumes.
-            for (var j = 0; j < ids.length; j++) {
+            for (var j=0; j<ids.length; j++) {
               var sound = self._howls[i]._soundById(ids[j]);
 
               if (sound && sound._node) {
@@ -785,7 +777,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Handle muting and unmuting globally.
      * @param  {Boolean} muted Is muted or not.
      */
-    mute: function mute(muted) {
+    mute: function(muted) {
       var self = this || Howler;
 
       // If we don't have an AudioContext created yet, run the setup.
@@ -801,17 +793,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // Loop through and mute all HTML5 Audio nodes.
-      for (var i = 0; i < self._howls.length; i++) {
+      for (var i=0; i<self._howls.length; i++) {
         if (!self._howls[i]._webAudio) {
           // Get all of the sounds in this Howl group.
           var ids = self._howls[i]._getSoundIds();
 
           // Loop through all sounds and mark the audio node as muted.
-          for (var j = 0; j < ids.length; j++) {
+          for (var j=0; j<ids.length; j++) {
             var sound = self._howls[i]._soundById(ids[j]);
 
             if (sound && sound._node) {
-              sound._node.muted = muted ? true : sound._muted;
+              sound._node.muted = (muted) ? true : sound._muted;
             }
           }
         }
@@ -824,10 +816,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Unload and destroy all currently loaded Howl objects.
      * @return {Howler}
      */
-    unload: function unload() {
+    unload: function() {
       var self = this || Howler;
 
-      for (var i = self._howls.length - 1; i >= 0; i--) {
+      for (var i=self._howls.length-1; i>=0; i--) {
         self._howls[i].unload();
       }
 
@@ -846,7 +838,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {String} ext Audio file extention.
      * @return {Boolean}
      */
-    codecs: function codecs(ext) {
+    codecs: function(ext) {
       return (this || Howler)._codecs[ext.replace(/^x-/, '')];
     },
 
@@ -854,7 +846,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Setup various state values for global tracking.
      * @return {Howler}
      */
-    _setup: function _setup() {
+    _setup: function() {
       var self = this || Howler;
 
       // Keeps track of the suspend/resume state of the AudioContext.
@@ -874,7 +866,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             if (typeof test.oncanplaythrough === 'undefined') {
               self._canPlayEvent = 'canplay';
             }
-          } catch (e) {
+          } catch(e) {
             self.noAudio = true;
           }
         } else {
@@ -902,13 +894,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Check for browser support for various codecs and cache the results.
      * @return {Howler}
      */
-    _setupCodecs: function _setupCodecs() {
+    _setupCodecs: function() {
       var self = this || Howler;
       var audioTest = null;
 
       // Must wrap in a try/catch because IE11 in server mode throws an error.
       try {
-        audioTest = typeof Audio !== 'undefined' ? new Audio() : null;
+        audioTest = (typeof Audio !== 'undefined') ? new Audio() : null;
       } catch (err) {
         return self;
       }
@@ -921,7 +913,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Opera version <33 has mixed MP3 support, so we need to check for and block it.
       var checkOpera = self._navigator && self._navigator.userAgent.match(/OPR\/([0-6].)/g);
-      var isOldOpera = checkOpera && parseInt(checkOpera[0].split('/')[1], 10) < 33;
+      var isOldOpera = (checkOpera && parseInt(checkOpera[0].split('/')[1], 10) < 33);
 
       self._codecs = {
         mp3: !!(!isOldOpera && (mpegTest || audioTest.canPlayType('audio/mp3;').replace(/^no$/, ''))),
@@ -949,13 +941,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Concept from: http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
      * @return {Howler}
      */
-    _enableMobileAudio: function _enableMobileAudio() {
+    _enableMobileAudio: function() {
       var self = this || Howler;
 
       // Only run this on mobile devices if audio isn't already eanbled.
       var isMobile = /iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(self._navigator && self._navigator.userAgent);
-      var isTouch = !!('ontouchend' in window || self._navigator && self._navigator.maxTouchPoints > 0 || self._navigator && self._navigator.msMaxTouchPoints > 0);
-      if (self._mobileEnabled || !self.ctx || !isMobile && !isTouch) {
+      var isTouch = !!(('ontouchend' in window) || (self._navigator && self._navigator.maxTouchPoints > 0) || (self._navigator && self._navigator.msMaxTouchPoints > 0));
+      if (self._mobileEnabled || !self.ctx || (!isMobile && !isTouch)) {
         return;
       }
 
@@ -976,7 +968,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Call this method on touch start to create and play a buffer,
       // then check if the audio actually played to determine if
       // audio has now been unlocked on iOS, Android, etc.
-      var unlock = function unlock() {
+      var unlock = function() {
         // Create an empty buffer.
         var source = self.ctx.createBufferSource();
         source.buffer = self._scratchBuffer;
@@ -990,7 +982,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         // Setup a timeout to check that we are unlocked on the next event loop.
-        source.onended = function () {
+        source.onended = function() {
           source.disconnect(0);
 
           // Update the unlocked state and prevent this check from happening again.
@@ -1013,7 +1005,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * This saves processing/energy and fixes various browser-specific bugs with audio getting stuck.
      * @return {Howler}
      */
-    _autoSuspend: function _autoSuspend() {
+    _autoSuspend: function() {
       var self = this;
 
       if (!self.autoSuspend || !self.ctx || typeof self.ctx.suspend === 'undefined' || !Howler.usingWebAudio) {
@@ -1021,9 +1013,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // Check if any sounds are playing.
-      for (var i = 0; i < self._howls.length; i++) {
+      for (var i=0; i<self._howls.length; i++) {
         if (self._howls[i]._webAudio) {
-          for (var j = 0; j < self._howls[i]._sounds.length; j++) {
+          for (var j=0; j<self._howls[i]._sounds.length; j++) {
             if (!self._howls[i]._sounds[j]._paused) {
               return self;
             }
@@ -1036,14 +1028,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // If no sound has played after 30 seconds, suspend the context.
-      self._suspendTimer = setTimeout(function () {
+      self._suspendTimer = setTimeout(function() {
         if (!self.autoSuspend) {
           return;
         }
 
         self._suspendTimer = null;
         self.state = 'suspending';
-        self.ctx.suspend().then(function () {
+        self.ctx.suspend().then(function() {
           self.state = 'suspended';
 
           if (self._resumeAfterSuspend) {
@@ -1060,7 +1052,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Automatically resume the Web Audio AudioContext when a new sound is played.
      * @return {Howler}
      */
-    _autoResume: function _autoResume() {
+    _autoResume: function() {
       var self = this;
 
       if (!self.ctx || typeof self.ctx.resume === 'undefined' || !Howler.usingWebAudio) {
@@ -1072,11 +1064,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         self._suspendTimer = null;
       } else if (self.state === 'suspended') {
         self.state = 'resuming';
-        self.ctx.resume().then(function () {
+        self.ctx.resume().then(function() {
           self.state = 'running';
 
           // Emit to all Howls that the audio has resumed.
-          for (var i = 0; i < self._howls.length; i++) {
+          for (var i=0; i<self._howls.length; i++) {
             self._howls[i]._emit('resume');
           }
         });
@@ -1103,7 +1095,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Create an audio group controller.
    * @param {Object} o Passed in properties for this group.
    */
-  var Howl = function Howl(o) {
+  var Howl = function(o) {
     var self = this;
 
     // Throw an error if no source is provided.
@@ -1120,7 +1112,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Object} o Passed in properties for this group.
      * @return {Howl}
      */
-    init: function init(o) {
+    init: function(o) {
       var self = this;
 
       // If we don't have an AudioContext created yet, run the setup.
@@ -1130,15 +1122,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Setup user-defined default properties.
       self._autoplay = o.autoplay || false;
-      self._format = typeof o.format !== 'string' ? o.format : [o.format];
+      self._format = (typeof o.format !== 'string') ? o.format : [o.format];
       self._html5 = o.html5 || false;
       self._muted = o.mute || false;
       self._loop = o.loop || false;
       self._pool = o.pool || 5;
-      self._preload = typeof o.preload === 'boolean' ? o.preload : true;
+      self._preload = (typeof o.preload === 'boolean') ? o.preload : true;
       self._rate = o.rate || 1;
       self._sprite = o.sprite || {};
-      self._src = typeof o.src !== 'string' ? o.src : [o.src];
+      self._src = (typeof o.src !== 'string') ? o.src : [o.src];
       self._volume = o.volume !== undefined ? o.volume : 1;
 
       // Setup all other default properties.
@@ -1149,17 +1141,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       self._queue = [];
 
       // Setup event listeners.
-      self._onend = o.onend ? [{ fn: o.onend }] : [];
-      self._onfade = o.onfade ? [{ fn: o.onfade }] : [];
-      self._onload = o.onload ? [{ fn: o.onload }] : [];
-      self._onloaderror = o.onloaderror ? [{ fn: o.onloaderror }] : [];
-      self._onpause = o.onpause ? [{ fn: o.onpause }] : [];
-      self._onplay = o.onplay ? [{ fn: o.onplay }] : [];
-      self._onstop = o.onstop ? [{ fn: o.onstop }] : [];
-      self._onmute = o.onmute ? [{ fn: o.onmute }] : [];
-      self._onvolume = o.onvolume ? [{ fn: o.onvolume }] : [];
-      self._onrate = o.onrate ? [{ fn: o.onrate }] : [];
-      self._onseek = o.onseek ? [{ fn: o.onseek }] : [];
+      self._onend = o.onend ? [{fn: o.onend}] : [];
+      self._onfade = o.onfade ? [{fn: o.onfade}] : [];
+      self._onload = o.onload ? [{fn: o.onload}] : [];
+      self._onloaderror = o.onloaderror ? [{fn: o.onloaderror}] : [];
+      self._onpause = o.onpause ? [{fn: o.onpause}] : [];
+      self._onplay = o.onplay ? [{fn: o.onplay}] : [];
+      self._onstop = o.onstop ? [{fn: o.onstop}] : [];
+      self._onmute = o.onmute ? [{fn: o.onmute}] : [];
+      self._onvolume = o.onvolume ? [{fn: o.onvolume}] : [];
+      self._onrate = o.onrate ? [{fn: o.onrate}] : [];
+      self._onseek = o.onseek ? [{fn: o.onseek}] : [];
       self._onresume = [];
 
       // Web Audio or HTML5 Audio?
@@ -1177,7 +1169,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._autoplay) {
         self._queue.push({
           event: 'play',
-          action: function action() {
+          action: function() {
             self.play();
           }
         });
@@ -1195,7 +1187,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Load the audio file.
      * @return {Howler}
      */
-    load: function load() {
+    load: function() {
       var self = this;
       var url = null;
 
@@ -1211,7 +1203,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // Loop through the sources and pick the first one that is compatible.
-      for (var i = 0; i < self._src.length; i++) {
+      for (var i=0; i<self._src.length; i++) {
         var ext, str;
 
         if (self._format && self._format[i]) {
@@ -1280,7 +1272,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Boolean} internal Internal Use: true prevents event firing.
      * @return {Number}          Sound ID.
      */
-    play: function play(sprite, internal) {
+    play: function(sprite, internal) {
       var self = this;
       var id = null;
 
@@ -1298,7 +1290,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // Check if there is a single paused sound that isn't ended.
         // If there is, play that sound. If not, continue as usual.
         var num = 0;
-        for (var i = 0; i < self._sounds.length; i++) {
+        for (var i=0; i<self._sounds.length; i++) {
           if (self._sounds[i]._paused && !self._sounds[i]._ended) {
             num++;
             id = self._sounds[i]._id;
@@ -1330,7 +1322,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._state !== 'loaded' && !self._sprite[sprite]) {
         self._queue.push({
           event: 'play',
-          action: function action() {
+          action: function() {
             self.play(self._soundById(sound._id) ? sound._id : undefined);
           }
         });
@@ -1342,7 +1334,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (id && !sound._paused) {
         // Trigger the play event, in order to keep iterating through queue.
         if (!internal) {
-          setTimeout(function () {
+          setTimeout(function() {
             self._emit('play', sound._id);
           }, 0);
         }
@@ -1357,8 +1349,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Determine how long to play for and where to start playing.
       var seek = Math.max(0, sound._seek > 0 ? sound._seek : self._sprite[sprite][0] / 1000);
-      var duration = Math.max(0, (self._sprite[sprite][0] + self._sprite[sprite][1]) / 1000 - seek);
-      var timeout = duration * 1000 / Math.abs(sound._rate);
+      var duration = Math.max(0, ((self._sprite[sprite][0] + self._sprite[sprite][1]) / 1000) - seek);
+      var timeout = (duration * 1000) / Math.abs(sound._rate);
 
       // Update the parameters of the sound
       sound._paused = false;
@@ -1373,11 +1365,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var node = sound._node;
       if (self._webAudio) {
         // Fire this when the sound is ready to play to begin Web Audio playback.
-        var playWebAudio = function playWebAudio() {
+        var playWebAudio = function() {
           self._refreshBuffer(sound);
 
           // Setup the playback params.
-          var vol = sound._muted || self._muted ? 0 : sound._volume;
+          var vol = (sound._muted || self._muted) ? 0 : sound._volume;
           node.gain.setValueAtTime(vol, Howler.ctx.currentTime);
           sound._playStart = Howler.ctx.currentTime;
 
@@ -1394,13 +1386,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }
 
           if (!internal) {
-            setTimeout(function () {
+            setTimeout(function() {
               self._emit('play', sound._id);
             }, 0);
           }
         };
 
-        var isRunning = Howler.state === 'running';
+        var isRunning = (Howler.state === 'running');
         if (self._state === 'loaded' && isRunning) {
           playWebAudio();
         } else {
@@ -1413,7 +1405,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       } else {
         // Fire this when the sound is ready to play to begin HTML5 Audio playback.
-        var playHtml5 = function playHtml5() {
+        var playHtml5 = function() {
           node.currentTime = seek;
           node.muted = sound._muted || self._muted || Howler._muted || node.muted;
           node.volume = sound._volume * Howler.volume();
@@ -1431,11 +1423,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         // Play immediately if ready, or wait for the 'canplaythrough'e vent.
-        var loadedNoReadyState = self._state === 'loaded' && (window && window.ejecta || !node.readyState && Howler._navigator.isCocoonJS);
+        var loadedNoReadyState = (self._state === 'loaded' && (window && window.ejecta || !node.readyState && Howler._navigator.isCocoonJS));
         if (node.readyState === 4 || loadedNoReadyState) {
           playHtml5();
         } else {
-          var listener = function listener() {
+          var listener = function() {
             // Begin playback.
             playHtml5();
 
@@ -1457,14 +1449,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id The sound ID (empty to pause all in group).
      * @return {Howl}
      */
-    pause: function pause(id) {
+    pause: function(id) {
       var self = this;
 
       // If the sound hasn't loaded, add it to the load queue to pause when capable.
       if (self._state !== 'loaded') {
         self._queue.push({
           event: 'pause',
-          action: function action() {
+          action: function() {
             self.pause(id);
           }
         });
@@ -1475,7 +1467,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // If no id is passed, get all ID's to be paused.
       var ids = self._getSoundIds(id);
 
-      for (var i = 0; i < ids.length; i++) {
+      for (var i=0; i<ids.length; i++) {
         // Clear the end timer.
         self._clearTimer(ids[i]);
 
@@ -1527,14 +1519,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Boolean} internal Internal Use: true prevents event firing.
      * @return {Howl}
      */
-    stop: function stop(id, internal) {
+    stop: function(id, internal) {
       var self = this;
 
       // If the sound hasn't loaded, add it to the load queue to stop when capable.
       if (self._state !== 'loaded') {
         self._queue.push({
           event: 'stop',
-          action: function action() {
+          action: function() {
             self.stop(id);
           }
         });
@@ -1545,7 +1537,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // If no id is passed, get all ID's to be stopped.
       var ids = self._getSoundIds(id);
 
-      for (var i = 0; i < ids.length; i++) {
+      for (var i=0; i<ids.length; i++) {
         // Clear the end timer.
         self._clearTimer(ids[i]);
 
@@ -1602,14 +1594,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id    The sound ID to update (omit to mute/unmute all).
      * @return {Howl}
      */
-    mute: function mute(muted, id) {
+    mute: function(muted, id) {
       var self = this;
 
       // If the sound hasn't loaded, add it to the load queue to mute when capable.
       if (self._state !== 'loaded') {
         self._queue.push({
           event: 'mute',
-          action: function action() {
+          action: function() {
             self.mute(muted, id);
           }
         });
@@ -1629,7 +1621,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // If no id is passed, get all ID's to be muted.
       var ids = self._getSoundIds(id);
 
-      for (var i = 0; i < ids.length; i++) {
+      for (var i=0; i<ids.length; i++) {
         // Get the sound.
         var sound = self._soundById(ids[i]);
 
@@ -1657,7 +1649,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      *   volume(vol, id) -> Sets the volume of passed sound id.
      * @return {Howl/Number} Returns self or current volume.
      */
-    volume: function volume() {
+    volume: function() {
       var self = this;
       var args = arguments;
       var vol, id;
@@ -1687,7 +1679,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (self._state !== 'loaded') {
           self._queue.push({
             event: 'volume',
-            action: function action() {
+            action: function() {
               self.volume.apply(self, args);
             }
           });
@@ -1702,7 +1694,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // Update one or all volumes.
         id = self._getSoundIds(id);
-        for (var i = 0; i < id.length; i++) {
+        for (var i=0; i<id.length; i++) {
           // Get the sound.
           sound = self._soundById(id[i]);
 
@@ -1739,12 +1731,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id   The sound id (omit to fade all sounds).
      * @return {Howl}
      */
-    fade: function fade(from, to, len, id) {
+    fade: function(from, to, len, id) {
       var self = this;
       var diff = Math.abs(from - to);
       var dir = from > to ? 'out' : 'in';
       var steps = diff / 0.01;
-      var stepLen = steps > 0 ? len / steps : len;
+      var stepLen = (steps > 0) ? len / steps : len;
 
       // Since browsers clamp timeouts to 4ms, we need to clamp our steps to that too.
       if (stepLen < 4) {
@@ -1756,7 +1748,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._state !== 'loaded') {
         self._queue.push({
           event: 'fade',
-          action: function action() {
+          action: function() {
             self.fade(from, to, len, id);
           }
         });
@@ -1769,7 +1761,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Fade the volume of one or all sounds.
       var ids = self._getSoundIds(id);
-      for (var i = 0; i < ids.length; i++) {
+      for (var i=0; i<ids.length; i++) {
         // Get the sound.
         var sound = self._soundById(ids[i]);
 
@@ -1783,17 +1775,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // If we are using Web Audio, let the native methods do the actual fade.
           if (self._webAudio && !sound._muted) {
             var currentTime = Howler.ctx.currentTime;
-            var end = currentTime + len / 1000;
+            var end = currentTime + (len / 1000);
             sound._volume = from;
             sound._node.gain.setValueAtTime(from, currentTime);
             sound._node.gain.linearRampToValueAtTime(to, end);
           }
 
           var vol = from;
-          sound._interval = setInterval(function (soundId, sound) {
+          sound._interval = setInterval(function(soundId, sound) {
             // Update the volume amount, but only if the volume should change.
             if (steps > 0) {
-              vol += dir === 'in' ? 0.01 : -0.01;
+              vol += (dir === 'in' ? 0.01 : -0.01);
             }
 
             // Make sure the volume is in the right bounds.
@@ -1815,7 +1807,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             // When the fade is complete, stop it and fire event.
-            if (to < from && vol <= to || to > from && vol >= to) {
+            if ((to < from && vol <= to) || (to > from && vol >= to)) {
               clearInterval(sound._interval);
               sound._interval = null;
               self.volume(to, soundId);
@@ -1834,7 +1826,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id The sound id.
      * @return {Howl}
      */
-    _stopFade: function _stopFade(id) {
+    _stopFade: function(id) {
       var self = this;
       var sound = self._soundById(id);
 
@@ -1859,7 +1851,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      *   loop(loop, id) -> Sets the loop value of passed sound id.
      * @return {Howl/Boolean} Returns self or current loop value.
      */
-    loop: function loop() {
+    loop: function() {
       var self = this;
       var args = arguments;
       var loop, id, sound;
@@ -1884,7 +1876,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // If no id is passed, get all ID's to be looped.
       var ids = self._getSoundIds(id);
-      for (var i = 0; i < ids.length; i++) {
+      for (var i=0; i<ids.length; i++) {
         sound = self._soundById(ids[i]);
 
         if (sound) {
@@ -1910,7 +1902,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      *   rate(rate, id) -> Sets the playback rate of passed sound id.
      * @return {Howl/Number} Returns self or the current playback rate.
      */
-    rate: function rate() {
+    rate: function() {
       var self = this;
       var args = arguments;
       var rate, id;
@@ -1940,7 +1932,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (self._state !== 'loaded') {
           self._queue.push({
             event: 'rate',
-            action: function action() {
+            action: function() {
               self.rate.apply(self, args);
             }
           });
@@ -1955,7 +1947,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // Update one or all volumes.
         id = self._getSoundIds(id);
-        for (var i = 0; i < id.length; i++) {
+        for (var i=0; i<id.length; i++) {
           // Get the sound.
           sound = self._soundById(id[i]);
 
@@ -1975,8 +1967,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             // Reset the timers.
             var seek = self.seek(id[i]);
-            var duration = (self._sprite[sound._sprite][0] + self._sprite[sound._sprite][1]) / 1000 - seek;
-            var timeout = duration * 1000 / Math.abs(sound._rate);
+            var duration = ((self._sprite[sound._sprite][0] + self._sprite[sound._sprite][1]) / 1000) - seek;
+            var timeout = (duration * 1000) / Math.abs(sound._rate);
 
             // Start a new end timer if sound is already playing.
             if (self._endTimers[id[i]] || !sound._paused) {
@@ -2003,7 +1995,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      *   seek(seek, id) -> Sets the seek position of passed sound id.
      * @return {Howl/Number} Returns self or the current seek position.
      */
-    seek: function seek() {
+    seek: function() {
       var self = this;
       var args = arguments;
       var seek, id;
@@ -2036,7 +2028,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (self._state !== 'loaded') {
         self._queue.push({
           event: 'seek',
-          action: function action() {
+          action: function() {
             self.seek.apply(self, args);
           }
         });
@@ -2090,7 +2082,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number}  id The sound id to check. If none is passed, the whole sound group is checked.
      * @return {Boolean} True if playing and false if not.
      */
-    playing: function playing(id) {
+    playing: function(id) {
       var self = this;
 
       // Check the passed sound ID (if any).
@@ -2100,7 +2092,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // Otherwise, loop through all sounds and check if any are playing.
-      for (var i = 0; i < self._sounds.length; i++) {
+      for (var i=0; i<self._sounds.length; i++) {
         if (!self._sounds[i]._paused) {
           return true;
         }
@@ -2114,7 +2106,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id The sound id to check. If none is passed, return full source duration.
      * @return {Number} Audio duration in seconds.
      */
-    duration: function duration(id) {
+    duration: function(id) {
       var self = this;
       var duration = self._duration;
 
@@ -2131,7 +2123,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Returns the current loaded state of this Howl.
      * @return {String} 'unloaded', 'loading', 'loaded'
      */
-    state: function state() {
+    state: function() {
       return this._state;
     },
 
@@ -2139,12 +2131,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Unload and destroy the current Howl object.
      * This will immediately stop all sound instances attached to this group.
      */
-    unload: function unload() {
+    unload: function() {
       var self = this;
 
       // Stop playing any active sounds.
       var sounds = self._sounds;
-      for (var i = 0; i < sounds.length; i++) {
+      for (var i=0; i<sounds.length; i++) {
         // Stop the sound if it is currently playing.
         if (!sounds[i]._paused) {
           self.stop(sounds[i]._id);
@@ -2175,7 +2167,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Delete this sound from the cache (if no other Howl is using it).
       var remCache = true;
-      for (i = 0; i < Howler._howls.length; i++) {
+      for (i=0; i<Howler._howls.length; i++) {
         if (Howler._howls[i]._src === self._src) {
           remCache = false;
           break;
@@ -2205,12 +2197,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number}   once  (INTERNAL) Marks event to fire only once.
      * @return {Howl}
      */
-    on: function on(event, fn, id, once) {
+    on: function(event, fn, id, once) {
       var self = this;
       var events = self['_on' + event];
 
       if (typeof fn === 'function') {
-        events.push(once ? { id: id, fn: fn, once: once } : { id: id, fn: fn });
+        events.push(once ? {id: id, fn: fn, once: once} : {id: id, fn: fn});
       }
 
       return self;
@@ -2223,14 +2215,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number}   id    (optional) Only remove events for this sound.
      * @return {Howl}
      */
-    off: function off(event, fn, id) {
+    off: function(event, fn, id) {
       var self = this;
       var events = self['_on' + event];
       var i = 0;
 
       if (fn) {
         // Loop through event store and remove the passed function.
-        for (i = 0; i < events.length; i++) {
+        for (i=0; i<events.length; i++) {
           if (fn === events[i].fn && id === events[i].id) {
             events.splice(i, 1);
             break;
@@ -2242,8 +2234,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       } else {
         // Clear out all events of every type.
         var keys = Object.keys(self);
-        for (i = 0; i < keys.length; i++) {
-          if (keys[i].indexOf('_on') === 0 && Array.isArray(self[keys[i]])) {
+        for (i=0; i<keys.length; i++) {
+          if ((keys[i].indexOf('_on') === 0) && Array.isArray(self[keys[i]])) {
             self[keys[i]] = [];
           }
         }
@@ -2259,7 +2251,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number}   id    (optional) Only listen to events for this sound.
      * @return {Howl}
      */
-    once: function once(event, fn, id) {
+    once: function(event, fn, id) {
       var self = this;
 
       // Setup the event listener.
@@ -2275,14 +2267,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} msg   Message to go with event.
      * @return {Howl}
      */
-    _emit: function _emit(event, id, msg) {
+    _emit: function(event, id, msg) {
       var self = this;
       var events = self['_on' + event];
 
       // Loop through event store and fire all functions.
-      for (var i = events.length - 1; i >= 0; i--) {
+      for (var i=events.length-1; i>=0; i--) {
         if (!events[i].id || events[i].id === id || event === 'load') {
-          setTimeout(function (fn) {
+          setTimeout(function(fn) {
             fn.call(this, id, msg);
           }.bind(self, events[i].fn), 0);
 
@@ -2302,14 +2294,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * after the previous has finished executing (even if async like play).
      * @return {Howl}
      */
-    _loadQueue: function _loadQueue() {
+    _loadQueue: function() {
       var self = this;
 
       if (self._queue.length > 0) {
         var task = self._queue[0];
 
         // don't move onto the next task until this one is done
-        self.once(task.event, function () {
+        self.once(task.event, function() {
           self._queue.shift();
           self._loadQueue();
         });
@@ -2325,7 +2317,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Sound} sound The sound object to work with.
      * @return {Howl}
      */
-    _ended: function _ended(sound) {
+    _ended: function(sound) {
       var self = this;
       var sprite = sound._sprite;
 
@@ -2347,7 +2339,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         sound._rateSeek = 0;
         sound._playStart = Howler.ctx.currentTime;
 
-        var timeout = (sound._stop - sound._start) * 1000 / Math.abs(sound._rate);
+        var timeout = ((sound._stop - sound._start) * 1000) / Math.abs(sound._rate);
         self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
       }
 
@@ -2379,7 +2371,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id The sound ID.
      * @return {Howl}
      */
-    _clearTimer: function _clearTimer(id) {
+    _clearTimer: function(id) {
       var self = this;
 
       if (self._endTimers[id]) {
@@ -2395,11 +2387,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id Sound ID
      * @return {Object}    Sound object or null.
      */
-    _soundById: function _soundById(id) {
+    _soundById: function(id) {
       var self = this;
 
       // Loop through all sounds and find the one with this ID.
-      for (var i = 0; i < self._sounds.length; i++) {
+      for (var i=0; i<self._sounds.length; i++) {
         if (id === self._sounds[i]._id) {
           return self._sounds[i];
         }
@@ -2412,13 +2404,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Return an inactive sound from the pool or create a new one.
      * @return {Sound} Sound playback object.
      */
-    _inactiveSound: function _inactiveSound() {
+    _inactiveSound: function() {
       var self = this;
 
       self._drain();
 
       // Find the first inactive node to recycle.
-      for (var i = 0; i < self._sounds.length; i++) {
+      for (var i=0; i<self._sounds.length; i++) {
         if (self._sounds[i]._ended) {
           return self._sounds[i].reset();
         }
@@ -2431,7 +2423,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /**
      * Drain excess inactive sounds from the pool.
      */
-    _drain: function _drain() {
+    _drain: function() {
       var self = this;
       var limit = self._pool;
       var cnt = 0;
@@ -2443,14 +2435,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       // Count the number of inactive sounds.
-      for (i = 0; i < self._sounds.length; i++) {
+      for (i=0; i<self._sounds.length; i++) {
         if (self._sounds[i]._ended) {
           cnt++;
         }
       }
 
       // Remove excess inactive sounds, going in reverse order.
-      for (i = self._sounds.length - 1; i >= 0; i--) {
+      for (i=self._sounds.length - 1; i>=0; i--) {
         if (cnt <= limit) {
           return;
         }
@@ -2473,12 +2465,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Number} id Only return one ID if one is passed.
      * @return {Array}    Array of IDs.
      */
-    _getSoundIds: function _getSoundIds(id) {
+    _getSoundIds: function(id) {
       var self = this;
 
       if (typeof id === 'undefined') {
         var ids = [];
-        for (var i = 0; i < self._sounds.length; i++) {
+        for (var i=0; i<self._sounds.length; i++) {
           ids.push(self._sounds[i]._id);
         }
 
@@ -2493,7 +2485,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Sound} sound The sound object to work with.
      * @return {Howl}
      */
-    _refreshBuffer: function _refreshBuffer(sound) {
+    _refreshBuffer: function(sound) {
       var self = this;
 
       // Setup the buffer source for playback.
@@ -2523,15 +2515,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param  {Object} node Sound's audio node containing the buffer source.
      * @return {Howl}
      */
-    _cleanBuffer: function _cleanBuffer(node) {
+    _cleanBuffer: function(node) {
       var self = this;
 
       if (self._scratchBuffer) {
         node.bufferSource.onended = null;
         node.bufferSource.disconnect(0);
-        try {
-          node.bufferSource.buffer = self._scratchBuffer;
-        } catch (e) {}
+        try { node.bufferSource.buffer = self._scratchBuffer; } catch(e) {}
       }
       node.bufferSource = null;
 
@@ -2546,7 +2536,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Setup the sound object, which each node attached to a Howl group is contained in.
    * @param {Object} howl The Howl parent group.
    */
-  var Sound = function Sound(howl) {
+  var Sound = function(howl) {
     this._parent = howl;
     this.init();
   };
@@ -2555,7 +2545,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Initialize a new Sound object.
      * @return {Sound}
      */
-    init: function init() {
+    init: function() {
       var self = this;
       var parent = self._parent;
 
@@ -2586,14 +2576,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Create and setup a new sound object, whether HTML5 Audio or Web Audio.
      * @return {Sound}
      */
-    create: function create() {
+    create: function() {
       var self = this;
       var parent = self._parent;
-      var volume = Howler._muted || self._muted || self._parent._muted ? 0 : self._volume;
+      var volume = (Howler._muted || self._muted || self._parent._muted) ? 0 : self._volume;
 
       if (parent._webAudio) {
         // Create the gain node for controlling volume (the source will connect to this).
-        self._node = typeof Howler.ctx.createGain === 'undefined' ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
+        self._node = (typeof Howler.ctx.createGain === 'undefined') ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
         self._node.gain.setValueAtTime(volume, Howler.ctx.currentTime);
         self._node.paused = true;
         self._node.connect(Howler.masterGain);
@@ -2624,7 +2614,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Reset the parameters of this sound to the original state (for recycle).
      * @return {Sound}
      */
-    reset: function reset() {
+    reset: function() {
       var self = this;
       var parent = self._parent;
 
@@ -2649,7 +2639,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /**
      * HTML5 Audio error listener callback.
      */
-    _errorListener: function _errorListener() {
+    _errorListener: function() {
       var self = this;
 
       // Fire an error event and pass back the code.
@@ -2662,7 +2652,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /**
      * HTML5 Audio canplaythrough listener callback.
      */
-    _loadListener: function _loadListener() {
+    _loadListener: function() {
       var self = this;
       var parent = self._parent;
 
@@ -2671,7 +2661,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // Setup a sprite if none is defined.
       if (Object.keys(parent._sprite).length === 0) {
-        parent._sprite = { __default: [0, parent._duration * 1000] };
+        parent._sprite = {__default: [0, parent._duration * 1000]};
       }
 
       if (parent._state !== 'loaded') {
@@ -2694,7 +2684,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Buffer a sound from URL, Data URI or cache and decode to audio source (Web Audio API).
    * @param  {Howl} self
    */
-  var loadBuffer = function loadBuffer(self) {
+  var loadBuffer = function(self) {
     var url = self._src;
 
     // Check if the buffer has already been cached and use it instead.
@@ -2712,7 +2702,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Decode the base64 data URI without XHR, since some browsers don't support it.
       var data = atob(url.split(',')[1]);
       var dataView = new Uint8Array(data.length);
-      for (var i = 0; i < data.length; ++i) {
+      for (var i=0; i<data.length; ++i) {
         dataView[i] = data.charCodeAt(i);
       }
 
@@ -2722,7 +2712,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
       xhr.responseType = 'arraybuffer';
-      xhr.onload = function () {
+      xhr.onload = function() {
         // Make sure we get a successful response back.
         var code = (xhr.status + '')[0];
         if (code !== '0' && code !== '2' && code !== '3') {
@@ -2732,7 +2722,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         decodeAudioData(xhr.response, self);
       };
-      xhr.onerror = function () {
+      xhr.onerror = function() {
         // If there is an error, switch to HTML5 Audio.
         if (self._webAudio) {
           self._html5 = true;
@@ -2750,7 +2740,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Send the XHR request wrapped in a try/catch.
    * @param  {Object} xhr XHR to send.
    */
-  var safeXhrSend = function safeXhrSend(xhr) {
+  var safeXhrSend = function(xhr) {
     try {
       xhr.send();
     } catch (e) {
@@ -2763,14 +2753,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {ArrayBuffer} arraybuffer The audio data.
    * @param  {Howl}        self
    */
-  var decodeAudioData = function decodeAudioData(arraybuffer, self) {
+  var decodeAudioData = function(arraybuffer, self) {
     // Decode the buffer into an audio source.
-    Howler.ctx.decodeAudioData(arraybuffer, function (buffer) {
+    Howler.ctx.decodeAudioData(arraybuffer, function(buffer) {
       if (buffer && self._sounds.length > 0) {
         cache[self._src] = buffer;
         loadSound(self, buffer);
       }
-    }, function () {
+    }, function() {
       self._emit('loaderror', null, 'Decoding audio data failed.');
     });
   };
@@ -2780,7 +2770,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Howl} self
    * @param  {Object} buffer The decoded buffer sound source.
    */
-  var loadSound = function loadSound(self, buffer) {
+  var loadSound = function(self, buffer) {
     // Set the duration.
     if (buffer && !self._duration) {
       self._duration = buffer.duration;
@@ -2788,7 +2778,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Setup a sprite if none is defined.
     if (Object.keys(self._sprite).length === 0) {
-      self._sprite = { __default: [0, self._duration * 1000] };
+      self._sprite = {__default: [0, self._duration * 1000]};
     }
 
     // Fire the loaded event.
@@ -2802,7 +2792,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   /**
    * Setup the audio context when available, or switch to HTML5 Audio mode.
    */
-  var setupAudioContext = function setupAudioContext() {
+  var setupAudioContext = function() {
     // Check if we are using Web Audio and setup the AudioContext if we are.
     try {
       if (typeof AudioContext !== 'undefined') {
@@ -2812,13 +2802,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       } else {
         Howler.usingWebAudio = false;
       }
-    } catch (e) {
+    } catch(e) {
       Howler.usingWebAudio = false;
     }
 
     // Check if a webview is being used on iOS8 or earlier (rather than the browser).
     // If it is, disable Web Audio as it causes crashing.
-    var iOS = /iP(hone|od|ad)/.test(Howler._navigator && Howler._navigator.platform);
+    var iOS = (/iP(hone|od|ad)/.test(Howler._navigator && Howler._navigator.platform));
     var appVersion = Howler._navigator && Howler._navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
     var version = appVersion ? parseInt(appVersion[1], 10) : null;
     if (iOS && version && version < 9) {
@@ -2830,7 +2820,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Create and expose the master GainNode when using Web Audio (useful for plugins or advanced usage).
     if (Howler.usingWebAudio) {
-      Howler.masterGain = typeof Howler.ctx.createGain === 'undefined' ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
+      Howler.masterGain = (typeof Howler.ctx.createGain === 'undefined') ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
       Howler.masterGain.gain.value = 1;
       Howler.masterGain.connect(Howler.ctx.destination);
     }
@@ -2841,7 +2831,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   // Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
       return {
         Howler: Howler,
         Howl: Howl
@@ -2862,14 +2852,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     window.Howler = Howler;
     window.Howl = Howl;
     window.Sound = Sound;
-  } else if (typeof global !== 'undefined') {
-    // Add to global in Node.js (for testing, etc).
+  } else if (typeof global !== 'undefined') { // Add to global in Node.js (for testing, etc).
     global.HowlerGlobal = HowlerGlobal;
     global.Howler = Howler;
     global.Howl = Howl;
     global.Sound = Sound;
   }
 })();
+
 
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
@@ -2883,15 +2873,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *  MIT License
  */
 
-(function () {
+(function() {
 
   'use strict';
 
   // Setup default properties.
-
   HowlerGlobal.prototype._pos = [0, 0, 0];
   HowlerGlobal.prototype._orientation = [0, 0, -1, 0, 1, 0];
-
+  
   /** Global Methods **/
   /***************************************************************************/
 
@@ -2901,7 +2890,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} pan A value of -1.0 is all the way left and 1.0 is all the way right.
    * @return {Howler/Number}     Self or current stereo panning value.
    */
-  HowlerGlobal.prototype.stereo = function (pan) {
+  HowlerGlobal.prototype.stereo = function(pan) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -2910,7 +2899,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // Loop through all Howls and update their stereo panning.
-    for (var i = self._howls.length - 1; i >= 0; i--) {
+    for (var i=self._howls.length-1; i>=0; i--) {
       self._howls[i].stereo(pan);
     }
 
@@ -2925,7 +2914,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} z The z-position of the listener.
    * @return {Howler/Array}   Self or current listener position.
    */
-  HowlerGlobal.prototype.pos = function (x, y, z) {
+  HowlerGlobal.prototype.pos = function(x, y, z) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -2934,8 +2923,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // Set the defaults for optional 'y' & 'z'.
-    y = typeof y !== 'number' ? self._pos[1] : y;
-    z = typeof z !== 'number' ? self._pos[2] : z;
+    y = (typeof y !== 'number') ? self._pos[1] : y;
+    z = (typeof z !== 'number') ? self._pos[2] : z;
 
     if (typeof x === 'number') {
       self._pos = [x, y, z];
@@ -2961,7 +2950,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} zUp The z-orientation of the top of the listener.
    * @return {Howler/Array}     Returns self or the current orientation vectors.
    */
-  HowlerGlobal.prototype.orientation = function (x, y, z, xUp, yUp, zUp) {
+  HowlerGlobal.prototype.orientation = function(x, y, z, xUp, yUp, zUp) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -2971,11 +2960,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Set the defaults for optional 'y' & 'z'.
     var or = self._orientation;
-    y = typeof y !== 'number' ? or[1] : y;
-    z = typeof z !== 'number' ? or[2] : z;
-    xUp = typeof xUp !== 'number' ? or[3] : xUp;
-    yUp = typeof yUp !== 'number' ? or[4] : yUp;
-    zUp = typeof zUp !== 'number' ? or[5] : zUp;
+    y = (typeof y !== 'number') ? or[1] : y;
+    z = (typeof z !== 'number') ? or[2] : z;
+    xUp = (typeof xUp !== 'number') ? or[3] : xUp;
+    yUp = (typeof yUp !== 'number') ? or[4] : yUp;
+    zUp = (typeof zUp !== 'number') ? or[5] : zUp;
 
     if (typeof x === 'number') {
       self._orientation = [x, y, z, xUp, yUp, zUp];
@@ -2995,8 +2984,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Function} _super Core init method.
    * @return {Howl}
    */
-  Howl.prototype.init = function (_super) {
-    return function (o) {
+  Howl.prototype.init = (function(_super) {
+    return function(o) {
       var self = this;
 
       // Setup user-defined default properties.
@@ -3015,14 +3004,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       // Setup event listeners.
-      self._onstereo = o.onstereo ? [{ fn: o.onstereo }] : [];
-      self._onpos = o.onpos ? [{ fn: o.onpos }] : [];
-      self._onorientation = o.onorientation ? [{ fn: o.onorientation }] : [];
+      self._onstereo = o.onstereo ? [{fn: o.onstereo}] : [];
+      self._onpos = o.onpos ? [{fn: o.onpos}] : [];
+      self._onorientation = o.onorientation ? [{fn: o.onorientation}] : [];
 
       // Complete initilization with howler.js core's init function.
       return _super.call(this, o);
     };
-  }(Howl.prototype.init);
+  })(Howl.prototype.init);
 
   /**
    * Get/set the stereo panning of the audio source for this sound or all in the group.
@@ -3030,7 +3019,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
    * @return {Howl/Number}    Returns self or the current stereo panning value.
    */
-  Howl.prototype.stereo = function (pan, id) {
+  Howl.prototype.stereo = function(pan, id) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -3042,7 +3031,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (self._state !== 'loaded') {
       self._queue.push({
         event: 'stereo',
-        action: function action() {
+        action: function() {
           self.stereo(pan, id);
         }
       });
@@ -3051,7 +3040,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // Check for PannerStereoNode support and fallback to PannerNode if it doesn't exist.
-    var pannerType = typeof Howler.ctx.createStereoPanner === 'undefined' ? 'spatial' : 'stereo';
+    var pannerType = (typeof Howler.ctx.createStereoPanner === 'undefined') ? 'spatial' : 'stereo';
 
     // Setup the group's stereo panning if no ID is passed.
     if (typeof id === 'undefined') {
@@ -3066,7 +3055,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Change the streo panning of one or all sounds in group.
     var ids = self._getSoundIds(id);
-    for (var i = 0; i < ids.length; i++) {
+    for (var i=0; i<ids.length; i++) {
       // Get the sound.
       var sound = self._soundById(ids[i]);
 
@@ -3112,7 +3101,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
    * @return {Howl/Array}    Returns self or the current 3D spatial position: [x, y, z].
    */
-  Howl.prototype.pos = function (x, y, z, id) {
+  Howl.prototype.pos = function(x, y, z, id) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -3124,7 +3113,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (self._state !== 'loaded') {
       self._queue.push({
         event: 'pos',
-        action: function action() {
+        action: function() {
           self.pos(x, y, z, id);
         }
       });
@@ -3133,8 +3122,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // Set the defaults for optional 'y' & 'z'.
-    y = typeof y !== 'number' ? 0 : y;
-    z = typeof z !== 'number' ? -0.5 : z;
+    y = (typeof y !== 'number') ? 0 : y;
+    z = (typeof z !== 'number') ? -0.5 : z;
 
     // Setup the group's spatial position if no ID is passed.
     if (typeof id === 'undefined') {
@@ -3148,7 +3137,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Change the spatial position of one or all sounds in group.
     var ids = self._getSoundIds(id);
-    for (var i = 0; i < ids.length; i++) {
+    for (var i=0; i<ids.length; i++) {
       // Get the sound.
       var sound = self._soundById(ids[i]);
 
@@ -3185,7 +3174,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
    * @return {Howl/Array}    Returns self or the current 3D spatial orientation: [x, y, z].
    */
-  Howl.prototype.orientation = function (x, y, z, id) {
+  Howl.prototype.orientation = function(x, y, z, id) {
     var self = this;
 
     // Stop right here if not using Web Audio.
@@ -3197,7 +3186,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (self._state !== 'loaded') {
       self._queue.push({
         event: 'orientation',
-        action: function action() {
+        action: function() {
           self.orientation(x, y, z, id);
         }
       });
@@ -3206,8 +3195,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     // Set the defaults for optional 'y' & 'z'.
-    y = typeof y !== 'number' ? self._orientation[1] : y;
-    z = typeof z !== 'number' ? self._orientation[2] : z;
+    y = (typeof y !== 'number') ? self._orientation[1] : y;
+    z = (typeof z !== 'number') ? self._orientation[2] : z;
 
     // Setup the group's spatial orientation if no ID is passed.
     if (typeof id === 'undefined') {
@@ -3221,7 +3210,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Change the spatial orientation of one or all sounds in group.
     var ids = self._getSoundIds(id);
-    for (var i = 0; i < ids.length; i++) {
+    for (var i=0; i<ids.length; i++) {
       // Get the sound.
       var sound = self._soundById(ids[i]);
 
@@ -3277,7 +3266,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * 
    * @return {Howl/Object} Returns self or current panner attributes.
    */
-  Howl.prototype.pannerAttr = function () {
+  Howl.prototype.pannerAttr = function() {
     var self = this;
     var args = arguments;
     var o, id, sound;
@@ -3292,7 +3281,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Return the group's panner attribute values.
       return self._pannerAttr;
     } else if (args.length === 1) {
-      if (_typeof(args[0]) === 'object') {
+      if (typeof args[0] === 'object') {
         o = args[0];
 
         // Set the grou's panner attribute values.
@@ -3320,7 +3309,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Update the values of the specified sounds.
     var ids = self._getSoundIds(id);
-    for (var i = 0; i < ids.length; i++) {
+    for (var i=0; i<ids.length; i++) {
       sound = self._soundById(ids[i]);
 
       if (sound) {
@@ -3371,8 +3360,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Function} _super Core Sound init method.
    * @return {Sound}
    */
-  Sound.prototype.init = function (_super) {
-    return function () {
+  Sound.prototype.init = (function(_super) {
+    return function() {
       var self = this;
       var parent = self._parent;
 
@@ -3392,15 +3381,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         parent.pos(self._pos[0], self._pos[1], self._pos[2], self._id);
       }
     };
-  }(Sound.prototype.init);
+  })(Sound.prototype.init);
 
   /**
    * Override the Sound.reset method to clean up properties from the spatial plugin.
    * @param  {Function} _super Sound reset method.
    * @return {Sound}
    */
-  Sound.prototype.reset = function (_super) {
-    return function () {
+  Sound.prototype.reset = (function(_super) {
+    return function() {
       var self = this;
       var parent = self._parent;
 
@@ -3412,7 +3401,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Complete resetting of the sound.
       return _super.call(this);
     };
-  }(Sound.prototype.reset);
+  })(Sound.prototype.reset);
 
   /** Helper Methods **/
   /***************************************************************************/
@@ -3422,7 +3411,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @param  {Sound} sound Specific sound to setup panning on.
    * @param {String} type Type of panner to create: 'stereo' or 'spatial'.
    */
-  var setupPanner = function setupPanner(sound, type) {
+  var setupPanner = function(sound, type) {
     type = type || 'spatial';
 
     // Create the new panner node.
@@ -3451,6 +3440,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
 })();
+
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
@@ -3484,178 +3474,172 @@ module.exports = g;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+    var soundbankProto = __webpack_require__(9);
+    var matrixProto = __webpack_require__(10);
+
+    var menuProto = function() {
+
+        this.app = $("#app");
+        this.menu = $("#menu");
+        this.kits = $(".kits");
+        this.bpm_counter = $("#bpm-counter");
+        this.soundbank = 0;
+        this.bpm = 120;
+
+        this.bank = {};
+        this.matrix = {};
+
+        this.init_menu = function() {
+
+            this.app.hide();
+            this.menu.hide();
+            this.menu.fadeIn(200);
+
+            let self = this;
+
+            $(".menu-row div").on("click", function() {
+
+                let target = $(this);
+
+                if (target.is("#demo")) {
+                    self.soundbank = 0;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#roland-808")) {
+                    self.soundbank = 1;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#plucked")) {
+                    self.soundbank = 2;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#bpm-down")) {
+                    self.bpm -= 5;
+                    self.bpm_counter.text(self.bpm)
+                }
+
+                if (target.is("#bpm-up")) {
+                    self.bpm += 5;
+                    self.bpm_counter.text(self.bpm)
+                }
+
+                // STARTING APP
+
+                if (target.is("#start-app")) {
+
+                    self.bank = new soundbankProto();
+
+                    if (self.soundbank == 0) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10stab high", "11stab"]) }
+
+                    if (self.soundbank == 1) {self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]) }
+
+                    if (self.soundbank == 2) {self.bank.load_sounds("./audio/B_SYNTH_F_MINOR/", ["00synth F", "01synth G", "02synth Ab", "03synth Bb", "04synth C", "05synth Db", "06synth Eb", "07synth F 2"]) }
+
+                    self.matrix = new matrixProto(17, 17);
+
+                    self.matrix.init_map();
+                    self.matrix.prepare_DOM(self.bank);
+
+                    // DEMO CONTENT 
+                    // (cuntent must be prepared after soundbank init) 
+
+                    if (self.soundbank == 0) {
+
+                        self.matrix.switch_help();
+
+                    	// kick
+
+                    	self.matrix.set_sample(0,0,"right",0);
+                    	self.matrix.set_trigger(0,0);
+                    	self.matrix.set_trigger(4,0);
+                    	self.matrix.set_trigger(8,0);
+                    	self.matrix.set_trigger(12,0);
+                    	self.matrix.set_trigger(16,0);
+
+                    	// stab (mellow chord)
+
+                    	self.matrix.set_sample(0,1,"right",11);
+                    	self.matrix.set_arrow(0,1, "right");
+                    	self.matrix.set_arrow(8,1, "down");
+                    	self.matrix.set_arrow(8,5, "left");
+                    	self.matrix.set_arrow(0,5, "up");
+                    	self.matrix.set_trigger(6,1);
+                    	self.matrix.set_trigger(0,3);
+
+                    	// closed hihat
+
+                    	self.matrix.set_sample(4,7,"up",6);
+                    	self.matrix.set_trigger(4,3);
+                    	self.matrix.set_trigger(4,6);
+                    	self.matrix.set_bouncer(4,8);
+
+                    	// closed hihat 2
+
+                    	self.matrix.set_sample(0,6,"right",7)
+                    	self.matrix.set_trigger(12,6);
+
+                    	// high freq stab (mellow chord + reverb)
+
+                    	self.matrix.set_sample(5,8,"right",10);
+                    	self.matrix.set_bouncer(12,8);
+                    	self.matrix.set_trigger(11,8);
+
+                        // bass
+
+                        self.matrix.set_sample(0,9,"right",1);
+                        self.matrix.set_arrow(0,9, "right");
+                        self.matrix.set_arrow(16,9, "down");
+                        self.matrix.set_arrow(16,13, "left");
+                        self.matrix.set_arrow(0,13, "up");
+                        self.matrix.set_trigger(4,13);
+                        self.matrix.set_trigger(2,13);
+                        self.matrix.set_trigger(0,13);
+                        self.matrix.set_trigger(0,11);
+                        self.matrix.set_trigger(0,9);
+
+                    }
+
+                    self.matrix.render_DOM();
 
 
-var soundbankProto = __webpack_require__(9);
-var matrixProto = __webpack_require__(10);
+                    self.menu.fadeOut(200, "swing", () => self.app.fadeIn(200));
 
-var menuProto = function menuProto() {
 
-                    this.app = $("#app");
-                    this.menu = $("#menu");
-                    this.kits = $(".kits");
-                    this.bpm_counter = $("#bpm-counter");
-                    this.soundbank = 0;
-                    this.bpm = 120;
+                    mainLoop = setInterval(function() {
+                        if (self.matrix.state != "pause") {
+                            self.matrix.animate_samples();
+                            self.bank.trigger_sounds(self.matrix.soundBuffer);
+                        }
+                        self.matrix.render_DOM();
+                    }, Math.round(60000 / self.bpm / self.matrix.bars));
 
-                    this.bank = {};
-                    this.matrix = {};
+                }
 
-                    this.init_menu = function () {
 
-                                        this.app.hide();
-                                        this.menu.hide();
-                                        this.menu.fadeIn(200);
+                target.addClass("select")
+                setTimeout(function() {
+                    target.removeClass("select");
+                }, 300);
+            })
 
-                                        var self = this;
 
-                                        $(".menu-row div").on("click", function () {
+        }
 
-                                                            var target = $(this);
+    }
 
-                                                            if (target.is("#demo")) {
-                                                                                self.soundbank = 0;
-                                                                                self.kits.children().removeClass("glow");
-                                                                                target.addClass("glow");
-                                                            }
-
-                                                            if (target.is("#roland-808")) {
-                                                                                self.soundbank = 1;
-                                                                                self.kits.children().removeClass("glow");
-                                                                                target.addClass("glow");
-                                                            }
-
-                                                            if (target.is("#plucked")) {
-                                                                                self.soundbank = 2;
-                                                                                self.kits.children().removeClass("glow");
-                                                                                target.addClass("glow");
-                                                            }
-
-                                                            if (target.is("#bpm-down")) {
-                                                                                self.bpm -= 5;
-                                                                                self.bpm_counter.text(self.bpm);
-                                                            }
-
-                                                            if (target.is("#bpm-up")) {
-                                                                                self.bpm += 5;
-                                                                                self.bpm_counter.text(self.bpm);
-                                                            }
-
-                                                            // STARTING APP
-
-                                                            if (target.is("#start-app")) {
-
-                                                                                self.bank = new soundbankProto();
-
-                                                                                if (self.soundbank == 0) {
-                                                                                                    self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10stab high", "11stab"]);
-                                                                                }
-
-                                                                                if (self.soundbank == 1) {
-                                                                                                    self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]);
-                                                                                }
-
-                                                                                if (self.soundbank == 2) {
-                                                                                                    self.bank.load_sounds("./audio/B_SYNTH_F_MINOR/", ["00synth F", "01synth G", "02synth Ab", "03synth Bb", "04synth C", "05synth Db", "06synth Eb", "07synth F 2"]);
-                                                                                }
-
-                                                                                self.matrix = new matrixProto(17, 17);
-
-                                                                                self.matrix.init_map();
-                                                                                self.matrix.prepare_DOM(self.bank);
-
-                                                                                // DEMO CONTENT 
-                                                                                // (cuntent must be prepared after soundbank init) 
-
-                                                                                if (self.soundbank == 0) {
-
-                                                                                                    self.matrix.switch_help();
-
-                                                                                                    // kick
-
-                                                                                                    self.matrix.set_sample(0, 0, "right", 0);
-                                                                                                    self.matrix.set_trigger(0, 0);
-                                                                                                    self.matrix.set_trigger(4, 0);
-                                                                                                    self.matrix.set_trigger(8, 0);
-                                                                                                    self.matrix.set_trigger(12, 0);
-                                                                                                    self.matrix.set_trigger(16, 0);
-
-                                                                                                    // stab (mellow chord)
-
-                                                                                                    self.matrix.set_sample(0, 1, "right", 11);
-                                                                                                    self.matrix.set_arrow(0, 1, "right");
-                                                                                                    self.matrix.set_arrow(8, 1, "down");
-                                                                                                    self.matrix.set_arrow(8, 5, "left");
-                                                                                                    self.matrix.set_arrow(0, 5, "up");
-                                                                                                    self.matrix.set_trigger(6, 1);
-                                                                                                    self.matrix.set_trigger(0, 3);
-
-                                                                                                    // closed hihat
-
-                                                                                                    self.matrix.set_sample(4, 7, "up", 6);
-                                                                                                    self.matrix.set_trigger(4, 3);
-                                                                                                    self.matrix.set_trigger(4, 6);
-                                                                                                    self.matrix.set_bouncer(4, 8);
-
-                                                                                                    // closed hihat 2
-
-                                                                                                    self.matrix.set_sample(0, 6, "right", 7);
-                                                                                                    self.matrix.set_trigger(12, 6);
-
-                                                                                                    // high freq stab (mellow chord + reverb)
-
-                                                                                                    self.matrix.set_sample(5, 8, "right", 10);
-                                                                                                    self.matrix.set_bouncer(12, 8);
-                                                                                                    self.matrix.set_trigger(11, 8);
-
-                                                                                                    // bass
-
-                                                                                                    self.matrix.set_sample(0, 9, "right", 1);
-                                                                                                    self.matrix.set_arrow(0, 9, "right");
-                                                                                                    self.matrix.set_arrow(16, 9, "down");
-                                                                                                    self.matrix.set_arrow(16, 13, "left");
-                                                                                                    self.matrix.set_arrow(0, 13, "up");
-                                                                                                    self.matrix.set_trigger(4, 13);
-                                                                                                    self.matrix.set_trigger(2, 13);
-                                                                                                    self.matrix.set_trigger(0, 13);
-                                                                                                    self.matrix.set_trigger(0, 11);
-                                                                                                    self.matrix.set_trigger(0, 9);
-                                                                                }
-
-                                                                                self.matrix.render_DOM();
-
-                                                                                self.menu.fadeOut(200, "swing", function () {
-                                                                                                    return self.app.fadeIn(200);
-                                                                                });
-
-                                                                                mainLoop = setInterval(function () {
-                                                                                                    if (self.matrix.state != "pause") {
-                                                                                                                        self.matrix.animate_samples();
-                                                                                                                        self.bank.trigger_sounds(self.matrix.soundBuffer);
-                                                                                                    }
-                                                                                                    self.matrix.render_DOM();
-                                                                                }, Math.round(60000 / self.bpm / self.matrix.bars));
-                                                            }
-
-                                                            target.addClass("select");
-                                                            setTimeout(function () {
-                                                                                target.removeClass("select");
-                                                            }, 300);
-                                        });
-                    };
-};
-
-module.exports = menuProto;
+    module.exports = menuProto;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-var soundbankProto = function soundbankProto() {
+var soundbankProto = function() {
 
     // table for howler soundbank
 
@@ -3663,479 +3647,473 @@ var soundbankProto = function soundbankProto() {
 
     // sound loader - table of filenames as argument
 
-    this.load_sounds = function (path, filenames) {
-        var _this = this;
+    this.load_sounds = function(path, filenames) {
 
-        filenames.forEach(function (element) {
-            _this.sounds.push(new Howl({
+        filenames.forEach((element) => {
+            this.sounds.push(new Howl({
                 src: [path + element + ".wav"]
-            }));
+            }))
         });
-    };
+    }
 
-    this.trigger_sounds = function (soundBuffer) {
+    this.trigger_sounds = function(soundBuffer) {
 
-        for (var i = 0; i < soundBuffer.length; i++) {
+        for (let i = 0; i < soundBuffer.length; i++) {
             this.sounds[soundBuffer[i]].play();
         }
-    };
-};
+    }
+}
 
 module.exports = soundbankProto;
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var sampleProto = function sampleProto(x, y, direction, sound) {
-    this.type = "normal";
-    this.x = x;
-    this.y = y;
-    this.history_x = 0;
-    this.history_y = 0;
-    this.direction = direction;
-    this.sound = sound;
-    this.speed = 1;
-};
-
-var cellProto = function cellProto() {
-    display: "";
-    solid: false;
-    type: "empty";
-    subtype: "";
-    direction: "none";
-};
-
-var matrixProto = function matrixProto(x_size, y_size) {
-
-    // globals 
-
-    this.bpm = 100; // beats per minute
-    this.bars = 4; // bars per beat
-    this.bar = 0; // bar counter
-    this.action = { // action for click
-        type: "object",
-        index: 0,
-        direction: ""
-    }; // type of interacton - for events
-    this.state = "pause"; // state of app
-
-    // grid size
-
-    this.x_size = x_size;
-    this.y_size = y_size;
-
-    // tables 
-
-    this.map = []; // empty map of cells
-    this.samples = []; // empty map of samples
-
-    // buffers
-
-    this.soundBuffer = []; // map of sounds to play at one step
-    this.triggerBuffer = []; //map of triggers to light up
-
-    // DOM 
-
-    this.grid = {};
-    this.topPanel = {};
-    this.barCounter = {};
-    this.rightPanel = {};
-    this.bottomPanel = {};
-    this.tooltips = $(".tooltip-off");
-    this.tooltipsLeft = $(".tooltip-left-off");
-
-    // METHODS
-
-    this.pos = function (x_coord, y_coord) {
-        return y_coord * this.y_size + x_coord;
-    };
-
-    // inits
-
-    this.init_map = function () {
-        for (i = 0; i < this.x_size * this.y_size; i++) {
-            this.map.push(new cellProto());
-            this.map[i].type = "empty";
-        }
-    };
-
-    // methods for setting up cells and samples
-
-    this.set_sample = function (x, y) {
-        var direction = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "right";
-        var sound = arguments[3];
-
-        this.samples.push(new sampleProto(x, y, direction, sound));
-    };
-
-    this.set_bouncer = function (x, y) {
-        var addr = this.pos(x, y);
-        this.map[addr].type = "bouncer";
-        this.map[addr].solid = true;
-        this.grid.children().eq(addr).removeClass();
-        this.grid.children().eq(addr).addClass("cell");
-        this.grid.children().eq(addr).addClass("bouncer");
-        this.grid.children().eq(addr).text("#");
-    };
-
-    this.set_arrow = function (x, y) {
-        var direction = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "right";
-
-        var addr = this.pos(x, y);
-        this.map[addr].type = "arrow";
-        this.map[addr].direction = direction;
-        this.map[addr].solid = false;
-    };
-
-    this.set_trigger = function (x, y) {
-        var addr = this.pos(x, y);
-        this.map[addr].subtype = "trigger";
-        this.map[addr].solid = false;
-        this.grid.children().eq(addr).addClass("cell");
-        this.grid.children().eq(addr).addClass("trigger");
-    };
-
-    this.switch_help = function () {
-        var help = $("#help");
-        this.tooltips.toggleClass("tooltip tooltip-off");
-        this.tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
-        help.toggleClass("help-off help-on");
-        help.addClass("select");
-        setTimeout(function () {
-            help.removeClass("select");
-        }, 300);
-    };
-
-    this.animate_samples = function () {
-
-        // moving samples and detecting interactions with obiejcts on map
-
-        this.state != "pause" && this.bar++;
-        this.soundBuffer = [];
-
-        for (var _i = 0; _i < this.samples.length; _i++) {
-
-            var sample_field = this.pos(this.samples[_i].x, this.samples[_i].y);
-            var right_field = this.pos(this.samples[_i].x + 1, this.samples[_i].y);
-            var left_field = this.pos(this.samples[_i].x - 1, this.samples[_i].y);
-            var up_field = this.pos(this.samples[_i].x, this.samples[_i].y - 1);
-            var down_field = this.pos(this.samples[_i].x, this.samples[_i].y + 1);
-            this.samples[_i].history_x = this.samples[_i].x;
-            this.samples[_i].history_y = this.samples[_i].y;
-
-            if (this.map[sample_field].type === "arrow") {
-                this.samples[_i].direction = this.map[sample_field].direction;
-            }
-
-            // move stuff around
-
-            switch (this.samples[_i].direction) {
-                case "right":
-                    if (this.samples[_i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") {
-                        // bounce sample to the left
-                        this.samples[_i].x--;
-                        this.samples[_i].direction = "left";
-                    } else {
-                        this.samples[_i].x++;
-                    }
-                    break;
-                case "left":
-                    if (this.map[left_field] === undefined || this.samples[_i].x == 0 || this.map[left_field].type == "bouncer") {
-                        // bounce sample to the right
-                        this.samples[_i].x++;
-                        this.samples[_i].direction = "right";
-                    } else {
-                        this.samples[_i].x--;
-                    }
-                    break;
-                case "down":
-                    if (this.map[down_field] === undefined || this.samples[_i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") {
-                        // bounce sample up
-                        this.samples[_i].y--;
-                        this.samples[_i].direction = "up";
-                    } else {
-                        this.samples[_i].y++;
-                    }
-                    break;
-                case "up":
-                    if (this.map[up_field] === undefined || this.samples[_i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[_i].y == 0) {
-                        // bounce sample down
-                        this.samples[_i].y++;
-                        this.samples[_i].direction = "down";
-                    } else {
-                        this.samples[_i].y--;
-                    }
-                    break;
-            }
-
-            // detect triggers and store sounds and triggers into buffers
-
-            sample_field = this.pos(this.samples[_i].x, this.samples[_i].y);
-
-            if (this.map[sample_field].subtype === "trigger") {
-                this.soundBuffer.push(this.samples[_i].sound);
-                this.triggerBuffer.push(sample_field);
-            }
-        }
-    };
-
-    this.prepare_DOM = function (soundbank) {
-
-        // --- INITS ---
-
-        this.topPanel = $("#top-panel");
-        this.barCounter = $("#bar-counter");
-        this.grid = $("#grid");
-        this.rightPanel = $("#right-panel");
-        this.bottomPanel = $("#bottom-panel");
-        var sampleBank = $(".sample-bank");
-        var app = $("#app");
-        var play = $("#play");
-        var step = $("#step");
-        var pause = $("#pause");
-        var help = $("#help");
-
-        // pinpointing and catching that damn scope :)  
-
-        var self = this;
-
-        // --- TOP PANEL --- 
-        // creating events for controls
-
-        play.on("click", function () {
-            self.state = "play";
-            var target = $(this);
-            target.addClass("select");
-            setTimeout(function () {
-                target.removeClass("select");
-            }, 300);
-        });
-
-        pause.on("click", function () {
-            self.state = "pause";
-            var target = $(this);
-            target.addClass("select");
-            setTimeout(function () {
-                target.removeClass("select");
-            }, 300);
-        });
-
-        step.on("click", function () {
-            if (self.state != "play") {
-                self.state = "step";
-                var target = $(this);
-                target.addClass("select");
-                setTimeout(function () {
-                    target.removeClass("select");
-                }, 300);
-            }
-        });
-
-        //  --- GRID --- 
-        // calculate screen and grid size
-
-        app.css("width", 34 * this.x_size + 45 + "px"); // app window
-        this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
-        this.grid.css("width", 34 * this.x_size + 10 + "px");
-
-        for (var _i2 = 0; _i2 < this.x_size * this.y_size; _i2++) {
-            var cell = $("<div>");
-            cell.addClass("cell");
-            cell.attr("pos", _i2);
-            cell.text("");
-            cell.appendTo("#grid").fadeIn();
-        }
-
-        // create grid events for each cell - single clicks
-
-        this.grid.children().on("click", function () {
-
-            // vars 
-
-            var target = $(this);
-            var addr = target.attr("pos");
-
-            // adding trigger 
-
-            if (self.action.type == "object" && self.action.index == 0) {
-                self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
-            }
-
-            // adding bouncer 
-
-            if (self.action.type == "object" && self.action.index == 1) {
-                self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
-            }
-
-            // removing object OR CURSOR 
-
-            if (self.action.type == "object" && self.action.index == 2) {
-
-                // removing object - trigger, bouncer or arrow, then...
-
-                self.map[addr].type = "empty";
-                self.map[addr].subtype = "";
-                target.removeClass();
-                target.text("");
-                target.addClass("cell");
-
-                // ...checking for samples and removing them - in case 
-
-                var sample_field = 0;
-                var samples_temp = [];
-                for (var _i3 = 0; _i3 < self.samples.length; _i3++) {
-                    sample_field = self.pos(self.samples[_i3].x, self.samples[_i3].y);
-                    sample_field != target.attr("pos") && samples_temp.push(self.samples[_i3]);
-                }
-
-                // writing down new table of samples 
-
-                self.samples = samples_temp;
-            }
-
-            if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
-                self.set_arrow(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
-            }
-
-            if (self.action.type == "sample") {
-                self.set_sample(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
-            }
-
-            target.addClass("select");
-            setTimeout(function () {
-                target.removeClass("select");
-            }, 300);
-        });
-
-        // --- RIGHT PANEL --- 
-
-        // create events
-
-        this.rightPanel.children().on("click", function () {
-            self.action.type == "sample" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
-            var target = $(this);
-            self.action.type = "object";
-            self.rightPanel.children().eq(self.action.index).removeClass("glow");
-            self.action.index = target.index();
-            target.index() == 3 && (self.action.direction = "right");
-            target.index() == 4 && (self.action.direction = "left");
-            target.index() == 5 && (self.action.direction = "down");
-            target.index() == 6 && (self.action.direction = "up");
-            target.addClass("glow");
-        });
-
-        // --- BOTTOM PANEL --- 
-
-        // create sample list
-
-        this.bottomPanel.css("width", 34 * x_size + 50 + "px");
-
-        soundbank.sounds.forEach(function (element, index) {
-
-            index > 0 ? sampleBank.clone().appendTo(self.bottomPanel) : null;
-
-            var cutStart = element._src.lastIndexOf("/") + 1;
-            var name = element._src.substring(cutStart + 2, element._src.length - 4);
-
-            var lastBank = self.bottomPanel.children().last();
-            lastBank.attr("pos", index);
-            lastBank.children().eq(0).text(index);
-            lastBank.children().eq(1).text(name);
-
-            lastBank.children().on("click", function () {
-
-                self.action.type == "sample" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
-                var target = $(this);
-                clickIndex = target.index();
-                target.parent().children().eq(0).addClass("glow");
-                target.parent().children().eq(1).addClass("glow");
-                clickIndex > 2 ? target.parent().children().eq(clickIndex).addClass("glow") : target.parent().children().eq(2).addClass("glow");
-
-                self.action.type = "sample";
-                self.action.index = target.parent().attr("pos");
-
-                clickIndex > -1 && clickIndex < 3 && (self.action.direction = "right");
-                clickIndex == 3 && (self.action.direction = "left");
-                clickIndex == 4 && (self.action.direction = "down");
-                clickIndex == 5 && (self.action.direction = "up");
-            });
-        });
-
-        help.on("click", function () {
-
-            self.switch_help();
-
-            // tooltips.toggleClass("tooltip tooltip-off");
-            // tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
-
-            // let target = $(this);
-            // target.toggleClass("help-off help-on");
-
-            // target.addClass("select");
-            // setTimeout(function() {
-            //     target.removeClass("select");
-            // }, 300);
-        });
-    };
-
-    this.render_DOM = function () {
-        var _this = this;
-
-        // bar counter
-
-        this.state != "pause" && this.barCounter.css("transform", "rotate(" + (45 + this.bar % 4 * 90) + "deg)");
-        this.state == "step" && (this.state = "pause");
-
-        // rewriting standard elements into DOM
-
-        var _loop = function _loop(_i4) {
-
-            // triggers 
-
-            if (_this.map[_i4].subtype === "trigger") {
-                if (_this.triggerBuffer.indexOf(_i4) != -1) {
-                    _this.grid.children().eq(_i4).addClass("cell");
-                    _this.grid.children().eq(_i4).addClass("trigGlow");
-                    setTimeout(function () {
-                        _this.grid.children().eq(_i4).removeClass("trigGlow");
-                    }, 100);
-                }
-            }
-
-            // arrows
-
-            if (_this.map[_i4].type === "arrow") {
-
-                _this.map[_i4].direction === "right" && _this.grid.children().eq(_i4).text("→");
-                _this.map[_i4].direction === "left" && _this.grid.children().eq(_i4).text("←");
-                _this.map[_i4].direction === "up" && _this.grid.children().eq(_i4).text("↑");
-                _this.map[_i4].direction === "down" && _this.grid.children().eq(_i4).text("↓");
-            }
-        };
-
-        for (var _i4 = 0; _i4 < this.x_size * this.y_size - 1; _i4++) {
-            _loop(_i4);
-        }
-
-        for (var _i5 = 0; _i5 < this.samples.length; _i5++) {
-            // lighting up samples
-            this.grid.children().eq(this.pos(this.samples[_i5].x, this.samples[_i5].y)).addClass("sample");
-            this.grid.children().eq(this.pos(this.samples[_i5].x, this.samples[_i5].y)).text(this.samples[_i5].sound);
-            this.grid.children().eq(this.pos(this.samples[_i5].history_x, this.samples[_i5].history_y)).removeClass("sample");
-            this.bar > 0 && this.grid.children().eq(this.pos(this.samples[_i5].history_x, this.samples[_i5].history_y)).text("");
-        }
-
-        // cleaning buffers
-
-        this.triggerBuffer = [];
-    };
-};
-
-module.exports = matrixProto;
+/***/ (function(module, exports) {
+
+ var sampleProto = function(x, y, direction, sound) {
+     this.type = "normal";
+     this.x = x;
+     this.y = y;
+     this.history_x = 0;
+     this.history_y = 0;
+     this.direction = direction;
+     this.sound = sound;
+     this.speed = 1;
+
+ }
+
+ var cellProto = function() {
+     display: "";
+     solid: false;
+     type: "empty";
+     subtype: "";
+     direction: "none";
+ }
+
+ var matrixProto = function(x_size, y_size) {
+
+     // globals 
+
+     this.bpm = 100; // beats per minute
+     this.bars = 4; // bars per beat
+     this.bar = 0; // bar counter
+     this.action = { // action for click
+         type: "object",
+         index: 0,
+         direction: ""
+     }; // type of interacton - for events
+     this.state = "pause" // state of app
+
+     // grid size
+
+     this.x_size = x_size;
+     this.y_size = y_size;
+
+     // tables 
+
+     this.map = []; // empty map of cells
+     this.samples = []; // empty map of samples
+
+     // buffers
+
+     this.soundBuffer = []; // map of sounds to play at one step
+     this.triggerBuffer = []; //map of triggers to light up
+
+     // DOM 
+
+     this.grid = {};
+     this.topPanel = {};
+     this.barCounter = {};
+     this.rightPanel = {};
+     this.bottomPanel = {};
+     this.tooltips = $(".tooltip-off");
+     this.tooltipsLeft = $(".tooltip-left-off");
+
+
+     // METHODS
+
+     this.pos = function(x_coord, y_coord) {
+         return (y_coord * this.y_size) + x_coord;
+     }
+
+     // inits
+
+     this.init_map = function() {
+         for (i = 0; i < this.x_size * this.y_size; i++) {
+             this.map.push(new cellProto())
+             this.map[i].type = "empty";
+         }
+     }
+
+     // methods for setting up cells and samples
+
+     this.set_sample = function(x, y, direction = "right", sound) {
+         this.samples.push(new sampleProto(x, y, direction, sound));
+     }
+
+     this.set_bouncer = function(x, y) {
+         let addr = this.pos(x, y);
+         this.map[addr].type = "bouncer";
+         this.map[addr].solid = true;
+         this.grid.children().eq(addr).removeClass();
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("bouncer");
+         this.grid.children().eq(addr).text("#")
+     }
+
+     this.set_arrow = function(x, y, direction = "right") {
+         let addr = this.pos(x, y);
+         this.map[addr].type = "arrow";
+         this.map[addr].direction = direction;
+         this.map[addr].solid = false;
+     }
+
+     this.set_trigger = function(x, y) {
+         let addr = this.pos(x, y);
+         this.map[addr].subtype = "trigger";
+         this.map[addr].solid = false;
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("trigger");
+     }
+
+     this.switch_help = function() {
+         let help = $("#help");
+         this.tooltips.toggleClass("tooltip tooltip-off");
+         this.tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
+         help.toggleClass("help-off help-on");
+         help.addClass("select");
+         setTimeout(function() {
+             help.removeClass("select");
+         }, 300);
+     }
+
+
+     this.animate_samples = function() {
+
+         // moving samples and detecting interactions with obiejcts on map
+
+         (this.state != "pause") && (this.bar++);
+         this.soundBuffer = [];
+
+         for (let i = 0; i < this.samples.length; i++) {
+
+             let sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+             let right_field = this.pos(this.samples[i].x + 1, this.samples[i].y);
+             let left_field = this.pos(this.samples[i].x - 1, this.samples[i].y);
+             let up_field = this.pos(this.samples[i].x, this.samples[i].y - 1);
+             let down_field = this.pos(this.samples[i].x, this.samples[i].y + 1);
+             this.samples[i].history_x = this.samples[i].x;
+             this.samples[i].history_y = this.samples[i].y;
+
+             if (this.map[sample_field].type === "arrow") {
+                 this.samples[i].direction = this.map[sample_field].direction;
+             }
+
+             // move stuff around
+
+             switch (this.samples[i].direction) {
+                 case "right":
+                     if (this.samples[i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") { // bounce sample to the left
+                         this.samples[i].x--;
+                         this.samples[i].direction = "left";
+                     } else {
+                         this.samples[i].x++;
+                     }
+                     break;
+                 case "left":
+                     if (this.map[left_field] === undefined || this.samples[i].x == 0 || this.map[left_field].type == "bouncer") { // bounce sample to the right
+                         this.samples[i].x++;
+                         this.samples[i].direction = "right";
+                     } else {
+                         this.samples[i].x--;
+                     }
+                     break;
+                 case "down":
+                     if (this.map[down_field] === undefined || this.samples[i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") { // bounce sample up
+                         this.samples[i].y--;
+                         this.samples[i].direction = "up";
+                     } else {
+                         this.samples[i].y++;
+                     }
+                     break;
+                 case "up":
+                     if (this.map[up_field] === undefined || this.samples[i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[i].y == 0) { // bounce sample down
+                         this.samples[i].y++;
+                         this.samples[i].direction = "down";
+                     } else {
+                         this.samples[i].y--;
+                     }
+                     break;
+             }
+
+             // detect triggers and store sounds and triggers into buffers
+
+             sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+
+             if (this.map[sample_field].subtype === "trigger") {
+                 this.soundBuffer.push(this.samples[i].sound);
+                 this.triggerBuffer.push(sample_field);
+             }
+
+         }
+     }
+
+     this.prepare_DOM = function(soundbank) {
+
+         // --- INITS ---
+
+         this.topPanel = $("#top-panel");
+         this.barCounter = $("#bar-counter");
+         this.grid = $("#grid");
+         this.rightPanel = $("#right-panel");
+         this.bottomPanel = $("#bottom-panel");
+         let sampleBank = $(".sample-bank");
+         let app = $("#app");
+         let play = $("#play");
+         let step = $("#step");
+         let pause = $("#pause");
+         let help = $("#help");
+
+         // pinpointing and catching that damn scope :)  
+
+         let self = this;
+
+         // --- TOP PANEL --- 
+         // creating events for controls
+
+         play.on("click", function() {
+             self.state = "play";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
+         pause.on("click", function() {
+             self.state = "pause";
+             let target = $(this);
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+         })
+
+         step.on("click", function() {
+             if (self.state != "play") {
+                 self.state = "step";
+                 let target = $(this);
+                 target.addClass("select");
+                 setTimeout(function() {
+                     target.removeClass("select");
+                 }, 300);
+             }
+         })
+
+         //  --- GRID --- 
+         // calculate screen and grid size
+
+         app.css("width", 34 * this.x_size + 45 + "px"); // app window
+         this.topPanel.css("width", 34 * this.x_size - 10 + "px"); // top panel
+         this.grid.css("width", 34 * this.x_size + 10 + "px");
+
+         for (let i = 0; i < this.x_size * this.y_size; i++) {
+             let cell = $("<div>");
+             cell.addClass("cell");
+             cell.attr("pos", i);
+             cell.text("")
+             cell.appendTo("#grid").fadeIn();
+         }
+
+         // create grid events for each cell - single clicks
+
+         this.grid.children().on("click", function() {
+
+             // vars 
+
+             let target = $(this);
+             let addr = target.attr("pos");
+
+             // adding trigger 
+
+             if (self.action.type == "object" && self.action.index == 0) {
+                 self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             // adding bouncer 
+
+             if (self.action.type == "object" && self.action.index == 1) {
+                 self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
+             }
+
+             // removing object OR CURSOR 
+
+             if (self.action.type == "object" && self.action.index == 2) {
+
+                 // removing object - trigger, bouncer or arrow, then...
+
+                 self.map[addr].type = "empty";
+                 self.map[addr].subtype = "";
+                 target.removeClass();
+                 target.text("")
+                 target.addClass("cell");
+
+                 // ...checking for samples and removing them - in case 
+
+                 let sample_field = 0;
+                 let samples_temp = [];
+                 for (let i = 0; i < self.samples.length; i++) {
+                     sample_field = self.pos(self.samples[i].x, self.samples[i].y);
+                     (sample_field != target.attr("pos")) && (samples_temp.push(self.samples[i]))
+                 }
+
+                 // writing down new table of samples 
+
+                 self.samples = samples_temp;
+             }
+
+             if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
+                 self.set_arrow(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
+             }
+
+             if (self.action.type == "sample") {
+                 self.set_sample(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
+             }
+
+             target.addClass("select")
+             setTimeout(function() {
+                 target.removeClass("select");
+             }, 300);
+
+         })
+
+         // --- RIGHT PANEL --- 
+
+         // create events
+
+         this.rightPanel.children().on("click", function() {
+             self.action.type == "sample" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
+             let target = $(this);
+             self.action.type = "object";
+             self.rightPanel.children().eq(self.action.index).removeClass("glow");
+             self.action.index = target.index();
+             (target.index() == 3) && (self.action.direction = "right");
+             (target.index() == 4) && (self.action.direction = "left");
+             (target.index() == 5) && (self.action.direction = "down");
+             (target.index() == 6) && (self.action.direction = "up");
+             target.addClass("glow");
+         })
+
+         // --- BOTTOM PANEL --- 
+
+         // create sample list
+
+         this.bottomPanel.css("width", 34 * x_size + 50 + "px");
+
+         soundbank.sounds.forEach((element, index) => {
+
+             (index > 0 ? sampleBank.clone().appendTo(self.bottomPanel) : null)
+
+             let cutStart = element._src.lastIndexOf("/") + 1;
+             let name = element._src.substring(cutStart + 2, element._src.length - 4);
+
+
+             let lastBank = self.bottomPanel.children().last()
+             lastBank.attr("pos", index);
+             lastBank.children().eq(0).text(index);
+             lastBank.children().eq(1).text(name);
+
+             lastBank.children().on("click", function() {
+
+                 self.action.type == "sample" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
+                 let target = $(this);
+                 clickIndex = target.index();
+                 target.parent().children().eq(0).addClass("glow");
+                 target.parent().children().eq(1).addClass("glow");
+                 (clickIndex > 2 ? target.parent().children().eq(clickIndex).addClass("glow") : target.parent().children().eq(2).addClass("glow"));
+
+                 self.action.type = "sample";
+                 self.action.index = target.parent().attr("pos");
+
+                 (clickIndex > -1 && clickIndex < 3) && (self.action.direction = "right");
+                 (clickIndex == 3) && (self.action.direction = "left");
+                 (clickIndex == 4) && (self.action.direction = "down");
+                 (clickIndex == 5) && (self.action.direction = "up");
+
+             })
+         });
+
+         help.on("click", function() {
+
+             self.switch_help();
+
+             // tooltips.toggleClass("tooltip tooltip-off");
+             // tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
+
+             // let target = $(this);
+             // target.toggleClass("help-off help-on");
+
+             // target.addClass("select");
+             // setTimeout(function() {
+             //     target.removeClass("select");
+             // }, 300);
+         })
+
+     };
+
+
+
+     this.render_DOM = function() {
+
+         // bar counter
+
+         (this.state != "pause") && (this.barCounter.css("transform", "rotate(" + (45 + (this.bar % 4) * 90) + "deg)"));
+         (this.state == "step") && (this.state = "pause");
+
+         // rewriting standard elements into DOM
+
+         for (let i = 0; i < this.x_size * this.y_size - 1; i++) {
+
+             // triggers 
+
+             if (this.map[i].subtype === "trigger") {
+                 if (this.triggerBuffer.indexOf(i) != -1) {
+                     this.grid.children().eq(i).addClass("cell");
+                     this.grid.children().eq(i).addClass("trigGlow");
+                     setTimeout(() => {
+                         this.grid.children().eq(i).removeClass("trigGlow");
+                     }, 100);
+                 }
+             }
+
+             // arrows
+
+             if (this.map[i].type === "arrow") {
+
+                 (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
+                 (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));
+                 (this.map[i].direction === "up") && (this.grid.children().eq(i).text("↑"));
+                 (this.map[i].direction === "down") && (this.grid.children().eq(i).text("↓"));
+             }
+
+         }
+
+
+         for (let i = 0; i < this.samples.length; i++) { // lighting up samples
+             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).addClass("sample");
+             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).text(this.samples[i].sound);
+             this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).removeClass("sample");
+             (this.bar > 0) && (this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).text(""));
+         }
+
+
+         // cleaning buffers
+
+         this.triggerBuffer = [];
+     }
+ }
+
+ module.exports = matrixProto;
 
 /***/ })
 /******/ ]);

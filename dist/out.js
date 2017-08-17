@@ -70,30 +70,11 @@
 $(document).ready(function() {
 
     __webpack_require__(1);
+    var menuProto = __webpack_require__(6);
+    var menu = new menuProto();
 
-    // INITS
+    menu.init_menu();
 
-    var soundbankProto = __webpack_require__(6);
-    var matrixProto = __webpack_require__(7);
-
-    var matrix = new matrixProto(17, 17);
-
-
-    var bank808 = new soundbankProto();
-
-    bank808.load_sounds("./audio/A_808/", ["bass.wav", "kick.wav", "clap.wav", "clap 2.wav", "snare.wav", "cymbal.wav", "closed hh.wav", "open hh.wav", "tom.wav", "tom 2.wav"]);
-
-
-    matrix.init_map();
-    matrix.prepare_DOM(bank808);
-    matrix.render_DOM();
-    mainLoop = setInterval(function() {
-        if (matrix.state != "pause") {
-            matrix.animate_cursors();                       
-            bank808.trigger_sounds(matrix.soundBuffer);
-        }
-        matrix.render_DOM();
-    }, Math.round(60000 / matrix.bpm / matrix.bars));
 })
 
 /***/ }),
@@ -136,7 +117,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white;\n  cursor: default;\n  user-select: none; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: #003333; }\n\n.tooltip, .tooltip-left {\n  position: relative; }\n\n.tooltip:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  left: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n.tooltip-left:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  right: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n@keyframes zoomin {\n  0% {\n    transform: scale(0.95); }\n  20% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#help {\n  transition: background-color 0.5s ease; }\n\n.help-off {\n  background-color: transparent; }\n\n.help-on {\n  background-color: green; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  width: 210px;\n  height: 34px; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: border-zoom 0.2s linear; }\n\n@keyframes border-zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#bar-counter {\n  border-radius: 50%;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  height: 30px;\n  color: #e6ffff;\n  border: 4px solid #009999;\n  border-top: 4px solid #ccffff;\n  transition: transform 0.1s;\n  transform: rotate(45deg); }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid #33ffff;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #ccffff; }\n\n.bouncer {\n  border: 1px solid #99ffff; }\n\n.trigger {\n  background-color: #009999;\n  border: 1px solid #99ffff; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: #e6ffff; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  color: #ccffff;\n  border: 1px solid #ccffff; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white;\n  cursor: default;\n  user-select: none; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  -moz-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: #003333; }\n\n.tooltip, .tooltip-left {\n  position: relative; }\n\n.tooltip:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  left: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n.tooltip-left:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  position: absolute;\n  top: 25px;\n  right: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  animation: zoomin 0.3s linear; }\n\n@keyframes zoomin {\n  0% {\n    transform: scale(0.95); }\n  20% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#help {\n  transition: background-color 0.5s ease; }\n\n.help-off {\n  background-color: transparent; }\n\n.help-on {\n  background-color: green; }\n\n#menu {\n  width: 600px; }\n\n.menu-row {\n  margin: 10px 15px;\n  width: 600px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  text-align: center; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  height: 34px; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-start; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  animation: border-zoom 0.2s linear; }\n\n@keyframes border-zoom {\n  0% {\n    transform: scale(0.95); }\n  50% {\n    transform: scale(1.2); }\n  100% {\n    transform: scale(0.95); } }\n\n#bar-counter {\n  border-radius: 50%;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  height: 30px;\n  color: #e6ffff;\n  border: 4px solid #009999;\n  border-top: 4px solid #ccffff;\n  transition: transform 0.1s;\n  transform: rotate(45deg); }\n\n#grid {\n  display: flex;\n  flex-wrap: wrap;\n  align-content: center;\n  align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid #33ffff;\n  border-radius: 17px;\n  margin: 2px 2px;\n  flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #ccffff; }\n\n.bouncer {\n  border: 1px solid #99ffff; }\n\n.trigger {\n  background-color: #009999;\n  border: 1px solid #99ffff; }\n\n@keyframes triggerGlow {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 3px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: #e6ffff; }\n\n.size-30 {\n  flex-basis: 30px; }\n\n.size-60 {\n  flex-basis: 64px; }\n\n.size-90 {\n  flex-basis: 98px; }\n\n.size-140 {\n  flex-basis: 140px; }\n\n.size-180 {\n  flex-basis: 180px; }\n\n@keyframes glowingBorder {\n  0% {\n    box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample-bank {\n  flex-basis: 306px;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start; }\n\n.sample {\n  color: #ccffff;\n  border: 1px solid #ccffff; }\n", ""]);
 
 // exports
 
@@ -679,6 +660,128 @@ module.exports = function (css) {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+    var soundbankProto = __webpack_require__(7);
+    var matrixProto = __webpack_require__(8);
+
+    var menuProto = function() {
+
+        this.app = $("#app");
+        this.menu = $("#menu");
+        this.kits = $(".kits");
+        this.bpm_counter = $("#bpm-counter");
+        this.soundbank = 0;
+        this.bpm = 120;
+
+        this.bank = {};
+        this.matrix = {};
+
+        this.init_menu = function() {
+
+            this.app.hide();
+            this.menu.hide();
+            this.menu.fadeIn(200);
+
+            let self = this;
+
+            $(".menu-row div").on("click", function() {
+
+                let target = $(this);
+
+                if (target.is("#demo")) {
+                    self.soundbank = 0;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#roland-808")) {
+                    self.soundbank = 1;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#plucked")) {
+                    self.soundbank = 2;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
+                }
+
+                if (target.is("#bpm-down")) {
+                    self.bpm -= 5;
+                    self.bpm_counter.text(self.bpm)
+                }
+
+                if (target.is("#bpm-up")) {
+                    self.bpm += 5;
+                    self.bpm_counter.text(self.bpm)
+                }
+
+                // STARTING APP
+
+                if (target.is("#start-app")) {
+
+                    self.bank = new soundbankProto();
+
+                    if (self.soundbank == 0) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10knocker", "11stab"]) }
+
+                    if (self.soundbank == 1) {self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]) }
+
+                    if (self.soundbank == 2) {self.bank.load_sounds("./audio/B_SYNTH_F_MINOR/", ["00synth F", "01synth G", "02synth Ab", "03synth Bb", "04synth C", "05synth Db", "06synth Eb", "07synth F 2"]) }
+
+                    self.matrix = new matrixProto(17, 17);
+
+                    self.matrix.init_map();
+                    self.matrix.prepare_DOM(self.bank);
+
+
+                    // DEMO CONTENT 
+                    // (cuntent must be prepared after soundbank init) 
+
+                    if (self.soundbank == 0) {
+
+                    	self.matrix.set_cursor(0,0,"right",0);
+                    	self.matrix.set_trigger(0,0);
+                    	self.matrix.set_trigger(4,0);
+                    	self.matrix.set_trigger(8,0);
+                    	self.matrix.set_trigger(12,0);
+                    	self.matrix.set_trigger(16,0);
+
+
+                    }
+
+                    self.matrix.render_DOM();
+                    
+
+                    self.menu.fadeOut(200, "swing", () => self.app.fadeIn(200));
+
+
+                    mainLoop = setInterval(function() {
+                        if (self.matrix.state != "pause") {
+                            self.matrix.animate_cursors();
+                            self.bank.trigger_sounds(self.matrix.soundBuffer);
+                        }
+                        self.matrix.render_DOM();
+                    }, Math.round(60000 / self.bpm / self.matrix.bars));
+
+                }
+
+
+                target.addClass("select")
+                setTimeout(function() {
+                    target.removeClass("select");
+                }, 300);
+            })
+
+
+        }
+
+    }
+
+    module.exports = menuProto;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 var soundbankProto = function() {
@@ -693,7 +796,7 @@ var soundbankProto = function() {
 
         filenames.forEach((element) => {
             this.sounds.push(new Howl({
-                src: [path + element]
+                src: [path + element + ".wav"]
             }))
         });
     }
@@ -709,7 +812,7 @@ var soundbankProto = function() {
 module.exports = soundbankProto;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
  var cursorProto = function(x, y, direction, sound) {
@@ -796,19 +899,28 @@ module.exports = soundbankProto;
          let addr = this.pos(x, y);
          this.map[addr].type = "bouncer";
          this.map[addr].solid = true;
+         this.grid.children().eq(addr).removeClass();
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("bouncer");
+         this.grid.children().eq(addr).text("#")
      }
 
-     this.set_pipe = function(x, y, direction = "right") {
+     this.set_arrow = function(x, y, direction = "right") {
          let addr = this.pos(x, y);
-         this.map[addr].type = "pipe";
+         this.map[addr].type = "arrow";
          this.map[addr].direction = direction;
          this.map[addr].solid = false;
+                          // target.removeClass();
+                 // target.addClass("cell");
      }
 
      this.set_trigger = function(x, y) {
          let addr = this.pos(x, y);
          this.map[addr].subtype = "trigger";
          this.map[addr].solid = false;
+         // this.grid.children().eq(addr).removeClass();
+         this.grid.children().eq(addr).addClass("cell")
+         this.grid.children().eq(addr).addClass("trigger");
      }
 
      // let's move things atround! 
@@ -830,7 +942,7 @@ module.exports = soundbankProto;
              this.cursors[i].history_x = this.cursors[i].x;
              this.cursors[i].history_y = this.cursors[i].y;
 
-             if (this.map[cursor_field].type === "pipe") {
+             if (this.map[cursor_field].type === "arrow") {
                  this.cursors[i].direction = this.map[cursor_field].direction;
              }
 
@@ -900,8 +1012,6 @@ module.exports = soundbankProto;
          let help = $("#help");
          let tooltips = $(".tooltip-off");
          let tooltipsLeft = $(".tooltip-left-off");
-         console.log(tooltips);
-         console.log(this.sampleBank);
 
          // pinpointing and catching that damn scope :)  
 
@@ -963,22 +1073,15 @@ module.exports = soundbankProto;
              let target = $(this);
              let addr = target.attr("pos");
 
-             // adding cursor 
+             // adding trigger 
 
              if (self.action.type == "object" && self.action.index == 0) {
-                 target.removeClass();
-                 target.addClass("cell")
-                 target.addClass("trigger");
                  self.set_trigger(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
              // adding bouncer 
 
              if (self.action.type == "object" && self.action.index == 1) {
-                 target.removeClass();
-                 target.addClass("cell")
-                 target.addClass("bouncer");
-                 target.text("#")
                  self.set_bouncer(addr % self.x_size, Math.floor(addr / self.x_size));
              }
 
@@ -986,7 +1089,7 @@ module.exports = soundbankProto;
 
              if (self.action.type == "object" && self.action.index == 2) {
 
-                // removing object - trigger, bouncer or arrow, then...
+                 // removing object - trigger, bouncer or arrow, then...
 
                  self.map[addr].type = "empty";
                  self.map[addr].subtype = "";
@@ -1005,20 +1108,14 @@ module.exports = soundbankProto;
 
                  // writing down new table of cursors 
 
-                 self.cursors = cursors_temp; 
+                 self.cursors = cursors_temp;
              }
 
              if (self.action.type == "object" && self.action.index > 2 && self.action.index < 7) {
-                 target.removeClass();
-                 target.addClass("cell");
-                 // target.text(self.rightPanel.children().eq(self.action.index));
-                 console.log(self.action.direction);
-                 self.set_pipe(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
+                 self.set_arrow(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction);
              }
 
              if (self.action.type == "cursor") {
-                 target.removeClass();
-                 target.addClass("cell")
                  self.set_cursor(addr % self.x_size, Math.floor(addr / self.x_size), self.action.direction, self.action.index);
              }
 
@@ -1037,7 +1134,6 @@ module.exports = soundbankProto;
              self.action.type == "cursor" ? self.bottomPanel.children().children().removeClass("glow") : self.rightPanel.children().removeClass("glow");
              let target = $(this);
              self.action.type = "object";
-             console.log(target.index());
              self.rightPanel.children().eq(self.action.index).removeClass("glow");
              self.action.index = target.index();
              (target.index() == 3) && (self.action.direction = "right");
@@ -1058,7 +1154,8 @@ module.exports = soundbankProto;
              (index > 0 ? sampleBank.clone().appendTo(self.bottomPanel) : null)
 
              let cutStart = element._src.lastIndexOf("/") + 1;
-             let name = element._src.slice(cutStart, element._src.length - 4);
+             let name = element._src.substring(cutStart + 2, element._src.length - 4);
+
 
              let lastBank = self.bottomPanel.children().last()
              lastBank.attr("pos", index)
@@ -1125,9 +1222,9 @@ module.exports = soundbankProto;
                  }
              }
 
-             // pipes
+             // arrows
 
-             if (this.map[i].type === "pipe") {
+             if (this.map[i].type === "arrow") {
 
                  (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
                  (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));

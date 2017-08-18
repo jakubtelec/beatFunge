@@ -41,6 +41,12 @@
                     self.soundbank = 2;
                     self.kits.children().removeClass("glow");
                     target.addClass("glow");
+                }                
+
+                if (target.is("#minimal-tech")) {
+                    self.soundbank = 3;
+                    self.kits.children().removeClass("glow");
+                    target.addClass("glow");
                 }
 
                 if (target.is("#bpm-down")) {
@@ -59,7 +65,7 @@
 
                     self.bank = new soundbankProto();
 
-                    if (self.soundbank == 0) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10stab high", "11stab"]) }
+                    if (self.soundbank == 0 || self.soundbank == 3) {self.bank.load_sounds("./audio/X_DEMO/", ["00kick", "01bass kick", "02snare 1", "03snare 2", "04claps", "05open hh", "06closed hh 1", "07closed hh 2", "08rim 1", "09rim 2", "10stab high", "11stab"]) }
 
                     if (self.soundbank == 1) {self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]) }
 

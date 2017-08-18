@@ -9,7 +9,7 @@
   },
   "browserlist": [
     "> 1%",
-    "ie > 8"
+    "last 3 versions"
   ],
   "author": "",
   "license": "ISC",

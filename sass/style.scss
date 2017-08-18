@@ -42,8 +42,10 @@ body {
     line-height: 16px;
     background: $tooltipColor;
     border-radius: 10px;
+    border: 1px solid darken($tooltipColor,5%);
+    box-shadow: 6px 6px 22px -4px rgba(0,0,0,0.82);
     position: absolute;    
-    top: 25px;
+    top: 20px;
     left: 15px;    
     color: #fff;
     content: attr(data-title);
@@ -60,10 +62,12 @@ body {
     text-align: left;
     line-height: 16px;
     background: $tooltipColor;
-    border-radius: 10px;
+        border-radius: 10px;
+    border: 1px solid darken($tooltipColor,5%);
+    box-shadow: 6px 6px 22px -4px rgba(0,0,0,0.82);
     position: absolute;    
-    top: 25px;
-    right: 15px;    
+    top: 20px;
+    right: 20px;    
     color: #fff;
     content: attr(data-title);
     display: inline-block;

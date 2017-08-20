@@ -15,7 +15,7 @@
 
 #### Now, test it:
 
-* ##### https://jakubtelec.github.io/beatFunge/
+* ### https://jakubtelec.github.io/beatFunge/
 
 #### Credits:
 

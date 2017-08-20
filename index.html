@@ -58,15 +58,15 @@
             <div class="tooltip-off" id="grid" data-title="Cell grid. Click on any cell to add or remove objects: triggers, bouncers, arrows or samples.">
             </div>
             <div id="right-panel">
-                <div class="button size-30 trigger glow tooltip-left-off" id="add-trigger" data-title="Add trigger cell. Combined with sample trigger plays sound."></div>
-                <div class="button size-30 bouncer tooltip-left-off" id="add-bouncer" data-title="Add bouncer cell. Bouncer turning back samples.">#</div>
-                <div class="button size-30 bouncer tooltip-left-off" data-title="Eraser. When selected, click on any cell to remove trigger, bouncer, arrow or sample.">X</div>
+                <div class="button size-30 trigger glow tooltip-left-off" id="add-trigger" data-title="Add trigger cell. Once sample moves over it, trigger cell triggers it's sound."></div>
+                <div class="button size-30 bouncer tooltip-left-off" id="add-bouncer" data-title="Add bouncer cell. Bouncer turns back samples by switching their direction.">#</div>
+                <div class="button size-30 bouncer tooltip-left-off" data-title="Eraser. Click on any cell to remove it's content - trigger, bouncer, arrow or sample.">X</div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample right. Can be combined with trigger."> → </div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample left. Can be combined with trigger."> ← </div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample down. Can be combined with trigger."> ↓ </div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample up. Can be combined with trigger."> ↑ </div>
             </div>
-            <div class="tooltip-off" id="bottom-panel" data-title="Sample selector. By default sample moves right - click on one of arrows on the right side of sample name to change it's direction. Important: when play is on, new sample starts to move instantly!">
+            <div class="tooltip-off" id="bottom-panel" data-title="Sample selector. By default new sample moves right - click on one of arrows on the right side of sample name to change it's direction. Important: when play is on, new sample starts to move instantly!">
                 <div class="sample-bank">
                     <div class="button size-30 sample" id="new-sample"> 0 </div>
                     <div class="button size-90 sample"> Samplename </div>
@@ -77,6 +77,7 @@
                 </div>
             </div>
         </div>
+
         <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
         <script src="./dist/out.js" type="text/javascript"></script>
 </body>

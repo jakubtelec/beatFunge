@@ -82,6 +82,7 @@
             this.bpm_counter = $("#bpm-counter");
             this.soundbank = -1;
             this.bpm = 120;
+            this.timer = 0;
 
             this.bank = {};
             this.matrix = {};
@@ -169,7 +170,6 @@
                         if (self.soundbank == 5 || self.soundbank == -1) { self.bank.load_sounds("./audio/D_HIP_HOP/", ["00kick", "01kick 2", "02snare", "03snare 2", "04clap", "05cymbal", "06hat", "07hat 2", "08perc","09perc 2"])}
 
                         self.matrix = new matrixProto(17, 17);
-
                         self.matrix.init_map();
                         self.matrix.prepare_DOM(self.bank);
 
@@ -285,18 +285,22 @@
                         }
 
                         self.matrix.render_DOM();
-
-
                         self.menu.fadeOut(200, "swing", () => self.app.fadeIn(200));
+
+                        self.timer = Math.round(60000 / self.bpm / self.matrix.bars);
+
+                        console.log("Timer: " + self.timer);
 
 
                         mainLoop = setInterval(function() {
+
                             if (self.matrix.state != "pause") {
                                 self.matrix.animate_samples();
                                 self.bank.trigger_sounds(self.matrix.soundBuffer);
                             }
                             self.matrix.render_DOM();
-                        }, Math.round(60000 / self.bpm / self.matrix.bars));
+
+                        }, self.timer);
 
                     }
 
@@ -359,7 +363,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white;\n  cursor: default;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: #003333; }\n\n.tooltip, .tooltip-left {\n  position: relative; }\n\n.tooltip:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  border: 1px solid #006700;\n  -webkit-box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n          box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n  position: absolute;\n  top: 20px;\n  left: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  -webkit-animation: zoomin 0.3s linear;\n          animation: zoomin 0.3s linear; }\n\n.tooltip-left:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  border: 1px solid #006700;\n  -webkit-box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n          box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  -webkit-animation: zoomin 0.3s linear;\n          animation: zoomin 0.3s linear; }\n\n@-webkit-keyframes zoomin {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  20% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n@keyframes zoomin {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  20% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n#help {\n  -webkit-transition: background-color 0.5s ease;\n  transition: background-color 0.5s ease; }\n\n.help-off {\n  background-color: transparent; }\n\n.help-on {\n  background-color: green; }\n\n#menu {\n  width: 600px; }\n\n.menu-row {\n  margin: 10px 15px;\n  width: 600px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  height: 34px; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  -webkit-animation: border-zoom 0.2s linear;\n          animation: border-zoom 0.2s linear;\n  z-index: 10; }\n\n@-webkit-keyframes border-zoom {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  50% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n@keyframes border-zoom {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  50% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n#bar-counter {\n  border-radius: 50%;\n  margin: 2px 2px;\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px;\n  height: 30px;\n  color: #e6ffff;\n  border: 4px solid #009999;\n  border-top: 4px solid #ccffff;\n  -webkit-transition: -webkit-transform 0.1s;\n  transition: -webkit-transform 0.1s;\n  transition: transform 0.1s;\n  transition: transform 0.1s, -webkit-transform 0.1s;\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg); }\n\n#grid {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -ms-flex-item-align: center;\n      align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid #33ffff;\n  border-radius: 17px;\n  margin: 2px 2px;\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #ccffff; }\n\n.bouncer {\n  border: 1px solid #99ffff; }\n\n.trigger {\n  background-color: #009999;\n  border: 1px solid #99ffff; }\n\n@-webkit-keyframes triggerGlow {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 3px #99ffff;\n            box-shadow: 0px 0px 5px 3px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n@keyframes triggerGlow {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 3px #99ffff;\n            box-shadow: 0px 0px 5px 3px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n.trigGlow {\n  -webkit-animation: triggerGlow 0.1s ease-in-out;\n          animation: triggerGlow 0.1s ease-in-out; }\n\n#right-panel {\n  width: 35px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: #e6ffff; }\n\n.size-30 {\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px; }\n\n.size-60 {\n  -ms-flex-preferred-size: 64px;\n      flex-basis: 64px; }\n\n.size-90 {\n  -ms-flex-preferred-size: 98px;\n      flex-basis: 98px; }\n\n.size-140 {\n  -ms-flex-preferred-size: 140px;\n      flex-basis: 140px; }\n\n.size-180 {\n  -ms-flex-preferred-size: 180px;\n      flex-basis: 180px; }\n\n@-webkit-keyframes glowingBorder {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 2px #99ffff;\n            box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n@keyframes glowingBorder {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 2px #99ffff;\n            box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  -webkit-animation: glowingBorder 1s infinite;\n          animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.sample-bank {\n  -ms-flex-preferred-size: 306px;\n      flex-basis: 306px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.sample {\n  color: #ccffff;\n  border: 1px solid #ccffff; }\n", ""]);
+exports.push([module.i, "* {\n  margin: 0 0;\n  padding: 0 0;\n  font-family: 'Arimo', sans-serif;\n  font-size: 14px;\n  color: white;\n  cursor: default;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n\nhtml {\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*,\n*:before,\n*:after {\n  -webkit-box-sizing: inherit;\n  box-sizing: inherit; }\n\nbody {\n  background-color: #003333; }\n\n.tooltip, .tooltip-left {\n  position: relative; }\n\n.tooltip:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  border: 1px solid #006700;\n  -webkit-box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n          box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n  position: absolute;\n  top: 20px;\n  left: 15px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  -webkit-animation: zoomin 0.3s linear;\n          animation: zoomin 0.3s linear; }\n\n.tooltip-left:hover:after {\n  font-size: 14px;\n  width: 150px;\n  text-align: left;\n  line-height: 16px;\n  background: green;\n  border-radius: 10px;\n  border: 1px solid #006700;\n  -webkit-box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n          box-shadow: 6px 6px 22px -4px rgba(0, 0, 0, 0.82);\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  color: #fff;\n  content: attr(data-title);\n  display: inline-block;\n  padding: 5px 10px;\n  text-shadow: 0 1px 0 #000;\n  z-index: 10;\n  -webkit-animation: zoomin 0.3s linear;\n          animation: zoomin 0.3s linear; }\n\n@-webkit-keyframes zoomin {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  20% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n@keyframes zoomin {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  20% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n#help {\n  -webkit-transition: background-color 0.5s ease;\n  transition: background-color 0.5s ease; }\n\n.help-off {\n  background-color: transparent; }\n\n.help-on {\n  background-color: green; }\n\n#menu {\n  width: 600px; }\n\n.menu-row {\n  margin: 10px 15px;\n  width: 600px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center; }\n\nh1 {\n  font-size: 30px;\n  font-weight: 400;\n  display: block;\n  height: 34px; }\n\n.wrapper {\n  width: 100%;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start; }\n\n#top-panel {\n  height: 34px;\n  margin: 10px 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n\n#controls {\n  width: 320px;\n  height: 34px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end; }\n\n.select {\n  border-radius: 50%;\n  -webkit-animation: border-zoom 0.2s linear;\n          animation: border-zoom 0.2s linear;\n  z-index: 10; }\n\n@-webkit-keyframes border-zoom {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  50% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n@keyframes border-zoom {\n  0% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); }\n  50% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2); }\n  100% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95); } }\n\n#bar-counter {\n  border-radius: 50%;\n  margin: 2px 2px;\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px;\n  height: 30px;\n  color: #e6ffff;\n  border: 4px solid #009999;\n  border-top: 4px solid #ccffff;\n  -webkit-transition: -webkit-transform 0.1s;\n  transition: -webkit-transform 0.1s;\n  transition: transform 0.1s;\n  transition: transform 0.1s, -webkit-transform 0.1s;\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg); }\n\n#grid {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -ms-flex-item-align: center;\n      align-self: center; }\n\n.cell {\n  background-color: transparent;\n  border: 1px solid #33ffff;\n  border-radius: 17px;\n  margin: 2px 2px;\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px;\n  text-align: center;\n  height: 30px;\n  line-height: 28px;\n  color: white; }\n\n.cursor {\n  border: 1px solid #ccffff; }\n\n.bouncer {\n  border: 1px solid #99ffff; }\n\n.trigger {\n  background-color: #009999;\n  border: 1px solid #99ffff; }\n\n@-webkit-keyframes triggerGlow {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px;\n            box-shadow: 0px 0px 0px 0px; }\n  70% {\n    -webkit-box-shadow: 0px 0px 3px 3px #99ffff;\n            box-shadow: 0px 0px 3px 3px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px;\n            box-shadow: 0px 0px 0px 0px; } }\n\n@keyframes triggerGlow {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px;\n            box-shadow: 0px 0px 0px 0px; }\n  70% {\n    -webkit-box-shadow: 0px 0px 3px 3px #99ffff;\n            box-shadow: 0px 0px 3px 3px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px;\n            box-shadow: 0px 0px 0px 0px; } }\n\n.trigGlow {\n  -webkit-animation-iteration-count: 1;\n          animation-iteration-count: 1;\n  -webkit-animation: triggerGlow 0.08s;\n          animation: triggerGlow 0.08s; }\n\n#right-panel {\n  width: 35px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.button {\n  border-radius: 20px;\n  margin: 2px 2px;\n  height: 30px;\n  line-height: 28px;\n  text-align: center;\n  font-weight: 400;\n  color: #e6ffff; }\n\n.size-30 {\n  -ms-flex-preferred-size: 30px;\n      flex-basis: 30px; }\n\n.size-60 {\n  -ms-flex-preferred-size: 64px;\n      flex-basis: 64px; }\n\n.size-90 {\n  -ms-flex-preferred-size: 98px;\n      flex-basis: 98px; }\n\n.size-140 {\n  -ms-flex-preferred-size: 140px;\n      flex-basis: 140px; }\n\n.size-180 {\n  -ms-flex-preferred-size: 180px;\n      flex-basis: 180px; }\n\n@-webkit-keyframes glowingBorder {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 2px #99ffff;\n            box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n@keyframes glowingBorder {\n  0% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; }\n  50% {\n    -webkit-box-shadow: 0px 0px 5px 2px #99ffff;\n            box-shadow: 0px 0px 5px 2px #99ffff; }\n  100% {\n    -webkit-box-shadow: 0px 0px 0px 0px transparent;\n            box-shadow: 0px 0px 0px 0px transparent; } }\n\n.glow {\n  -webkit-animation: glowingBorder 1s infinite;\n          animation: glowingBorder 1s infinite; }\n\n#bottom-panel {\n  margin: 10px 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.sample-bank {\n  -ms-flex-preferred-size: 306px;\n      flex-basis: 306px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-line-pack: start;\n      align-content: flex-start; }\n\n.sample {\n  color: #ccffff;\n  border: 1px solid #ccffff; }\n", ""]);
 
 // exports
 
@@ -3841,6 +3845,10 @@ module.exports = soundbankProto;
          this.map[addr].type = "arrow";
          this.map[addr].direction = direction;
          this.map[addr].solid = false;
+        (direction === "right") && (this.grid.children().eq(addr).text("→"));
+         (direction === "left") && (this.grid.children().eq(addr).text("←"));
+         (direction === "up") && (this.grid.children().eq(addr).text("↑"));
+         (direction === "down") && (this.grid.children().eq(addr).text("↓"));
      }
 
      this.set_trigger = function(x, y) {
@@ -3860,77 +3868,6 @@ module.exports = soundbankProto;
          setTimeout(function() {
              help.removeClass("select");
          }, 300);
-     }
-
-
-     this.animate_samples = function() {
-
-         // moving samples and detecting interactions with obiejcts on map
-
-         (this.state != "pause") && (this.bar++);
-         this.soundBuffer = [];
-
-         for (let i = 0; i < this.samples.length; i++) {
-
-             let sample_field = this.pos(this.samples[i].x, this.samples[i].y);
-             let right_field = this.pos(this.samples[i].x + 1, this.samples[i].y);
-             let left_field = this.pos(this.samples[i].x - 1, this.samples[i].y);
-             let up_field = this.pos(this.samples[i].x, this.samples[i].y - 1);
-             let down_field = this.pos(this.samples[i].x, this.samples[i].y + 1);
-             this.samples[i].history_x = this.samples[i].x;
-             this.samples[i].history_y = this.samples[i].y;
-
-             if (this.map[sample_field].type === "arrow") {
-                 this.samples[i].direction = this.map[sample_field].direction;
-             }
-
-             // move stuff around
-
-             switch (this.samples[i].direction) {
-                 case "right":
-                     if (this.samples[i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") { // bounce sample to the left
-                         this.samples[i].x--;
-                         this.samples[i].direction = "left";
-                     } else {
-                         this.samples[i].x++;
-                     }
-                     break;
-                 case "left":
-                     if (this.map[left_field] === undefined || this.samples[i].x == 0 || this.map[left_field].type == "bouncer") { // bounce sample to the right
-                         this.samples[i].x++;
-                         this.samples[i].direction = "right";
-                     } else {
-                         this.samples[i].x--;
-                     }
-                     break;
-                 case "down":
-                     if (this.map[down_field] === undefined || this.samples[i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") { // bounce sample up
-                         this.samples[i].y--;
-                         this.samples[i].direction = "up";
-                     } else {
-                         this.samples[i].y++;
-                     }
-                     break;
-                 case "up":
-                     if (this.map[up_field] === undefined || this.samples[i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[i].y == 0) { // bounce sample down
-                         this.samples[i].y++;
-                         this.samples[i].direction = "down";
-                     } else {
-                         this.samples[i].y--;
-                     }
-                     break;
-             }
-
-             // detect triggers and store sounds and triggers into buffers
-
-             sample_field = this.pos(this.samples[i].x, this.samples[i].y);
-
-             if (this.map[sample_field].subtype === "trigger") {
-                 this.soundBuffer.push(this.samples[i].sound);
-                 this.triggerBuffer.push(sample_field);
-             }
-
-         }
      }
 
      this.prepare_DOM = function(soundbank) {
@@ -4119,73 +4056,138 @@ module.exports = soundbankProto;
          });
 
          help.on("click", function() {
-
              self.switch_help();
-
-             // tooltips.toggleClass("tooltip tooltip-off");
-             // tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
-
-             // let target = $(this);
-             // target.toggleClass("help-off help-on");
-
-             // target.addClass("select");
-             // setTimeout(function() {
-             //     target.removeClass("select");
-             // }, 300);
          })
 
      };
 
 
+     this.animate_samples = function() {
+
+         // moving samples and detecting interactions with obiejcts on map
+
+         (this.state != "pause") && (this.bar++);
+         this.soundBuffer = [];
+
+         for (let i = 0; i < this.samples.length; i++) {
+
+             let sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+             let right_field = this.pos(this.samples[i].x + 1, this.samples[i].y);
+             let left_field = this.pos(this.samples[i].x - 1, this.samples[i].y);
+             let up_field = this.pos(this.samples[i].x, this.samples[i].y - 1);
+             let down_field = this.pos(this.samples[i].x, this.samples[i].y + 1);
+             this.samples[i].history_x = this.samples[i].x;
+             this.samples[i].history_y = this.samples[i].y;
+
+             if (this.map[sample_field].type === "arrow") {
+                 this.samples[i].direction = this.map[sample_field].direction;
+             }
+
+             // move stuff around
+
+             switch (this.samples[i].direction) {
+                 case "right":
+                     if (this.samples[i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") { // bounce sample to the left
+                         this.samples[i].x--;
+                         this.samples[i].direction = "left";
+                     } else {
+                         this.samples[i].x++;
+                     }
+                     break;
+                 case "left":
+                     if (this.map[left_field] === undefined || this.samples[i].x == 0 || this.map[left_field].type == "bouncer") { // bounce sample to the right
+                         this.samples[i].x++;
+                         this.samples[i].direction = "right";
+                     } else {
+                         this.samples[i].x--;
+                     }
+                     break;
+                 case "down":
+                     if (this.map[down_field] === undefined || this.samples[i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") { // bounce sample up
+                         this.samples[i].y--;
+                         this.samples[i].direction = "up";
+                     } else {
+                         this.samples[i].y++;
+                     }
+                     break;
+                 case "up":
+                     if (this.map[up_field] === undefined || this.samples[i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[i].y == 0) { // bounce sample down
+                         this.samples[i].y++;
+                         this.samples[i].direction = "down";
+                     } else {
+                         this.samples[i].y--;
+                     }
+                     break;
+             }
+
+             // detect triggers and store sounds and triggers into buffers
+
+             sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+
+             if (this.map[sample_field].subtype === "trigger") {
+                 this.soundBuffer.push(this.samples[i].sound);
+                 this.triggerBuffer.push(sample_field);
+             }
+
+         }
+     }
+
 
      this.render_DOM = function() {
 
          // bar counter
-
          (this.state != "pause") && (this.barCounter.css("transform", "rotate(" + (45 + (this.bar % 4) * 90) + "deg)"));
+         // in case step button is pressed - change state to pause
          (this.state == "step") && (this.state = "pause");
 
-         // rewriting standard elements into DOM
 
-         for (let i = 0; i < this.x_size * this.y_size - 1; i++) {
+         for (let i = 0; i < this.samples.length; i++) {
 
-             // triggers 
+             // lighting up samples
 
-             if (this.map[i].subtype === "trigger") {
-                 if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.grid.children().eq(i).addClass("cell");
-                     this.grid.children().eq(i).addClass("trigGlow");
-                     setTimeout(() => {
-                         this.grid.children().eq(i).removeClass("trigGlow");
-                     }, 100);
+             let pos = this.pos(this.samples[i].x, this.samples[i].y);
+             let last_pos = this.pos(this.samples[i].history_x, this.samples[i].history_y);
+
+             this.grid.children().eq(pos).addClass("sample");
+             this.grid.children().eq(pos).text(this.samples[i].sound);
+
+             if (this.bar > 0) {
+
+                 this.grid.children().eq(last_pos).removeClass("sample");
+
+                 if (this.triggerBuffer.indexOf(pos) != -1) {
+                     this.grid.children().eq(pos).addClass("trigGlow");
+
+                     // method below is clean and elegant, but deadly for app's performance
+                     // so I had to remove it
+
+                     // setTimeout(() => {
+                     //     this.grid.children().eq(pos).removeClass("trigGlow");
+                     // }, 100);
                  }
+
+                 if (this.map[last_pos].type === "arrow") {
+
+                     (this.map[last_pos].direction === "right") && (this.grid.children().eq(last_pos).text("→"));
+                     (this.map[last_pos].direction === "left") && (this.grid.children().eq(last_pos).text("←"));
+                     (this.map[last_pos].direction === "up") && (this.grid.children().eq(last_pos).text("↑"));
+                     (this.map[last_pos].direction === "down") && (this.grid.children().eq(last_pos).text("↓"));
+
+                 } else if (this.map[last_pos].subtype === "trigger") {
+
+                     this.grid.children().eq(last_pos).text("");
+                     this.grid.children().eq(last_pos).removeClass("trigGlow");
+
+                 } else { this.grid.children().eq(last_pos).text("");}
              }
-
-             // arrows
-
-             if (this.map[i].type === "arrow") {
-
-                 (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
-                 (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));
-                 (this.map[i].direction === "up") && (this.grid.children().eq(i).text("↑"));
-                 (this.map[i].direction === "down") && (this.grid.children().eq(i).text("↓"));
-             }
-
          }
-
-
-         for (let i = 0; i < this.samples.length; i++) { // lighting up samples
-             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).addClass("sample");
-             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).text(this.samples[i].sound);
-             this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).removeClass("sample");
-             (this.bar > 0) && (this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).text(""));
-         }
-
 
          // cleaning buffers
 
          this.triggerBuffer = [];
+
      }
+
  }
 
  module.exports = matrixProto;

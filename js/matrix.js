@@ -94,6 +94,10 @@
          this.map[addr].type = "arrow";
          this.map[addr].direction = direction;
          this.map[addr].solid = false;
+        (direction === "right") && (this.grid.children().eq(addr).text("→"));
+         (direction === "left") && (this.grid.children().eq(addr).text("←"));
+         (direction === "up") && (this.grid.children().eq(addr).text("↑"));
+         (direction === "down") && (this.grid.children().eq(addr).text("↓"));
      }
 
      this.set_trigger = function(x, y) {
@@ -113,77 +117,6 @@
          setTimeout(function() {
              help.removeClass("select");
          }, 300);
-     }
-
-
-     this.animate_samples = function() {
-
-         // moving samples and detecting interactions with obiejcts on map
-
-         (this.state != "pause") && (this.bar++);
-         this.soundBuffer = [];
-
-         for (let i = 0; i < this.samples.length; i++) {
-
-             let sample_field = this.pos(this.samples[i].x, this.samples[i].y);
-             let right_field = this.pos(this.samples[i].x + 1, this.samples[i].y);
-             let left_field = this.pos(this.samples[i].x - 1, this.samples[i].y);
-             let up_field = this.pos(this.samples[i].x, this.samples[i].y - 1);
-             let down_field = this.pos(this.samples[i].x, this.samples[i].y + 1);
-             this.samples[i].history_x = this.samples[i].x;
-             this.samples[i].history_y = this.samples[i].y;
-
-             if (this.map[sample_field].type === "arrow") {
-                 this.samples[i].direction = this.map[sample_field].direction;
-             }
-
-             // move stuff around
-
-             switch (this.samples[i].direction) {
-                 case "right":
-                     if (this.samples[i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") { // bounce sample to the left
-                         this.samples[i].x--;
-                         this.samples[i].direction = "left";
-                     } else {
-                         this.samples[i].x++;
-                     }
-                     break;
-                 case "left":
-                     if (this.map[left_field] === undefined || this.samples[i].x == 0 || this.map[left_field].type == "bouncer") { // bounce sample to the right
-                         this.samples[i].x++;
-                         this.samples[i].direction = "right";
-                     } else {
-                         this.samples[i].x--;
-                     }
-                     break;
-                 case "down":
-                     if (this.map[down_field] === undefined || this.samples[i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") { // bounce sample up
-                         this.samples[i].y--;
-                         this.samples[i].direction = "up";
-                     } else {
-                         this.samples[i].y++;
-                     }
-                     break;
-                 case "up":
-                     if (this.map[up_field] === undefined || this.samples[i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[i].y == 0) { // bounce sample down
-                         this.samples[i].y++;
-                         this.samples[i].direction = "down";
-                     } else {
-                         this.samples[i].y--;
-                     }
-                     break;
-             }
-
-             // detect triggers and store sounds and triggers into buffers
-
-             sample_field = this.pos(this.samples[i].x, this.samples[i].y);
-
-             if (this.map[sample_field].subtype === "trigger") {
-                 this.soundBuffer.push(this.samples[i].sound);
-                 this.triggerBuffer.push(sample_field);
-             }
-
-         }
      }
 
      this.prepare_DOM = function(soundbank) {
@@ -372,73 +305,138 @@
          });
 
          help.on("click", function() {
-
              self.switch_help();
-
-             // tooltips.toggleClass("tooltip tooltip-off");
-             // tooltipsLeft.toggleClass("tooltip-left tooltip-left-off");
-
-             // let target = $(this);
-             // target.toggleClass("help-off help-on");
-
-             // target.addClass("select");
-             // setTimeout(function() {
-             //     target.removeClass("select");
-             // }, 300);
          })
 
      };
 
 
+     this.animate_samples = function() {
+
+         // moving samples and detecting interactions with obiejcts on map
+
+         (this.state != "pause") && (this.bar++);
+         this.soundBuffer = [];
+
+         for (let i = 0; i < this.samples.length; i++) {
+
+             let sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+             let right_field = this.pos(this.samples[i].x + 1, this.samples[i].y);
+             let left_field = this.pos(this.samples[i].x - 1, this.samples[i].y);
+             let up_field = this.pos(this.samples[i].x, this.samples[i].y - 1);
+             let down_field = this.pos(this.samples[i].x, this.samples[i].y + 1);
+             this.samples[i].history_x = this.samples[i].x;
+             this.samples[i].history_y = this.samples[i].y;
+
+             if (this.map[sample_field].type === "arrow") {
+                 this.samples[i].direction = this.map[sample_field].direction;
+             }
+
+             // move stuff around
+
+             switch (this.samples[i].direction) {
+                 case "right":
+                     if (this.samples[i].x == this.x_size - 1 || this.map[right_field].type == "bouncer") { // bounce sample to the left
+                         this.samples[i].x--;
+                         this.samples[i].direction = "left";
+                     } else {
+                         this.samples[i].x++;
+                     }
+                     break;
+                 case "left":
+                     if (this.map[left_field] === undefined || this.samples[i].x == 0 || this.map[left_field].type == "bouncer") { // bounce sample to the right
+                         this.samples[i].x++;
+                         this.samples[i].direction = "right";
+                     } else {
+                         this.samples[i].x--;
+                     }
+                     break;
+                 case "down":
+                     if (this.map[down_field] === undefined || this.samples[i].y == this.y_size - 1 || this.map[down_field].type == "bouncer") { // bounce sample up
+                         this.samples[i].y--;
+                         this.samples[i].direction = "up";
+                     } else {
+                         this.samples[i].y++;
+                     }
+                     break;
+                 case "up":
+                     if (this.map[up_field] === undefined || this.samples[i].y == 0 || this.map[up_field].type == "bouncer" || this.samples[i].y == 0) { // bounce sample down
+                         this.samples[i].y++;
+                         this.samples[i].direction = "down";
+                     } else {
+                         this.samples[i].y--;
+                     }
+                     break;
+             }
+
+             // detect triggers and store sounds and triggers into buffers
+
+             sample_field = this.pos(this.samples[i].x, this.samples[i].y);
+
+             if (this.map[sample_field].subtype === "trigger") {
+                 this.soundBuffer.push(this.samples[i].sound);
+                 this.triggerBuffer.push(sample_field);
+             }
+
+         }
+     }
+
 
      this.render_DOM = function() {
 
          // bar counter
-
          (this.state != "pause") && (this.barCounter.css("transform", "rotate(" + (45 + (this.bar % 4) * 90) + "deg)"));
+         // in case step button is pressed - change state to pause
          (this.state == "step") && (this.state = "pause");
 
-         // rewriting standard elements into DOM
 
-         for (let i = 0; i < this.x_size * this.y_size - 1; i++) {
+         for (let i = 0; i < this.samples.length; i++) {
 
-             // triggers 
+             // lighting up samples
 
-             if (this.map[i].subtype === "trigger") {
-                 if (this.triggerBuffer.indexOf(i) != -1) {
-                     this.grid.children().eq(i).addClass("cell");
-                     this.grid.children().eq(i).addClass("trigGlow");
-                     setTimeout(() => {
-                         this.grid.children().eq(i).removeClass("trigGlow");
-                     }, 100);
+             let pos = this.pos(this.samples[i].x, this.samples[i].y);
+             let last_pos = this.pos(this.samples[i].history_x, this.samples[i].history_y);
+
+             this.grid.children().eq(pos).addClass("sample");
+             this.grid.children().eq(pos).text(this.samples[i].sound);
+
+             if (this.bar > 0) {
+
+                 this.grid.children().eq(last_pos).removeClass("sample");
+
+                 if (this.triggerBuffer.indexOf(pos) != -1) {
+                     this.grid.children().eq(pos).addClass("trigGlow");
+
+                     // method below is clean and elegant, but deadly for app's performance
+                     // so I had to remove it
+
+                     // setTimeout(() => {
+                     //     this.grid.children().eq(pos).removeClass("trigGlow");
+                     // }, 100);
                  }
+
+                 if (this.map[last_pos].type === "arrow") {
+
+                     (this.map[last_pos].direction === "right") && (this.grid.children().eq(last_pos).text("→"));
+                     (this.map[last_pos].direction === "left") && (this.grid.children().eq(last_pos).text("←"));
+                     (this.map[last_pos].direction === "up") && (this.grid.children().eq(last_pos).text("↑"));
+                     (this.map[last_pos].direction === "down") && (this.grid.children().eq(last_pos).text("↓"));
+
+                 } else if (this.map[last_pos].subtype === "trigger") {
+
+                     this.grid.children().eq(last_pos).text("");
+                     this.grid.children().eq(last_pos).removeClass("trigGlow");
+
+                 } else { this.grid.children().eq(last_pos).text("");}
              }
-
-             // arrows
-
-             if (this.map[i].type === "arrow") {
-
-                 (this.map[i].direction === "right") && (this.grid.children().eq(i).text("→"));
-                 (this.map[i].direction === "left") && (this.grid.children().eq(i).text("←"));
-                 (this.map[i].direction === "up") && (this.grid.children().eq(i).text("↑"));
-                 (this.map[i].direction === "down") && (this.grid.children().eq(i).text("↓"));
-             }
-
          }
-
-
-         for (let i = 0; i < this.samples.length; i++) { // lighting up samples
-             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).addClass("sample");
-             this.grid.children().eq(this.pos(this.samples[i].x, this.samples[i].y)).text(this.samples[i].sound);
-             this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).removeClass("sample");
-             (this.bar > 0) && (this.grid.children().eq(this.pos(this.samples[i].history_x, this.samples[i].history_y)).text(""));
-         }
-
 
          // cleaning buffers
 
          this.triggerBuffer = [];
+
      }
+
  }
 
  module.exports = matrixProto;

@@ -13,6 +13,7 @@
             this.bpm_counter = $("#bpm-counter");
             this.soundbank = -1;
             this.bpm = 120;
+            this.timer = 0;
 
             this.bank = {};
             this.matrix = {};
@@ -100,7 +101,6 @@
                         if (self.soundbank == 5 || self.soundbank == -1) { self.bank.load_sounds("./audio/D_HIP_HOP/", ["00kick", "01kick 2", "02snare", "03snare 2", "04clap", "05cymbal", "06hat", "07hat 2", "08perc","09perc 2"])}
 
                         self.matrix = new matrixProto(17, 17);
-
                         self.matrix.init_map();
                         self.matrix.prepare_DOM(self.bank);
 
@@ -216,18 +216,22 @@
                         }
 
                         self.matrix.render_DOM();
-
-
                         self.menu.fadeOut(200, "swing", () => self.app.fadeIn(200));
+
+                        self.timer = Math.round(60000 / self.bpm / self.matrix.bars);
+
+                        console.log("Timer: " + self.timer);
 
 
                         mainLoop = setInterval(function() {
+
                             if (self.matrix.state != "pause") {
                                 self.matrix.animate_samples();
                                 self.bank.trigger_sounds(self.matrix.soundBuffer);
                             }
                             self.matrix.render_DOM();
-                        }, Math.round(60000 / self.bpm / self.matrix.bars));
+
+                        }, self.timer);
 
                     }
 

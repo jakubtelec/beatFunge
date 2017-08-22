@@ -203,24 +203,25 @@ h1 {
 
 .trigger {
     background-color: $triggerBackground;
-    border: 1px solid $triggerBorder;
+    border: 1px solid $triggerBorder; 
 }
 
 @keyframes triggerGlow {
 
     0% {
-        box-shadow: 0px 0px 0px 0px transparent;
+        box-shadow: 0px 0px 0px 0px;
     }
-    50% {
-        box-shadow: 0px 0px 5px 3px $triggerGlow;
+    70% {
+        box-shadow: 0px 0px 3px 3px $triggerGlow;
     }
     100% {
-        box-shadow: 0px 0px 0px 0px transparent;
+        box-shadow: 0px 0px 0px 0px;
     }
 }
 
 .trigGlow {
-    animation: triggerGlow 0.1s ease-in-out;
+   animation-iteration-count: 1;
+    animation: triggerGlow 0.08s;
 }
 
 

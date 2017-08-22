@@ -80,7 +80,7 @@
             this.menu = $("#menu");
             this.kits = $(".kits");
             this.bpm_counter = $("#bpm-counter");
-            this.soundbank = 0;
+            this.soundbank = -1;
             this.bpm = 120;
 
             this.bank = {};
@@ -89,6 +89,7 @@
             this.init_menu = function() {
 
                 this.app.hide();
+                $("body").css("display", "block");
                 this.menu.hide();
                 this.menu.fadeIn(200);
 
@@ -98,7 +99,14 @@
 
                     let target = $(this);
 
-                    if (target.is("#demo")) {
+                    if (target.is("#demo-0")) {
+                        self.soundbank = -1;
+                        self.kits.children().removeClass("glow");
+                        target.addClass("glow");
+                    }
+
+
+                    if (target.is("#demo-1")) {
                         self.soundbank = 0;
                         self.kits.children().removeClass("glow");
                         target.addClass("glow");
@@ -158,7 +166,7 @@
 
                         if (self.soundbank == 4) { self.bank.load_sounds("./audio/C_GLITCH/", ["00kick", "01kick 2", "02clap", "03clap 2", "04snare", "05snare 2", "06hat 1", "07hat 2", "08hat 3","09hat 4","10tone", "11tone 2"])}                        
 
-                        if (self.soundbank == 5) { self.bank.load_sounds("./audio/D_HIP_HOP/", ["00kick", "01kick 2", "02snare", "03snare 2", "04clap", "05cymbal", "06hat", "07hat 2", "08perc","09perc 2"])}
+                        if (self.soundbank == 5 || self.soundbank == -1) { self.bank.load_sounds("./audio/D_HIP_HOP/", ["00kick", "01kick 2", "02snare", "03snare 2", "04clap", "05cymbal", "06hat", "07hat 2", "08perc","09perc 2"])}
 
                         self.matrix = new matrixProto(17, 17);
 
@@ -221,6 +229,58 @@
                             self.matrix.set_trigger(0, 13);
                             self.matrix.set_trigger(0, 11);
                             self.matrix.set_trigger(0, 9);
+
+                        } 
+
+                        if (self.soundbank == -1) {
+
+                            self.matrix.switch_help();
+
+                            // kick
+
+                            self.matrix.set_sample(0, 0, "right", 0);
+                            self.matrix.set_trigger(0, 0);
+                            self.matrix.set_trigger(3, 0);
+                            self.matrix.set_trigger(14, 0);
+
+                            // snare 
+
+                            self.matrix.set_sample(0, 1, "right", 2);
+                            self.matrix.set_trigger(4, 1);
+                            self.matrix.set_trigger(1, 1);
+                            self.matrix.set_trigger(12, 1);
+
+                            // kick 2
+
+                            self.matrix.set_sample(0, 2, "right", 1);
+                            self.matrix.set_trigger(0, 2);
+                            self.matrix.set_trigger(1, 2);
+                            self.matrix.set_trigger(6, 2);
+                            self.matrix.set_trigger(10, 2);
+                            self.matrix.set_trigger(11, 2);
+
+                            // closed hihat 1
+
+                            self.matrix.set_sample(0, 3, "right", 7)
+                            self.matrix.set_trigger(8, 3);
+                            self.matrix.set_trigger(11, 3);                           
+                            // closed hihat 2
+
+                            self.matrix.set_sample(0, 4, "right", 6)
+                            self.matrix.set_trigger(9, 4);
+                            self.matrix.set_trigger(13, 4);
+                            self.matrix.set_trigger(15, 4);
+
+                            // perc 1
+
+                            self.matrix.set_sample(0, 5, "right", 8);
+                            self.matrix.set_trigger(7, 5);
+
+                            // perc 2
+
+                            self.matrix.set_sample(0, 6, "right", 9);
+                            self.matrix.set_trigger(2, 6);
+
 
                         }
 

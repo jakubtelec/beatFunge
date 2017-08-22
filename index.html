@@ -7,17 +7,18 @@
     <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 </head>
 
-<body>
+<body style="display: none">
     <!-- START MENU  -->
     <div class="wrapper" id="menu">
         <div class="menu-row">
             <h1>beatFunge</h1>
         </div>
         <div class="menu-row">
-            Select demo with help mode on...
+            Select one of demos with help mode on...
         </div>
         <div class="menu-row kits">
-            <div class="button size-140 bouncer glow" id="demo">Demo</div>
+            <div class="button size-140 bouncer glow" id="demo-0">Demo 1</div>
+            <div class="button size-140 bouncer" id="demo-1">Demo 2</div>
         </div>
         <div class="menu-row">
             ...or empty grid with sample kit:
@@ -62,7 +63,7 @@
             <div id="right-panel">
                 <div class="button size-30 trigger glow tooltip-left-off" id="add-trigger" data-title="Add trigger cell. Once sample moves over it, trigger cell triggers it's sound."></div>
                 <div class="button size-30 bouncer tooltip-left-off" id="add-bouncer" data-title="Add bouncer cell. Bouncer turns back samples by switching their direction.">#</div>
-                <div class="button size-30 bouncer tooltip-left-off" data-title="Eraser. Click on any cell to remove it's content - trigger, bouncer, arrow or sample.">X</div>
+                <div class="button size-30 bouncer tooltip-left-off" data-title="Eraser. Click on the grid cell to cell's content - trigger, bouncer, arrow or sample.">X</div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample right. Can be combined with trigger."> → </div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample left. Can be combined with trigger."> ← </div>
                 <div class="button size-30 pipe tooltip-left-off" data-title="Arrow. Turns sample down. Can be combined with trigger."> ↓ </div>

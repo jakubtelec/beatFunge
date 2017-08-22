@@ -8,7 +8,7 @@
 
 #### How to use:
 
-1. Select **demo** (recommended) with help mode on or **one of sample kits** with empty grid. Click **GO!**  
+1. Select **one of demos** __(recommended)__ with help mode on or **one of sample kits** with empty grid. Click **GO!**  
 2. In demo mode click **play button** to start playback. 
 3. When **sample kit** is selected - start to populate empty grid; insert objects and samples, click **play button**, try to experiment.
 4. You can always use instant **help mode** by clicking on (?) icon in the upper right corner of the app.

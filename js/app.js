@@ -51,6 +51,18 @@
                         self.soundbank = 3;
                         self.kits.children().removeClass("glow");
                         target.addClass("glow");
+                    }                    
+
+                    if (target.is("#glitch-drums")) {
+                        self.soundbank = 4;
+                        self.kits.children().removeClass("glow");
+                        target.addClass("glow");
+                    }                    
+
+                    if (target.is("#hip-hop-drums")) {
+                        self.soundbank = 5;
+                        self.kits.children().removeClass("glow");
+                        target.addClass("glow");
                     }
 
                     if (target.is("#bpm-down")) {
@@ -74,6 +86,10 @@
                         if (self.soundbank == 1) { self.bank.load_sounds("./audio/A_808/", ["00kick", "01bass", "02clap", "03clap 2", "04snare", "05cymbal", "06closed hh", "07open hh", "08tom", "09tom 2"]) }
 
                         if (self.soundbank == 2) { self.bank.load_sounds("./audio/B_SYNTH_F_MINOR/", ["00synth F", "01synth G", "02synth Ab", "03synth Bb", "04synth C", "05synth Db", "06synth Eb", "07synth F 2"]) }
+
+                        if (self.soundbank == 4) { self.bank.load_sounds("./audio/C_GLITCH/", ["00kick", "01kick 2", "02clap", "03clap 2", "04snare", "05snare 2", "06hat 1", "07hat 2", "08hat 3","09hat 4","10tone", "11tone 2"])}                        
+
+                        if (self.soundbank == 5) { self.bank.load_sounds("./audio/D_HIP_HOP/", ["00kick", "01kick 2", "02snare", "03snare 2", "04clap", "05cymbal", "06hat", "07hat 2", "08perc","09perc 2"])}
 
                         self.matrix = new matrixProto(17, 17);
 

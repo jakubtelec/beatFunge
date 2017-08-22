@@ -21,4 +21,6 @@
 
 * demo sample kit / minimal techno kit - processed sounds from [musicradar]( http://www.musicradar.com/news/tech/sampleradar-494-free-techno-drum-and-fx-samples-550889)
 * Roland TR-808 sample kit - [hiphopmakers.com](http://hiphopmakers.com/free-808-drum-kit-227-samples)
+* Glitch drums sample kit - [Rhythm Lab](http://rhythm-lab.com/glitch-drumkit/)
+* Hip-hop sample kit - [hpistrumentals.com](http://www.hipstrumentals.com/2014/05/boom-bap-drum-kit-drumkit/)
 
